@@ -6,15 +6,18 @@ public class Player : MonoBehaviour
 {
     
     [SerializeField] private float _speed = 3.5f;
+    [SerializeField] private Vector3 _initPosition = new Vector3(0, -3.8f, 0);
 
     public float horizontalInput;
     public float verticalInput;
+
+    [SerializeField] private GameObject _laserPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
         // take the current position = new position (0,0,0)
-        transform.position = new Vector3(0, 0, 0);
+        transform.position = _initPosition;
     }
 
     // Update is called once per frame
@@ -22,6 +25,14 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
+        //if i hit space key
+        //spawn space key
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Spacebar pressed down");
+            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     void CalculateMovement()
@@ -46,5 +57,6 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(horizontalLimit, transform.position.y, 0);
         }
     }
+
 
 }
