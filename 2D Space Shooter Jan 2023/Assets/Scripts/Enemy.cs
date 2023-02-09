@@ -17,9 +17,9 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+         transform.Translate(Vector3.down * _speed * Time.deltaTime);       
+        
         float _randomXPos = Random.Range(-_horizontalLimit, _horizontalLimit);
-
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         //if bottom of screen
         if(transform.position.y <= -_verticalLimit)
