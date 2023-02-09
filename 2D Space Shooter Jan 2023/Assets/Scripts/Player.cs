@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     public float verticalInput;
 
     [SerializeField] private GameObject _laserPrefab;
+    private Vector3 _laserOffset = new Vector3(0, 0.8f, 0);
+    [SerializeField] private float _firerate = 0.15f;
+    private float _canFire = -1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,15 +28,13 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
-        //if i hit space key
-        //spawn space key
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire )
         {
-            Debug.Log("Spacebar pressed down");
-            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Firelaser();
         }
     }
+
+
 
     void CalculateMovement()
     {
@@ -58,5 +59,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    void Firelaser()
+    {
+        Vector3 _laserPosition = transform.position + _laserOffset;
 
+        _canFire = Time.time + _firerate;
+        Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+    }
 }
