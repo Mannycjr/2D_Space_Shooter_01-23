@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     float _yPositionLimit = 6f;
-    float _xPositionLimit = 10.0f;
+    float _xPositionLimit = 9.0f;
     float _randomX;
     float _randomY;
     float _waitTime = 5.0f;
@@ -15,7 +15,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(spawnRoutine());
+        StartCoroutine(SpawnRoutine());
     }
 
     // Update is called once per frame
@@ -24,7 +24,7 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    IEnumerator spawnRoutine()
+    IEnumerator SpawnRoutine()
     {
         while (true)
         {
