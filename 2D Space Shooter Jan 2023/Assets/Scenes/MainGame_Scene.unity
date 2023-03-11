@@ -158,6 +158,7 @@ MonoBehaviour:
   _speed: 3.5
   _lives: 3
   _laserPrefab: {fileID: 1810411115264252563, guid: 8b484725a1d03fe4bb2f41246bfc7252, type: 3}
+  _tripleShotlaserPrefab: {fileID: 6391372228156131305, guid: ce7344bf7cb4f1b45b0bc7a5a74efcbe, type: 3}
   _firerate: 0.15
 --- !u!212 &242333502
 SpriteRenderer:
@@ -220,7 +221,7 @@ Transform:
   m_GameObject: {fileID: 242333500}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

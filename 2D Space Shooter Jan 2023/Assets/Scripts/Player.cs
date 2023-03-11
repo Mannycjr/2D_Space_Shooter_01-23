@@ -13,11 +13,16 @@ public class Player : MonoBehaviour
     private float verticalInput;
 
     [SerializeField] private GameObject _laserPrefab;
+    [SerializeField] private GameObject _tripleShotlaserPrefab;
     private Vector3 _laserOffset = new Vector3(0, 1.05f, 0);
     [SerializeField] private float _firerate = 0.15f;
     private float _canFire = -1.0f;
 
     SpawnManager _spawnManager;
+
+    //Powerups variables
+    private bool _tripleShotActive = true;
+
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +53,7 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        float verticalLimit = 5.5f;
+        float verticalLimit = 5.0f;
         float horizontalLimit = 11.0f;
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
@@ -72,7 +77,17 @@ public class Player : MonoBehaviour
         Vector3 _laserPosition = transform.position + _laserOffset;
 
         _canFire = Time.time + _firerate;
-        Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+
+        if (_tripleShotActive)
+        {
+            Instantiate(_tripleShotlaserPrefab, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+        }
+
+        
     }
 
     public void Damage()
