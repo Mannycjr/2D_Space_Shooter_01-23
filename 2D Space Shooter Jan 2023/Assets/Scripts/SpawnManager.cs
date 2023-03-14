@@ -6,6 +6,8 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
+    [SerializeField] private GameObject _powerups;
+
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;
     float _randomX;
@@ -16,7 +18,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnRoutine());
+        StartCoroutine(SpawnEnemyRoutine());
     }
 
     // Update is called once per frame
@@ -25,7 +27,7 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    IEnumerator SpawnRoutine()
+    IEnumerator SpawnEnemyRoutine()
     {
         while (_stopSpawning == false)
         {
@@ -39,6 +41,11 @@ public class SpawnManager : MonoBehaviour
             // yield wait for 5 seconds
             yield return new WaitForSeconds(_waitTime);
         }
+    }
+
+    IEnumerator SpawnPowerupRoutine()
+    {
+
     }
 
     public void OnPlayerDeath()

@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     SpawnManager _spawnManager;
 
     //Powerups variables
-    private bool _tripleShotActive = true;
+    [SerializeField] private bool _tripleShotActive = false;
 
 
     // Start is called before the first frame update
