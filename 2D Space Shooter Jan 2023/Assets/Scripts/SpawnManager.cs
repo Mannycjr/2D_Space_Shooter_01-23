@@ -12,7 +12,8 @@ public class SpawnManager : MonoBehaviour
     float _xPositionLimit = 9.0f;
     float _randomX;
     float _randomY;
-    float _waitTime = 5.0f;
+    float _waitTimeEnemy = 5.0f;
+    float _waitTimePowerups = 7.0f;
     private bool _stopSpawning = false;
 
     // Start is called before the first frame update
@@ -39,13 +40,15 @@ public class SpawnManager : MonoBehaviour
             newEnemy.transform.parent = _enemyContainer.transform;
 
             // yield wait for 5 seconds
-            yield return new WaitForSeconds(_waitTime);
+            yield return new WaitForSeconds(_waitTimeEnemy);
         }
     }
 
     IEnumerator SpawnPowerupRoutine()
     {
 
+
+        yield return new WaitForSeconds(_waitTimePowerups);
     }
 
     public void OnPlayerDeath()

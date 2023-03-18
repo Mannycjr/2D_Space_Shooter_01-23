@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    private int _speed = 4;
+    [SerializeField] private float _speed = 3.0f;
     private float _verticalLimit = 7.0f;
     private float _horizontalLimit = 11.0f;
 
@@ -17,20 +17,34 @@ public class Powerup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
+        // move down
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        float _randomXPos = Random.Range(-_horizontalLimit, _horizontalLimit);
-
+        // when leave screen, destroy object
         if (transform.position.y <= -_verticalLimit)
         {
-            //respawn at top with a new random x position
-            transform.position = new Vector3(_randomXPos, _verticalLimit, 0);
+            Destroy(this.gameObject);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.tag == "Player")
+        {
+            // Enable the tripleshot lasers in player
+            Player player = other.transform.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TripleShotActive();   
+            }
+            else
+            {
+                Debug.LogError("Powerup::OnTriggerEnter2D: player is null");
+            }
 
+
+            Destroy(this.gameObject);
+        }
     }
 
 }

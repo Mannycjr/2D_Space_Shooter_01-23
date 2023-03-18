@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     //Powerups variables
     [SerializeField] private bool _tripleShotActive = false;
-
+    [SerializeField] private float _tripleShotDuration = 5.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -99,6 +99,18 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
+    }
+
+    public void TripleShotActive()
+    {
+        _tripleShotActive = true;
+        StartCoroutine(TripleShotDuration());
+    }
+
+    IEnumerator TripleShotDuration()
+    {
+        yield return new WaitForSeconds(_tripleShotDuration);
+        _tripleShotActive = false;
     }
 
 }
