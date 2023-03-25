@@ -442,6 +442,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Triple_Shot_Powerup
       objectReference: {fileID: 0}
+    - target: {fileID: 6096329838717489898, guid: 05ea6156496d06044aa6fa5f8da06725, type: 3}
+      propertyPath: _speed
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05ea6156496d06044aa6fa5f8da06725, type: 3}
 --- !u!1 &705507993
