@@ -7,7 +7,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject _powerupPrefab;
-    [SerializeField] private GameObject _powerupsContainer;
 
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;
@@ -59,7 +58,6 @@ public class SpawnManager : MonoBehaviour
             Vector3 spawnPosition = new Vector3(_randomX, _randomY, 0);
 
             GameObject newPowerup = Instantiate(_powerupPrefab, spawnPosition, Quaternion.identity);
-            newPowerup.transform.parent = _powerupsContainer.transform;
 
             yield return new WaitForSeconds(_waitTimePowerups);
         }
