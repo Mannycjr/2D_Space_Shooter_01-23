@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
+    private float _speedDefault = 3.5f;
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private int _lives = 3;
     private Vector3 _initPosition = new Vector3(0, -3.8f, 0);
@@ -22,7 +22,9 @@ public class Player : MonoBehaviour
 
     //Powerups variables
     [SerializeField] private bool _tripleShotActive = false;
-    [SerializeField] private float _tripleShotDuration = 5.0f;
+
+    [SerializeField] private bool _speedBoostActive = false;
+    [SerializeField] private float _speedBoostMultiplier = 2.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +60,19 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
+        Debug.Log("Player::CalculateMovement::_speedBoostActive=" + _speedBoostActive);
+        // SpeedBoost Logic
+        if (_speedBoostActive)
+        {
+            _speed = _speedDefault * _speedBoostMultiplier;
+        }
+        else
+        {
+            _speed = _speedDefault;
+        }
+        Debug.Log("Player::CalculateMovement::_speed="+ _speed);
+
+        // Movement
         transform.Translate(direction * _speed * Time.deltaTime);
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -verticalLimit, verticalLimit), 0);
@@ -101,16 +116,27 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TripleShotActive()
+    public void TripleShotActive(float _duration)
     {
         _tripleShotActive = true;
-        StartCoroutine(TripleShotDuration());
+        StartCoroutine(TripleShotDuration(_duration));
     }
 
-    IEnumerator TripleShotDuration()
+    IEnumerator TripleShotDuration(float _duration)
     {
-        yield return new WaitForSeconds(_tripleShotDuration);
+        yield return new WaitForSeconds(_duration);
         _tripleShotActive = false;
     }
 
+    public void SpeedBoostActive(float _duration)
+    {
+        _speedBoostActive = true;
+        StartCoroutine(SpeedBoostDurationCoroutine(float _duration));
+    }
+
+    IEnumerator SpeedBoostDurationCoroutine(float _duration)
+    {
+        yield return new WaitForSeconds(_duration);
+        _speedBoostActive = false;
+    }
 }

@@ -6,7 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
-    [SerializeField] private GameObject _powerupPrefab;
+    [SerializeField] private GameObject[] _powerupPrefab;
 
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;
@@ -47,6 +47,8 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
+        int powerUpIndex = 0;
+
         while (_stopSpawning == false)
         {
             // spawn every 3-7 seconds
@@ -57,7 +59,9 @@ public class SpawnManager : MonoBehaviour
             _randomY = Random.Range(0, _yPositionLimit);
             Vector3 spawnPosition = new Vector3(_randomX, _randomY, 0);
 
-            GameObject newPowerup = Instantiate(_powerupPrefab, spawnPosition, Quaternion.identity);
+            powerUpIndex = Random.Range(0, _powerupPrefab.Length+1);
+
+            GameObject newPowerup = Instantiate(_powerupPrefab[0], spawnPosition, Quaternion.identity);
 
             yield return new WaitForSeconds(_waitTimePowerups);
         }
