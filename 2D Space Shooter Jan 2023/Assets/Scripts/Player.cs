@@ -122,21 +122,21 @@ public class Player : MonoBehaviour
         StartCoroutine(TripleShotDuration(_duration));
     }
 
-    IEnumerator TripleShotDuration(float _duration)
+    IEnumerator TripleShotDuration(float delay)
     {
-        yield return new WaitForSeconds(_duration);
+        yield return new WaitForSeconds(delay);
         _tripleShotActive = false;
     }
 
     public void SpeedBoostActive(float _duration)
     {
         _speedBoostActive = true;
-        StartCoroutine(SpeedBoostDurationCoroutine(float _duration));
+        StartCoroutine(SpeedBoostDurationCoroutine(_duration));
     }
 
-    IEnumerator SpeedBoostDurationCoroutine(float _duration)
+    IEnumerator SpeedBoostDurationCoroutine(float delay)
     {
-        yield return new WaitForSeconds(_duration);
+        yield return new WaitForSeconds(delay);
         _speedBoostActive = false;
     }
 }

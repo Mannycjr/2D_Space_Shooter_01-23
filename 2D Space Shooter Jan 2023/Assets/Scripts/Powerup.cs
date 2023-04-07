@@ -48,11 +48,11 @@ public class Powerup : MonoBehaviour
                 switch (_powerupID)
                 {
                     case _powerupIDs.TripleShot:
-                        player.TripleShotActive();
+                        player.TripleShotActive(_powerupDuration);
                         Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=0 TripleShot");
                         break;
                     case _powerupIDs.SpeedBoost:
-                        player.SpeedBoostActive();
+                        player.SpeedBoostActive(_powerupDuration);
                         Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=1 SpeedBoost");
                         break;
                     case _powerupIDs.Shields:

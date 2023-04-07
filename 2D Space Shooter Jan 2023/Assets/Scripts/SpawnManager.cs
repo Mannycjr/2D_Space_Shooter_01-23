@@ -61,7 +61,7 @@ public class SpawnManager : MonoBehaviour
 
             powerUpIndex = Random.Range(0, _powerupPrefab.Length+1);
 
-            GameObject newPowerup = Instantiate(_powerupPrefab[0], spawnPosition, Quaternion.identity);
+            GameObject newPowerup = Instantiate(_powerupPrefab[powerUpIndex], spawnPosition, Quaternion.identity);
 
             yield return new WaitForSeconds(_waitTimePowerups);
         }
