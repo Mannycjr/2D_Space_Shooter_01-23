@@ -60,8 +60,8 @@ public class Player : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        Debug.Log("Player::CalculateMovement::_speedBoostActive=" + _speedBoostActive);
-        Debug.Log("Player::CalculateMovement::_speed="+ _speed);
+        //Debug.Log("Player::CalculateMovement::_speedBoostActive=" + _speedBoostActive);
+        //Debug.Log("Player::CalculateMovement::_speed="+ _speed);
 
         // Movement
         transform.Translate(direction * _speed * Time.deltaTime);
