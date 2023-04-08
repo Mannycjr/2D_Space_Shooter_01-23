@@ -22,8 +22,8 @@ public class Player : MonoBehaviour
 
     //Powerups variables
     [SerializeField] private bool _tripleShotActive = false;
-
     [SerializeField] private bool _speedBoostActive = false;
+
     [SerializeField] private float _speedBoostMultiplier = 2.0f;
 
     // Start is called before the first frame update
@@ -61,15 +61,6 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
         Debug.Log("Player::CalculateMovement::_speedBoostActive=" + _speedBoostActive);
-        // SpeedBoost Logic
-        if (_speedBoostActive)
-        {
-            _speed = _speedDefault * _speedBoostMultiplier;
-        }
-        else
-        {
-            _speed = _speedDefault;
-        }
         Debug.Log("Player::CalculateMovement::_speed="+ _speed);
 
         // Movement
@@ -131,6 +122,7 @@ public class Player : MonoBehaviour
     public void SpeedBoostActive(float _duration)
     {
         _speedBoostActive = true;
+        _speed = _speedDefault * _speedBoostMultiplier;
         StartCoroutine(SpeedBoostDurationCoroutine(_duration));
     }
 
@@ -138,5 +130,6 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         _speedBoostActive = false;
+        _speed = _speedDefault;
     }
 }
