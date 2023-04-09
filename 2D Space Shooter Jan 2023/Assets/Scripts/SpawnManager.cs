@@ -6,7 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
-    [SerializeField] private GameObject _powerupPrefab;
+    [SerializeField] private GameObject[] _powerupPrefab;
 
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;
@@ -35,8 +35,7 @@ public class SpawnManager : MonoBehaviour
         {
             // Instantiate enemy prefab
             _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
-            _randomY = Random.Range(0, _yPositionLimit);
-            Vector3 spawnPosition = new Vector3(_randomX, _randomY, 0);
+            Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, spawnPosition, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
 
@@ -47,6 +46,8 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
+        int _randomPowerUpIndex = 0;
+
         while (_stopSpawning == false)
         {
             // spawn every 3-7 seconds
@@ -54,10 +55,12 @@ public class SpawnManager : MonoBehaviour
 
             // Instantiate prowerup prefab
             _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
-            _randomY = Random.Range(0, _yPositionLimit);
-            Vector3 spawnPosition = new Vector3(_randomX, _randomY, 0);
+            Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
 
-            GameObject newPowerup = Instantiate(_powerupPrefab, spawnPosition, Quaternion.identity);
+            //Debug.Log("_powerupPrefab.Length=" + (_powerupPrefab.Length));
+            _randomPowerUpIndex = Random.Range(0, _powerupPrefab.Length);
+
+            GameObject newPowerup = Instantiate(_powerupPrefab[_randomPowerUpIndex], spawnPosition, Quaternion.identity);
 
             yield return new WaitForSeconds(_waitTimePowerups);
         }
