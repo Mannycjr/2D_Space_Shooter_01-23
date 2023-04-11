@@ -13,7 +13,7 @@ public class SpawnManager : MonoBehaviour
     float _randomX;
     float _randomY;
     float _waitTimeEnemy = 5.0f;
-    [SerializeField] float _waitTimePowerups = 7.0f;
+    float _waitTimePowerups = 7.0f; // In between powerup spawning
     private bool _stopSpawning = false;
 
     // Start is called before the first frame update
@@ -51,16 +51,17 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             // spawn every 3-7 seconds
-            _waitTimePowerups = Random.Range(3.0f, 7.0f);
+            _waitTimePowerups = Random.Range(1.0f, 3.0f);
 
             // Instantiate prowerup prefab
             _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
             Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
 
-            //Debug.Log("_powerupPrefab.Length=" + (_powerupPrefab.Length));
-            _randomPowerUpIndex = Random.Range(0, _powerupPrefab.Length);
+            Debug.Log("SpawnManager::SpawnPowerupRoutine:_powerupPrefab.Length=" + (_powerupPrefab.Length));
+            _randomPowerUpIndex = Random.Range(0, _powerupPrefab.Length); // 
 
             GameObject newPowerup = Instantiate(_powerupPrefab[_randomPowerUpIndex], spawnPosition, Quaternion.identity);
+            Debug.Log("SpawnManager::SpawnPowerupRoutine: spawned _powerupPrefab[" + _randomPowerUpIndex + "]");
 
             yield return new WaitForSeconds(_waitTimePowerups);
         }

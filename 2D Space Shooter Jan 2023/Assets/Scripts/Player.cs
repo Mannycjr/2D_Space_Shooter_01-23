@@ -23,8 +23,9 @@ public class Player : MonoBehaviour
     //Powerups variables
     [SerializeField] private bool _tripleShotActive = false;
     [SerializeField] private bool _speedBoostActive = false;
+    [SerializeField] private bool _shieldsActiveAlready = false;
 
-    [SerializeField] private float _speedBoostMultiplier = 2.0f;
+    [SerializeField] private float _speedBoostMultiplier = 4.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -32,9 +33,13 @@ public class Player : MonoBehaviour
         // take the current position = new position (0,0,0)
         transform.position = _initPosition;
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        
         if (_spawnManager == null)
         {
             Debug.LogError("Player::Start:No _spawnManager");
+        } else
+        {
+            Debug.Log("Player::Start:SpawnManager exists");
         }
     }
 
@@ -131,5 +136,17 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(delay);
         _speedBoostActive = false;
         _speed = _speedDefault;
+    }
+
+    public void ShieldsActive(float _duration)
+    {
+        _shieldsActiveAlready = true;
+        StartCoroutine(ShieldsActivateDurationCoroutine(_duration));
+    }
+
+    IEnumerator ShieldsActivateDurationCoroutine(float delay)
+    {
+        Debug.Log("Player::ShieldsActivateDurationCoroutine Shields cooldown waiting");
+        yield return new WaitForSeconds(delay);
     }
 }

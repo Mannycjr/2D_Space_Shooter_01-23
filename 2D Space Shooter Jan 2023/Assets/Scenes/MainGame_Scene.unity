@@ -162,7 +162,8 @@ MonoBehaviour:
   _firerate: 0.15
   _tripleShotActive: 0
   _speedBoostActive: 0
-  _speedBoostMultiplier: 2
+  _shieldsActiveAlready: 0
+  _speedBoostMultiplier: 4
 --- !u!212 &242333502
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -358,6 +359,7 @@ MonoBehaviour:
   _powerupPrefab:
   - {fileID: 4183205521747697883, guid: c1db6df7b47bb8e45adf1cf0ebd2ac6d, type: 3}
   - {fileID: 9044674762967548964, guid: 6351496bdfdda0c42b96eb9f7c8b4eb7, type: 3}
+  - {fileID: 7462965167645492359, guid: 2a5bf8846bd43df4e82ee9f8bf3044de, type: 3}
   _waitTimePowerups: 7
 --- !u!1 &705507993
 GameObject:
