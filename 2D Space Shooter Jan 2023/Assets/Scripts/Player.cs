@@ -103,13 +103,22 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        _lives--;
-
-        if (_lives < 1)
+        if (!_shieldsActiveAlready)
         {
-            _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
+            _lives--;
+
+            if (_lives < 1)
+            {
+                _spawnManager.OnPlayerDeath();
+                Destroy(this.gameObject);
+            }
         }
+        else
+        {    
+            _shieldsActiveAlready = false;
+        }
+
+
     }
 
     public void TripleShotActive(float _duration)
