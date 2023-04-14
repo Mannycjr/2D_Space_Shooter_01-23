@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _tripleShotActive = false;
     [SerializeField] private bool _speedBoostActive = false;
     [SerializeField] private bool _shieldsActiveAlready = false;
-
+    [SerializeField] private GameObject _shieldsPlayer;
     [SerializeField] private float _speedBoostMultiplier = 4.0f;
 
     // Start is called before the first frame update
@@ -64,9 +64,6 @@ public class Player : MonoBehaviour
         float horizontalLimit = 11.0f;
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-
-        //Debug.Log("Player::CalculateMovement::_speedBoostActive=" + _speedBoostActive);
-        //Debug.Log("Player::CalculateMovement::_speed="+ _speed);
 
         // Movement
         transform.Translate(direction * _speed * Time.deltaTime);
@@ -113,9 +110,10 @@ public class Player : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-        else
+        else // _shieldsActiveAlready = true
         {    
             _shieldsActiveAlready = false;
+            _shieldsPlayer.SetActive(false);
         }
 
 
@@ -150,6 +148,7 @@ public class Player : MonoBehaviour
     public void ShieldsActive(float _duration)
     {
         _shieldsActiveAlready = true;
+        _shieldsPlayer.SetActive(true);
         StartCoroutine(ShieldsActivateDurationCoroutine(_duration));
     }
 
