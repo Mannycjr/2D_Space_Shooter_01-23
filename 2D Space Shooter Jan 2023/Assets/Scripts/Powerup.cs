@@ -56,6 +56,7 @@ public class Powerup : MonoBehaviour
                         Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=1 SpeedBoost");
                         break;
                     case _powerupIDs.Shields:
+                        player.ShieldsActive(_powerupDuration);
                         Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=2 Shields");
                         break;
                     default:
