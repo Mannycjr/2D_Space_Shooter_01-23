@@ -163,6 +163,7 @@ MonoBehaviour:
   _tripleShotActive: 0
   _speedBoostActive: 0
   _shieldsActiveAlready: 0
+  _shieldsPlayer: {fileID: 1359052590}
   _speedBoostMultiplier: 4
 --- !u!212 &242333502
 SpriteRenderer:
