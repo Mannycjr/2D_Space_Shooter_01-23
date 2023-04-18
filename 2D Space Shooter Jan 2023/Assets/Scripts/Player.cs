@@ -27,19 +27,25 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _shieldsPlayer;
     [SerializeField] private float _speedBoostMultiplier = 4.0f;
 
+    private int _score = 0;
+    UIManager _UIManager;
+
     // Start is called before the first frame update
     void Start()
     {
         // take the current position = new position (0,0,0)
         transform.position = _initPosition;
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        
+        _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
         if (_spawnManager == null)
         {
             Debug.LogError("Player::Start:No _spawnManager");
-        } else
+        }
+
+        if (_UIManager == null)
         {
-            Debug.Log("Player::Start:SpawnManager exists");
+            Debug.LogError("Player::Start:No _UIManager");
         }
     }
 
@@ -104,6 +110,8 @@ public class Player : MonoBehaviour
         {
             _lives--;
 
+            _UIManager.UpdateLives(_lives);
+
             if (_lives < 1)
             {
                 _spawnManager.OnPlayerDeath();
@@ -157,4 +165,13 @@ public class Player : MonoBehaviour
         Debug.Log("Player::ShieldsActivateDurationCoroutine Shields cooldown waiting");
         yield return new WaitForSeconds(delay);
     }
+
+    public void PlayerScoreUpdate(int points)
+    {
+        _score += points;
+        _UIManager.UpdateScore(_score);
+    }
+    // Method to add 10 to the score
+    // Communicate with the UI to update the score
+
 }

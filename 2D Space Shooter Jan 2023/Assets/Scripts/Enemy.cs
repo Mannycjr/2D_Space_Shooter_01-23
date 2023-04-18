@@ -8,10 +8,16 @@ public class Enemy : MonoBehaviour
     private float _verticalLimit = 7.0f;
     private float _horizontalLimit = 11.0f;
 
+    private Player _player;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _player = GameObject.Find("Player").GetComponent<Player>();
+        if (_player == null)
+        {
+            Debug.LogError("Enemy::Start:No _player");
+        }
     }
 
     // Update is called once per frame
@@ -44,6 +50,7 @@ public class Enemy : MonoBehaviour
         }
         else if (other.tag == "Laser")
         {
+            _player.PlayerScoreUpdate(10);
             Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
