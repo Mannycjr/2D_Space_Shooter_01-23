@@ -10,12 +10,13 @@ public class UIManager : MonoBehaviour
     private string _scoreTextPrefix = "Score: ";
     [SerializeField] private Image _livesImageDisplay;
     [SerializeField] private Sprite[] _livesSprites;
+    [SerializeField] private GameObject _gameOverImage;
 
     // Start is called before the first frame update
     void Start()
     {
-        //_livesSprites[3]; 
-        _scoreText.text = _scoreTextPrefix + 0; 
+        _scoreText.text = _scoreTextPrefix + 0;
+        _gameOverImage.SetActive(false);
     }
 
     // Update is called once per frame
@@ -32,6 +33,11 @@ public class UIManager : MonoBehaviour
     public void UpdateLives(int currentLives)
     {
         _livesImageDisplay.sprite = _livesSprites[currentLives];
+    }
+
+    public void DisplayGameOver()
+    {
+        _gameOverImage.SetActive(true);
     }
 
 }
