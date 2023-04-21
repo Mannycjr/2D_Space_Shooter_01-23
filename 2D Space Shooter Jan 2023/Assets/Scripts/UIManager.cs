@@ -10,13 +10,15 @@ public class UIManager : MonoBehaviour
     private string _scoreTextPrefix = "Score: ";
     [SerializeField] private Image _livesImageDisplay;
     [SerializeField] private Sprite[] _livesSprites;
-    [SerializeField] private GameObject _gameOverImage;
+    [SerializeField] private Text _gameOverText;
+
+    [SerializeField] private float _textFlickerDelay = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         _scoreText.text = _scoreTextPrefix + 0;
-        _gameOverImage.SetActive(false);
+        _gameOverText.gameObject.active = false;
     }
 
     // Update is called once per frame
@@ -37,7 +39,22 @@ public class UIManager : MonoBehaviour
 
     public void DisplayGameOver()
     {
-        _gameOverImage.SetActive(true);
+        Debug.Log("UIManager::DisplayGameOver start");
+        _gameOverText.gameObject.active=true;
+        StartCoroutine(FlickerGameOverText());
     }
 
+    IEnumerator FlickerGameOverText()
+    {
+        Debug.Log("UIManager::FlickerGameOverText start");
+        while (true)
+        {
+            Debug.Log("UIManager::FlickerGameOverText loop at top");
+            _gameOverText.gameObject.active=false;
+            yield return new WaitForSeconds(_textFlickerDelay);
+            Debug.Log("UIManager::FlickerGameOverText Delay DONE");
+            _gameOverText.gameObject.active=true;
+        }
+        
+    }
 }
