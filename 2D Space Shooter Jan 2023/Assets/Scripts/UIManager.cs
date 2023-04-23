@@ -6,11 +6,12 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _scoreText;
+    //[SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private Text _scoreText;
     private string _scoreTextPrefix = "Score: ";
     [SerializeField] private Image _livesImageDisplay;
     [SerializeField] private Sprite[] _livesSprites;
-    [SerializeField] private Text _gameOverText;
+    [SerializeField] private TMP_Text _gameOverText;
 
     [SerializeField] private float _textFlickerDelay = 1.0f;
 
@@ -18,7 +19,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         _scoreText.text = _scoreTextPrefix + 0;
-        _gameOverText.gameObject.active = false;
+        _gameOverText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -40,8 +41,20 @@ public class UIManager : MonoBehaviour
     public void DisplayGameOver()
     {
         Debug.Log("UIManager::DisplayGameOver start");
-        _gameOverText.gameObject.active=true;
-        StartCoroutine(FlickerGameOverText());
+        _gameOverText.gameObject.SetActive(true);
+        StartCoroutine("GameOverTextFlickerRoutine");
+    }
+
+    IEnumerator GameOverTextFlickerRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            _gameOverText.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+            _gameOverText.gameObject.SetActive(true);
+        }
+
     }
 
     IEnumerator FlickerGameOverText()
@@ -50,10 +63,10 @@ public class UIManager : MonoBehaviour
         while (true)
         {
             Debug.Log("UIManager::FlickerGameOverText loop at top");
-            _gameOverText.gameObject.active=false;
+            _gameOverText.gameObject.SetActive(false);
             yield return new WaitForSeconds(_textFlickerDelay);
             Debug.Log("UIManager::FlickerGameOverText Delay DONE");
-            _gameOverText.gameObject.active=true;
+            _gameOverText.gameObject.SetActive(true);
         }
         
     }
