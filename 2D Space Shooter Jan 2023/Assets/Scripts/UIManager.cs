@@ -7,13 +7,13 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     //[SerializeField] private TMP_Text _scoreText;
-    [SerializeField] private Text _scoreText;
+    [SerializeField] private TMP_Text _scoreText;
     private string _scoreTextPrefix = "Score: ";
     [SerializeField] private Image _livesImageDisplay;
     [SerializeField] private Sprite[] _livesSprites;
     [SerializeField] private TMP_Text _gameOverText;
 
-    [SerializeField] private float _textFlickerDelay = 1.0f;
+    [SerializeField] private float _textFlickerDelay = 0.25f;
 
     // Start is called before the first frame update
     void Start()
@@ -49,25 +49,12 @@ public class UIManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.5f);
-            _gameOverText.gameObject.SetActive(false);
-            yield return new WaitForSeconds(0.5f);
-            _gameOverText.gameObject.SetActive(true);
-        }
-
-    }
-
-    IEnumerator FlickerGameOverText()
-    {
-        Debug.Log("UIManager::FlickerGameOverText start");
-        while (true)
-        {
-            Debug.Log("UIManager::FlickerGameOverText loop at top");
+            yield return new WaitForSeconds(_textFlickerDelay);
             _gameOverText.gameObject.SetActive(false);
             yield return new WaitForSeconds(_textFlickerDelay);
-            Debug.Log("UIManager::FlickerGameOverText Delay DONE");
             _gameOverText.gameObject.SetActive(true);
         }
-        
+
     }
+
 }
