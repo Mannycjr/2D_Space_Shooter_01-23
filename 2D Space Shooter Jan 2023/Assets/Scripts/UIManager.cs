@@ -12,14 +12,24 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _livesImageDisplay;
     [SerializeField] private Sprite[] _livesSprites;
     [SerializeField] private TMP_Text _gameOverText;
+    [SerializeField] private TMP_Text _restartText;
 
     [SerializeField] private float _textFlickerDelay = 0.25f;
+
+    private GameManager _gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         _scoreText.text = _scoreTextPrefix + 0;
         _gameOverText.gameObject.SetActive(false);
+        _restartText.gameObject.SetActive(false);
+
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        if (_gameManager == null)
+        {
+            Debug.LogError("UIManager::Start : no Game_Manager");
+        }
     }
 
     // Update is called once per frame
@@ -38,10 +48,12 @@ public class UIManager : MonoBehaviour
         _livesImageDisplay.sprite = _livesSprites[currentLives];
     }
 
-    public void DisplayGameOver()
+    public void GameOverSequence()
     {
         Debug.Log("UIManager::DisplayGameOver start");
         _gameOverText.gameObject.SetActive(true);
+        _restartText.gameObject.SetActive(true);
+        _gameManager.GameOver();
         StartCoroutine("GameOverTextFlickerRoutine");
     }
 
@@ -56,5 +68,11 @@ public class UIManager : MonoBehaviour
         }
 
     }
+
+    public void DisplayRestartText()
+    {
+        _restartText.gameObject.SetActive(true);
+    }
+
 
 }
