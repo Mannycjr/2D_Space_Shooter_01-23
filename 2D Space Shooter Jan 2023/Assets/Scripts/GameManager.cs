@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver == true) {
-            SceneManager.LoadScene(0); // Reloads same scene
+            SceneManager.LoadScene(1); // Reloads same scene, Game scene
         }
     }
 
