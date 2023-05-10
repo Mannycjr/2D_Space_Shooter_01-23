@@ -57,11 +57,9 @@ public class SpawnManager : MonoBehaviour
             _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
             Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
 
-            Debug.Log("SpawnManager::SpawnPowerupRoutine:_powerupPrefab.Length=" + (_powerupPrefab.Length));
             _randomPowerUpIndex = Random.Range(0, _powerupPrefab.Length); // 
 
             GameObject newPowerup = Instantiate(_powerupPrefab[_randomPowerUpIndex], spawnPosition, Quaternion.identity);
-            Debug.Log("SpawnManager::SpawnPowerupRoutine: spawned _powerupPrefab[" + _randomPowerUpIndex + "]");
 
             yield return new WaitForSeconds(_waitTimePowerups);
         }

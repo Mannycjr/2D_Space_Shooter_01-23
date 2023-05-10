@@ -115,6 +115,7 @@ public class Player : MonoBehaviour
             if (_lives < 1)
             {
                 _spawnManager.OnPlayerDeath();
+                _UIManager.GameOverSequence();
                 Destroy(this.gameObject);
             }
         }
@@ -162,7 +163,6 @@ public class Player : MonoBehaviour
 
     IEnumerator ShieldsActivateDurationCoroutine(float delay)
     {
-        Debug.Log("Player::ShieldsActivateDurationCoroutine Shields cooldown waiting");
         yield return new WaitForSeconds(delay);
     }
 
@@ -171,7 +171,5 @@ public class Player : MonoBehaviour
         _score += points;
         _UIManager.UpdateScore(_score);
     }
-    // Method to add 10 to the score
-    // Communicate with the UI to update the score
 
 }
