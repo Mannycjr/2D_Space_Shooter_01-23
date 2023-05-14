@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     private float _horizontalLimit = 11.0f;
 
     private Player _player;
+    // handle to animator component
+    private Animator _enemyAnimator;
+    private float _explosionAnimLength = 2.6f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +21,13 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Enemy::Start:No _player");
         }
+
+        _enemyAnimator = GetComponent<Animator>();
+        if (_enemyAnimator == null)
+        {
+            Debug.LogError("Enemy::Start:No _enemyAnimator");
+        }
+
     }
 
     // Update is called once per frame
@@ -46,14 +56,31 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
+            // trigger anim
+            _enemyAnimator.SetTrigger("OnEnemyDeath");
             Destroy(this.gameObject);
         }
         else if (other.tag == "Laser")
         {
-            _player.PlayerScoreUpdate(10);
             Destroy(other.gameObject);
+
+            if (_player != null)
+            {
+                _player.PlayerScoreUpdate(10);
+            }
+            _enemyAnimator.SetTrigger("OnEnemyDeath");
             Destroy(this.gameObject);
         }
 
+    }
+
+    private void DestoryEnemy()
+    {
+        _enemyAnimator.SetTrigger("OnEnemyDeath");
+        Destroy(GetComponent<Collider2D>());
+        _speed = 0;
+        // play explosion
+
+        Destroy(this.gameObject, _explosionAnimLength);
     }
 }
