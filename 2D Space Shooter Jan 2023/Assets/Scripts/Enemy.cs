@@ -19,13 +19,16 @@ public class Enemy : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player == null)
         {
-            Debug.LogError("Enemy::Start:No _player");
+            Debug.LogError("Enemy::Start() No _player");
         }
 
         _enemyAnimator = GetComponent<Animator>();
         if (_enemyAnimator == null)
         {
-            Debug.LogError("Enemy::Start:No _enemyAnimator");
+            Debug.LogError("Enemy::Start() No _enemyAnimator");
+        } else
+        {
+            Debug.Log("Enemy::Start() _enemyAnimator Exists");
         }
 
     }
@@ -57,8 +60,7 @@ public class Enemy : MonoBehaviour
                 player.Damage();
             }
             // trigger anim
-            _enemyAnimator.SetTrigger("OnEnemyDeath");
-            Destroy(this.gameObject);
+            DestoryEnemy();
         }
         else if (other.tag == "Laser")
         {
@@ -68,18 +70,18 @@ public class Enemy : MonoBehaviour
             {
                 _player.PlayerScoreUpdate(10);
             }
-            _enemyAnimator.SetTrigger("OnEnemyDeath");
-            Destroy(this.gameObject);
+            DestoryEnemy();
         }
 
     }
 
     private void DestoryEnemy()
     {
+        Debug.Log("Enemy:DestoryEnemy() Begin");
         _enemyAnimator.SetTrigger("OnEnemyDeath");
+        Debug.Log("Enemy:DestoryEnemy() played enemy explosion animation");
         Destroy(GetComponent<Collider2D>());
         _speed = 0;
-        // play explosion
 
         Destroy(this.gameObject, _explosionAnimLength);
     }
