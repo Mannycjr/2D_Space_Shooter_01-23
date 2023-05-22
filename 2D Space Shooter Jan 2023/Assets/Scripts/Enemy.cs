@@ -80,8 +80,8 @@ public class Enemy : MonoBehaviour
         Debug.Log("Enemy:DestoryEnemy() Begin");
         _enemyAnimator.SetTrigger("OnEnemyDeath");
         Debug.Log("Enemy:DestoryEnemy() played enemy explosion animation");
-        Destroy(GetComponent<Collider2D>());
-        _speed = 0;
+        Destroy(GetComponent<Collider2D>()); // Do not collide any more
+        _speed = 0; // No movement after shot
 
         Destroy(this.gameObject, _explosionAnimLength);
     }
