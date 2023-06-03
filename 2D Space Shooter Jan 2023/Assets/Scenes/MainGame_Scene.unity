@@ -1195,6 +1195,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1391229376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5804945403299343480, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
+  m_PrefabInstance: {fileID: 5804945404362003511}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1459458805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1542,6 +1547,10 @@ PrefabInstance:
       propertyPath: m_GravityScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4199262744024263407, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
+      propertyPath: _explosionPrefab
+      value: 
+      objectReference: {fileID: 1391229376}
     - target: {fileID: 5804945403299343462, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
       propertyPath: m_RootOrder
       value: 8
