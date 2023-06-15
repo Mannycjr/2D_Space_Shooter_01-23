@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy::Start() No _enemyAnimator");
         } else
         {
-            Debug.Log("Enemy::Start() _enemyAnimator Exists");
+            //Debug.Log("Enemy::Start() _enemyAnimator Exists");
         }
 
     }
@@ -77,9 +77,9 @@ public class Enemy : MonoBehaviour
 
     private void DestoryEnemy()
     {
-        Debug.Log("Enemy:DestoryEnemy() Begin");
+        //Debug.Log("Enemy:DestoryEnemy() Begin");
         _enemyAnimator.SetTrigger("OnEnemyDeath");
-        Debug.Log("Enemy:DestoryEnemy() played enemy explosion animation");
+        //Debug.Log("Enemy:DestoryEnemy() played enemy explosion animation");
         Destroy(GetComponent<Collider2D>()); // Do not collide any more
         _speed = 0; // No movement after shot
 

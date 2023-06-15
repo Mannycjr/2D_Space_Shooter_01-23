@@ -7,12 +7,18 @@ public class Asteroid : MonoBehaviour
     private float _rotationSpeed = 20.0f;
     [SerializeField] private GameObject _explosionPrefab;
     private GameObject _explosionInstance;
-
+    private SpawnManager _spawnManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("Asteroid::Start: Begin.");
+
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Asteroid::Start. Spawn Manager is NULL.");
+        }
     }
 
     // Update is called once per frame
@@ -23,15 +29,20 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Hit! Asteroid::OnTriggerEnter: Begin. other.tag=" + other.tag);
         if (other.tag == "Laser")
         {
+            Debug.Log("Asteroid::OnTriggerEnter: if other.tag=" + other.tag);
+            Destroy(other.gameObject);
             _explosionInstance = Instantiate(_explosionPrefab, transform.position, transform.rotation);
-            Destroy(_explosionInstance,2.5f); 
+            Destroy(_explosionInstance,2.5f);
+
+            _spawnManager.StartSpawning();
     
         }
 
-        Destroy(other.gameObject);
         
-        Destroy(this.gameObject);
+        
+        Destroy(this.gameObject,0.0f);
     }
 }

@@ -15,18 +15,28 @@ public class SpawnManager : MonoBehaviour
     float _waitTimeEnemy = 5.0f;
     float _waitTimePowerups = 7.0f; // In between powerup spawning
     private bool _stopSpawning = false;
+    private GameManager _gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnEnemyRoutine());
-        StartCoroutine(SpawnPowerupRoutine());
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        if (_gameManager == null)
+        {
+            Debug.LogError("SpawnManager::Start(). Game Manager is NULL");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void StartSpawning()
+    {
+        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnPowerupRoutine());
     }
 
     IEnumerator SpawnEnemyRoutine()
