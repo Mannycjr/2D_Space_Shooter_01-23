@@ -30,6 +30,10 @@ public class Player : MonoBehaviour
     private int _score = 0;
     UIManager _UIManager;
 
+    //VFX
+    [SerializeField] private GameObject _damageSmokeLeft;
+    [SerializeField] private GameObject _damageSmokeRight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -111,6 +115,7 @@ public class Player : MonoBehaviour
             _lives--;
 
             _UIManager.UpdateLives(_lives);
+            VFX_Smoke();
 
             if (_lives < 1)
             {
@@ -126,6 +131,25 @@ public class Player : MonoBehaviour
         }
 
 
+    }
+
+    private void VFX_Smoke()
+    {
+        if (_lives == 2)
+        {
+            _damageSmokeLeft.SetActive(true);
+            _damageSmokeRight.SetActive(false);
+        } 
+        else if (_lives == 1)
+        {
+            _damageSmokeLeft.SetActive(true);
+            _damageSmokeRight.SetActive(true);
+        }
+        else
+        {
+            _damageSmokeLeft.SetActive(false);
+            _damageSmokeRight.SetActive(false);
+        }
     }
 
     public void TripleShotActive(float _duration)
