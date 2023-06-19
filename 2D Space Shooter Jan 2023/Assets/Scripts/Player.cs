@@ -31,8 +31,7 @@ public class Player : MonoBehaviour
     UIManager _UIManager;
 
     //VFX
-    [SerializeField] private GameObject _damageSmokeLeft;
-    [SerializeField] private GameObject _damageSmokeRight;
+    [SerializeField] private GameObject _damageSmokeLeft, _damageSmokeRight;
 
     // Start is called before the first frame update
     void Start()
