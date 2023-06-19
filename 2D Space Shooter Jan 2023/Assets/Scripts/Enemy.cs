@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
     private float _horizontalLimit = 11.0f;
 
     private Player _player;
+    // handle to animator component
+    private Animator _enemyAnimator;
+    private float _explosionAnimLength = 2.6f;
 
     // Start is called before the first frame update
     void Start()
@@ -16,8 +19,18 @@ public class Enemy : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player == null)
         {
-            Debug.LogError("Enemy::Start:No _player");
+            Debug.LogError("Enemy::Start() No _player");
         }
+
+        _enemyAnimator = GetComponent<Animator>();
+        if (_enemyAnimator == null)
+        {
+            Debug.LogError("Enemy::Start() No _enemyAnimator");
+        } else
+        {
+            //Debug.Log("Enemy::Start() _enemyAnimator Exists");
+        }
+
     }
 
     // Update is called once per frame
@@ -46,14 +59,30 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
-            Destroy(this.gameObject);
+            // trigger anim
+            DestoryEnemy();
         }
         else if (other.tag == "Laser")
         {
-            _player.PlayerScoreUpdate(10);
             Destroy(other.gameObject);
-            Destroy(this.gameObject);
+
+            if (_player != null)
+            {
+                _player.PlayerScoreUpdate(10);
+            }
+            DestoryEnemy();
         }
 
+    }
+
+    private void DestoryEnemy()
+    {
+        //Debug.Log("Enemy:DestoryEnemy() Begin");
+        _enemyAnimator.SetTrigger("OnEnemyDeath");
+        //Debug.Log("Enemy:DestoryEnemy() played enemy explosion animation");
+        Destroy(GetComponent<Collider2D>()); // Do not collide any more
+        _speed = 0; // No movement after shot
+
+        Destroy(this.gameObject, _explosionAnimLength);
     }
 }
