@@ -33,6 +33,10 @@ public class Player : MonoBehaviour
     //VFX
     [SerializeField] private GameObject _damageSmokeLeft, _damageSmokeRight;
 
+    [SerializeField] private AudioClip _laserShotAudioClip;
+    [SerializeField] private AudioClip _explosionAudioClip;
+    private AudioSource _sfxAudioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +54,17 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Player::Start:No _UIManager");
         }
+
+        _sfxAudioSource = GetComponent<AudioSource>();
+        if (_sfxAudioSource == null)
+        {
+            Debug.LogError("No laser sound");
+        }
+        else
+        {
+            _sfxAudioSource.clip = _laserShotAudioClip;
+        }
+        
     }
 
     // Update is called once per frame
@@ -104,7 +119,8 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
         }
 
-        
+        _sfxAudioSource.clip = _laserShotAudioClip;
+        _sfxAudioSource.Play();
     }
 
     public void Damage()
