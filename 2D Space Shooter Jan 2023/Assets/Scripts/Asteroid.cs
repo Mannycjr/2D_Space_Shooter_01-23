@@ -10,7 +10,6 @@ public class Asteroid : MonoBehaviour
     private SpawnManager _spawnManager;
     private Player _player;
 
-    // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Asteroid::Start: Begin.");
@@ -43,7 +42,6 @@ public class Asteroid : MonoBehaviour
             Debug.Log("Asteroid::OnTriggerEnter: if other.tag=" + other.tag);
             Destroy(other.gameObject);
             ExplosionAnim();
-
             _spawnManager.StartSpawning();
     
         }
@@ -51,10 +49,8 @@ public class Asteroid : MonoBehaviour
         {
             ExplosionAnim();
             _player.Damage();
-
             _spawnManager.StartSpawning();
         }
-
 
         Destroy(this.gameObject,0.0f);
     }
@@ -62,6 +58,6 @@ public class Asteroid : MonoBehaviour
     private void ExplosionAnim()
     {
         _explosionInstance = Instantiate(_explosionPrefab, transform.position, transform.rotation);
-        Destroy(_explosionInstance, 2.5f);
+        Destroy(_explosionInstance, 4.0f);
     }
 }

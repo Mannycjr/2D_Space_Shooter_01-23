@@ -372,6 +372,7 @@ MonoBehaviour:
   _speedBoostMultiplier: 4
   _damageSmokeLeft: {fileID: 905524595}
   _damageSmokeRight: {fileID: 1206772055}
+  _explosionPrefab: {fileID: 5665125328609053333, guid: f053f236ed91d604b9ae33590978cf4f, type: 3}
   _laserShotAudioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _explosionAudioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!212 &242333502
@@ -2320,6 +2321,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1434321827, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4199262744024263407, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
+      propertyPath: _explosionAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
     - target: {fileID: 5804945403299343462, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
       propertyPath: m_RootOrder
       value: 8

@@ -32,7 +32,10 @@ public class Player : MonoBehaviour
 
     //VFX
     [SerializeField] private GameObject _damageSmokeLeft, _damageSmokeRight;
+    [SerializeField] private GameObject _explosionPrefab;
+    private GameObject _explosionInstance;
 
+    //SFX
     [SerializeField] private AudioClip _laserShotAudioClip;
     [SerializeField] private AudioClip _explosionAudioClip;
     private AudioSource _sfxAudioSource;
@@ -134,6 +137,7 @@ public class Player : MonoBehaviour
 
             if (_lives < 1)
             {
+                ExplosionAnim();
                 _spawnManager.OnPlayerDeath();
                 _UIManager.GameOverSequence();
                 Destroy(this.gameObject);
@@ -209,6 +213,14 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _UIManager.UpdateScore(_score);
+    }
+
+    private void ExplosionAnim()
+    {
+        _explosionInstance = Instantiate(_explosionPrefab, transform.position, transform.rotation);
+        _sfxAudioSource.clip = _explosionAudioClip;
+        _sfxAudioSource.Play();
+        Destroy(_explosionInstance, 2.7f);
     }
 
 }
