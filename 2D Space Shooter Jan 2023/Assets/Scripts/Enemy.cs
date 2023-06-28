@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
     private Animator _enemyAnimator;
     private float _explosionAnimLength = 2.6f;
 
+    private AudioSource _audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +28,12 @@ public class Enemy : MonoBehaviour
         if (_enemyAnimator == null)
         {
             Debug.LogError("Enemy::Start() No _enemyAnimator");
-        } else
+        }
+
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
         {
-            //Debug.Log("Enemy::Start() _enemyAnimator Exists");
+            Debug.LogError("Enemy::Start() _audioSource is NULL.");
         }
 
     }
@@ -77,9 +82,9 @@ public class Enemy : MonoBehaviour
 
     private void DestoryEnemy()
     {
-        //Debug.Log("Enemy:DestoryEnemy() Begin");
-        _enemyAnimator.SetTrigger("OnEnemyDeath");
-        //Debug.Log("Enemy:DestoryEnemy() played enemy explosion animation");
+        _audioSource.Play(0);
+        _enemyAnimator.SetTrigger("OnEnemyDeath"); // Explosion animaiton
+
         Destroy(GetComponent<Collider2D>()); // Do not collide any more
         _speed = 0; // No movement after shot
 
