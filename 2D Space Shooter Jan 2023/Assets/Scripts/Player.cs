@@ -37,7 +37,6 @@ public class Player : MonoBehaviour
 
     //SFX
     [SerializeField] private AudioClip _laserShotAudioClip;
-    [SerializeField] private AudioClip _explosionAudioClip;
     private AudioSource _sfxAudioSource;
 
     // Start is called before the first frame update
@@ -218,8 +217,6 @@ public class Player : MonoBehaviour
     private void ExplosionAnim()
     {
         _explosionInstance = Instantiate(_explosionPrefab, transform.position, transform.rotation);
-        _sfxAudioSource.clip = _explosionAudioClip;
-        _sfxAudioSource.Play();
         Destroy(_explosionInstance, 2.7f);
     }
 

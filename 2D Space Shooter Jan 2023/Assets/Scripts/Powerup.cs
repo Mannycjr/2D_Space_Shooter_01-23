@@ -16,13 +16,8 @@ public class Powerup : MonoBehaviour
     private float _verticalLimit = 7.0f;
     private float _horizontalLimit = 11.0f;
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // SFX
+    [SerializeField] private AudioClip _powerupAudioClip;
 
     // Update is called once per frame
     void Update()
@@ -44,7 +39,9 @@ public class Powerup : MonoBehaviour
             // Enable the tripleshot lasers in player
             Player player = other.transform.GetComponent<Player>();
             if (player != null)
-            {              
+            {
+                AudioSource.PlayClipAtPoint(_powerupAudioClip, new Vector3(0, 0, -9));
+
                 switch (_powerupID)
                 {
                     case _powerupIDs.TripleShot:
@@ -70,7 +67,7 @@ public class Powerup : MonoBehaviour
                 Debug.LogError("Powerup::OnTriggerEnter2D: player is null");
             }
 
-
+            // 
             Destroy(this.gameObject);
         }
     }
