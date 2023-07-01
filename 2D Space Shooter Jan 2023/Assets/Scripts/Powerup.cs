@@ -14,7 +14,6 @@ public class Powerup : MonoBehaviour
     }
     [SerializeField] private _powerupIDs _powerupID;
     private float _verticalLimit = 7.0f;
-    private float _horizontalLimit = 11.0f;
 
     // SFX
     [SerializeField] private AudioClip _powerupAudioClip;

@@ -29,6 +29,9 @@ public class UIManager : MonoBehaviour
         if (_gameManager == null)
         {
             Debug.LogError("UIManager::Start : no Game_Manager");
+        } else
+        {
+            _gameManager.GameNotOver();
         }
     }
 

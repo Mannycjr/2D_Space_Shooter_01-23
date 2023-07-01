@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -374,7 +374,6 @@ MonoBehaviour:
   _damageSmokeRight: {fileID: 1206772055}
   _explosionPrefab: {fileID: 5665125328609053333, guid: f053f236ed91d604b9ae33590978cf4f, type: 3}
   _laserShotAudioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
-  _explosionAudioClip: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!212 &242333502
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2214,8 +2213,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000091553, y: -227}
-  m_SizeDelta: {x: 1300, y: 105.7679}
+  m_AnchoredPosition: {x: 1.7814, y: -311}
+  m_SizeDelta: {x: 1916.4, y: 259.0457}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2087545398
 MonoBehaviour:
@@ -2237,7 +2236,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press the "R" key to restart the level
+  m_text: 'Press the "R" key to restart the level
+
+    Press the "M" key to go to
+    the Main Menu'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
