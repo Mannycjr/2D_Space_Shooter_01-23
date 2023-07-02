@@ -2239,7 +2239,9 @@ MonoBehaviour:
   m_text: 'Press the "R" key to restart the level
 
     Press the "M" key to go to
-    the Main Menu'
+    the Main Menu
+
+    Press "ESC" to quit this game'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2266,8 +2268,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2378,6 +2380,10 @@ PrefabInstance:
     - target: {fileID: 5804945403299343480, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
       propertyPath: m_Name
       value: Asteroid
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804945403299343480, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a65978a0c9bb4fc408c070228606876a, type: 3}

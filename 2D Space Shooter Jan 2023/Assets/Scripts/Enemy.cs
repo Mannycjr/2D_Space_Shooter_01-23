@@ -14,6 +14,16 @@ public class Enemy : MonoBehaviour
     private float _explosionAnimLength = 2.6f;
 
     private AudioSource _audioSource;
+    [SerializeField] private AudioClip _sfxClipExplosion;
+    [SerializeField] private AudioClip _sfxClipLaserSmall;
+
+    [SerializeField] private GameObject _laserPrefab;
+    private Vector3 _laserOffset = new Vector3(0, -1.05f, 0);
+
+    private float _fireRate = 3.0f;
+    private float _canFireAtTime = -1;
+
+    private bool _isDestroyed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,22 +46,36 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy::Start() _audioSource is NULL.");
         }
 
+        if (_laserPrefab == null)
+        {
+            Debug.LogError("Enemy::Start() _laserPrefab is NULL. Add prefab in Inspector.");
+        }
+        else
+        {
+            //_laserPrefab
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-         transform.Translate(Vector3.down * _speed * Time.deltaTime);       
-        
+        CalculateMovement();
+        FireLaser();
+
+    }
+
+    private void CalculateMovement()
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
         float _randomXPos = Random.Range(-_horizontalLimit, _horizontalLimit);
 
         //if bottom of screen
-        if(transform.position.y <= -_verticalLimit)
+        if (transform.position.y <= -_verticalLimit)
         {
             //respawn at top with a new random x position
             transform.position = new Vector3(_randomXPos, _verticalLimit, 0);
         }
-        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -80,8 +104,36 @@ public class Enemy : MonoBehaviour
 
     }
 
+    private void FireLaser()
+    {
+        //Debug.Log("Enemy::FireLaser: Begin");
+        
+        if (Time.time > _canFireAtTime && _isDestroyed == false)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canFireAtTime = Time.time + _fireRate;
+            Vector3 _laserPosition = transform.position + _laserOffset;
+
+
+            GameObject _enemyLaser = Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+            Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
+
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].EnemyLaser();
+
+            }
+
+            _audioSource.clip = _sfxClipLaserSmall;
+            _audioSource.Play(0);
+        }
+
+    }
+
     private void DestoryEnemy()
     {
+        _isDestroyed = true;
+        _audioSource.clip = _sfxClipExplosion;
         _audioSource.Play(0);
         _enemyAnimator.SetTrigger("OnEnemyDeath"); // Explosion animaiton
 
