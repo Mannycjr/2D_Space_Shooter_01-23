@@ -2239,7 +2239,9 @@ MonoBehaviour:
   m_text: 'Press the "R" key to restart the level
 
     Press the "M" key to go to
-    the Main Menu'
+    the Main Menu
+
+    Press "ESC" to quit this game'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2266,8 +2268,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2323,14 +2325,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1434321827, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4199262744024263407, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
-      propertyPath: _explosionAudioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
     - target: {fileID: 5804945403299343462, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2381,3 +2375,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
+--- !u!1 &503910239770247376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5804945403299343480, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
+  m_PrefabInstance: {fileID: 503910239770247375}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &503910239770247377
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503910239770247376}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ebd4b2bb172133744a23b9f9f1f48310, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0

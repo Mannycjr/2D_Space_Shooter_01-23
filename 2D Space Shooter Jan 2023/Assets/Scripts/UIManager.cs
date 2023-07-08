@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
         } else
         {
             _gameManager.GameNotOver();
+            Debug.Log("UIManager::Start : New Game Started");
         }
     }
 
