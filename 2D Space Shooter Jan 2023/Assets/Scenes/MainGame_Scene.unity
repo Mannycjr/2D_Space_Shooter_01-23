@@ -362,6 +362,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3.5
   _lives: 3
+  verticalLimit: 5
+  horizontalLimit: 11
   _laserPrefab: {fileID: 1810411115264252563, guid: 8b484725a1d03fe4bb2f41246bfc7252, type: 3}
   _tripleShotlaserPrefab: {fileID: 6391372228156131305, guid: ce7344bf7cb4f1b45b0bc7a5a74efcbe, type: 3}
   _firerate: 0.15

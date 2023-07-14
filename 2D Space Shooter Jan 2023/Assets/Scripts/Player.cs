@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int _lives = 3;
     private Vector3 _initPosition = new Vector3(0, -3.8f, 0);
 
-    private float horizontalInput;
-    private float verticalInput;
+    [SerializeField] private float verticalLimit = 5.0f;
+    [SerializeField] private float horizontalLimit = 11.0f;
 
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotlaserPrefab;
@@ -86,8 +86,6 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        float verticalLimit = 5.0f;
-        float horizontalLimit = 11.0f;
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
