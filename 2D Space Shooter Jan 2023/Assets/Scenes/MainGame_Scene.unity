@@ -362,14 +362,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3.5
   _lives: 3
+  verticalLimit: 5
+  horizontalLimit: 11
   _laserPrefab: {fileID: 1810411115264252563, guid: 8b484725a1d03fe4bb2f41246bfc7252, type: 3}
   _tripleShotlaserPrefab: {fileID: 6391372228156131305, guid: ce7344bf7cb4f1b45b0bc7a5a74efcbe, type: 3}
   _firerate: 0.15
+  _speedBoostMultiplierShift: 2.5
   _tripleShotActive: 0
-  _speedBoostActive: 0
+  _speedBoostPowerupActive: 0
+  _speedBoostShiftActive: 0
   _shieldsActiveAlready: 0
   _shieldsPlayer: {fileID: 1359052590}
-  _speedBoostMultiplier: 4
+  _speedBoostMultiplierPowerup: 7
   _damageSmokeLeft: {fileID: 905524595}
   _damageSmokeRight: {fileID: 1206772055}
   _explosionPrefab: {fileID: 5665125328609053333, guid: f053f236ed91d604b9ae33590978cf4f, type: 3}

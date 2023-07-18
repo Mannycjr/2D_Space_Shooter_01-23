@@ -9,8 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField] private int _lives = 3;
     private Vector3 _initPosition = new Vector3(0, -3.8f, 0);
 
-    private float horizontalInput;
-    private float verticalInput;
+    [SerializeField] private float verticalLimit = 5.0f;
+    [SerializeField] private float horizontalLimit = 11.0f;
 
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotlaserPrefab;
@@ -20,12 +20,15 @@ public class Player : MonoBehaviour
 
     SpawnManager _spawnManager;
 
+    [SerializeField] private float _speedBoostMultiplierShift = 2.5f;
+
     //Powerups variables
     [SerializeField] private bool _tripleShotActive = false;
-    [SerializeField] private bool _speedBoostActive = false;
+    [SerializeField] private bool _speedBoostPowerupActive = false;
+    [SerializeField] private bool _speedBoostShiftActive = false;
     [SerializeField] private bool _shieldsActiveAlready = false;
     [SerializeField] private GameObject _shieldsPlayer;
-    [SerializeField] private float _speedBoostMultiplier = 4.0f;
+    [SerializeField] private float _speedBoostMultiplierPowerup = 7.0f;
 
     private int _score = 0;
     UIManager _UIManager;
@@ -72,12 +75,23 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            SpeedBoostActiveShift();
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            SpeedReset();
+        }
+
         CalculateMovement();
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire )
         {
             Firelaser();
         }
+
     }
 
 
@@ -86,8 +100,6 @@ public class Player : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        float verticalLimit = 5.0f;
-        float horizontalLimit = 11.0f;
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
@@ -184,16 +196,32 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive(float _duration)
     {
-        _speedBoostActive = true;
-        _speed = _speedDefault * _speedBoostMultiplier;
+        _speedBoostPowerupActive = true;
+        _speed = _speedDefault * _speedBoostMultiplierPowerup;
         StartCoroutine(SpeedBoostDurationCoroutine(_duration));
     }
 
     IEnumerator SpeedBoostDurationCoroutine(float delay)
     {
         yield return new WaitForSeconds(delay);
-        _speedBoostActive = false;
+        SpeedReset();
+    }
+
+    public void SpeedBoostActiveShift()
+    {
+        if (_speedBoostPowerupActive == false)
+        {
+            _speedBoostShiftActive = true;
+            _speed = _speedDefault * _speedBoostMultiplierShift;
+        }
+
+    }
+
+    public void SpeedReset ()
+    {
         _speed = _speedDefault;
+        _speedBoostPowerupActive = false;
+        _speedBoostShiftActive = false;
     }
 
     public void ShieldsActive(float _duration)
