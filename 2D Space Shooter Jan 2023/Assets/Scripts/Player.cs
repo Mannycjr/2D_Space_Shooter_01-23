@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _speedBoostPowerupActive = false;
     [SerializeField] private bool _speedBoostShiftActive = false;
     [SerializeField] private bool _shieldsActiveAlready = false;
+    [SerializeField] private int _shieldStrength = 3;
     [SerializeField] private GameObject _shieldsPlayer;
     [SerializeField] private float _speedBoostMultiplierPowerup = 7.0f;
 
