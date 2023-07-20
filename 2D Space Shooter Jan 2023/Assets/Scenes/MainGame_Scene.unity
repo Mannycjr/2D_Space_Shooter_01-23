@@ -372,8 +372,11 @@ MonoBehaviour:
   _speedBoostPowerupActive: 0
   _speedBoostShiftActive: 0
   _shieldsActiveAlready: 0
-  _shieldStrength: 3
-  _shieldsPlayer: {fileID: 1359052590}
+  _shieldStrength: 0
+  _shieldsOnPlayer:
+  - {fileID: 738049679}
+  - {fileID: 1208064391}
+  - {fileID: 1359052590}
   _speedBoostMultiplierPowerup: 7
   _damageSmokeLeft: {fileID: 905524595}
   _damageSmokeRight: {fileID: 1206772055}
