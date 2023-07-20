@@ -12,7 +12,7 @@ public class Asteroid : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Asteroid::Start: Begin.");
+        //Debug.Log("Asteroid::Start: Begin.");
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         if (_spawnManager == null)
@@ -39,7 +39,7 @@ public class Asteroid : MonoBehaviour
         Debug.Log("Hit! Asteroid::OnTriggerEnter: Begin. other.tag=" + other.tag);
         if (other.tag == "Laser" ) 
         {
-            Debug.Log("Asteroid::OnTriggerEnter: if other.tag=" + other.tag);
+            //Debug.Log("Asteroid::OnTriggerEnter: if other.tag=" + other.tag);
             Destroy(other.gameObject);
             ExplosionAnim();
             _spawnManager.StartSpawning();

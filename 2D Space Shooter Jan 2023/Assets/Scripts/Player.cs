@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,7 +27,11 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _speedBoostPowerupActive = false;
     [SerializeField] private bool _speedBoostShiftActive = false;
     [SerializeField] private bool _shieldsActiveAlready = false;
-    [SerializeField] private GameObject _shieldsPlayer;
+    [SerializeField] private int _shieldStrength = 0;
+    [SerializeField] private GameObject _shieldsOnPlayer;
+    private SpriteRenderer _shieldsOnPlayerSpriteRenderer;
+    [SerializeField] private float[] _shieldsScaling;
+    [SerializeField] private Color[] _shieldsColor; // Double check user-set color's Alpha channel setting in Inspector.
     [SerializeField] private float _speedBoostMultiplierPowerup = 7.0f;
 
     private int _score = 0;
@@ -45,7 +49,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // take the current position = new position (0,0,0)
         transform.position = _initPosition;
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -69,7 +72,12 @@ public class Player : MonoBehaviour
         {
             _sfxAudioSource.clip = _laserShotAudioClip;
         }
-        
+
+        _shieldsOnPlayerSpriteRenderer = _shieldsOnPlayer.GetComponent<SpriteRenderer>();
+        if (_shieldsOnPlayerSpriteRenderer == null)
+        {
+            Debug.LogError("Player::Start:No Sprite Renderer in Shields Game Object");
+        }
     }
 
     // Update is called once per frame
@@ -155,11 +163,22 @@ public class Player : MonoBehaviour
             }
         }
         else // _shieldsActiveAlready = true
-        {    
-            _shieldsActiveAlready = false;
-            _shieldsPlayer.SetActive(false);
-        }
+        {
+            // Feature: Shield Strength
+            // ● Allow for 3 hits on the shield to accommodate visualization
+            if (_shieldStrength >=1 )
+            {
+                --_shieldStrength;
+            } 
 
+            // _shieldStrength may become 0 after damage. Attaching this conditional to the one above as an else introduced an error.
+            if (_shieldStrength == 0) 
+            {
+                _shieldsActiveAlready = false;
+            }
+
+            ShieldsUpdateVisualization();
+        }
 
     }
 
@@ -224,16 +243,33 @@ public class Player : MonoBehaviour
         _speedBoostShiftActive = false;
     }
 
-    public void ShieldsActive(float _duration)
+    public void ShieldsActive()
     {
+        //Debug.Log("ShieldsActive:Begin");
+        _shieldsOnPlayer.SetActive(true);
         _shieldsActiveAlready = true;
-        _shieldsPlayer.SetActive(true);
-        StartCoroutine(ShieldsActivateDurationCoroutine(_duration));
+        _shieldStrength = 3;
+        ShieldsUpdateVisualization();
     }
 
-    IEnumerator ShieldsActivateDurationCoroutine(float delay)
+    private void ShieldsUpdateVisualization()
     {
-        yield return new WaitForSeconds(delay);
+        //Debug.Log("ShieldsUpdateVisualization:Begin:_shieldStrength=" + _shieldStrength);
+
+        if (_shieldStrength > 0)
+        {
+            _shieldsOnPlayerSpriteRenderer.color = _shieldsColor[_shieldStrength - 1];
+            _shieldsOnPlayer.transform.localScale = new Vector3(_shieldsScaling[_shieldStrength - 1], _shieldsScaling[_shieldStrength - 1], 1);
+        } else
+        {
+            ShieldsNoneVisualizer(); 
+        }
+    }
+
+    private void ShieldsNoneVisualizer()
+    {
+        //Debug.Log("ShieldsNoneVisualizer:Begin");
+        _shieldsOnPlayer.SetActive(false);
     }
 
     public void PlayerScoreUpdate(int points)
