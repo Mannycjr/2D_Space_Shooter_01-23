@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -157,6 +157,8 @@ public class Player : MonoBehaviour
         }
         else // _shieldsActiveAlready = true
         {
+            // Feature: Shield Strength
+            // ● Allow for 3 hits on the shield to accommodate visualization
             if (_shieldStrength >=1 )
             {
                 --_shieldStrength;
