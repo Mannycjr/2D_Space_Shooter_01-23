@@ -160,11 +160,13 @@ public class Player : MonoBehaviour
             if (_shieldStrength >=1 )
             {
                 --_shieldStrength;
-            } else
+            } 
+
+            // _shieldStrength may become 0 after damage. Attaching this conditional to the one above as an else introduced an error.
+            if (_shieldStrength == 0) 
             {
                 _shieldsActiveAlready = false;
             }
-            //_shieldsPlayer.SetActive(false);
 
             ShieldsUpdateVisualization();
         }
