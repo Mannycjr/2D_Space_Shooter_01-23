@@ -28,7 +28,10 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _speedBoostShiftActive = false;
     [SerializeField] private bool _shieldsActiveAlready = false;
     [SerializeField] private int _shieldStrength = 0;
-    [SerializeField] private GameObject[] _shieldsOnPlayer;
+    [SerializeField] private GameObject _shieldsOnPlayer;
+    private SpriteRenderer _shieldsOnPlayerSpriteRenderer;
+    [SerializeField] private float[] _shieldsScaling;
+    [SerializeField] private Color[] _shieldsColor; // Double check user-set color's Alpha channel setting in Inspector.
     [SerializeField] private float _speedBoostMultiplierPowerup = 7.0f;
 
     private int _score = 0;
@@ -46,7 +49,6 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // take the current position = new position (0,0,0)
         transform.position = _initPosition;
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -70,7 +72,12 @@ public class Player : MonoBehaviour
         {
             _sfxAudioSource.clip = _laserShotAudioClip;
         }
-        
+
+        _shieldsOnPlayerSpriteRenderer = _shieldsOnPlayer.GetComponent<SpriteRenderer>();
+        if (_shieldsOnPlayerSpriteRenderer == null)
+        {
+            Debug.LogError("Player::Start:No Sprite Renderer in Shields Game Object");
+        }
     }
 
     // Update is called once per frame
@@ -238,6 +245,8 @@ public class Player : MonoBehaviour
 
     public void ShieldsActive()
     {
+        //Debug.Log("ShieldsActive:Begin");
+        _shieldsOnPlayer.SetActive(true);
         _shieldsActiveAlready = true;
         _shieldStrength = 3;
         ShieldsUpdateVisualization();
@@ -245,20 +254,22 @@ public class Player : MonoBehaviour
 
     private void ShieldsUpdateVisualization()
     {
-        ShieldsNoneVisualizer(); // Clear all shields first
+        //Debug.Log("ShieldsUpdateVisualization:Begin:_shieldStrength=" + _shieldStrength);
 
         if (_shieldStrength > 0)
         {
-            _shieldsOnPlayer[_shieldStrength - 1].SetActive(true);
+            _shieldsOnPlayerSpriteRenderer.color = _shieldsColor[_shieldStrength - 1];
+            _shieldsOnPlayer.transform.localScale = new Vector3(_shieldsScaling[_shieldStrength - 1], _shieldsScaling[_shieldStrength - 1], 1);
+        } else
+        {
+            ShieldsNoneVisualizer(); 
         }
     }
 
-    private void ShieldsNoneVisualizer() // Clear all shields levels
+    private void ShieldsNoneVisualizer()
     {
-        for (int i=0; i < 3; i++)
-        {
-            _shieldsOnPlayer[i].SetActive(false);
-        }
+        //Debug.Log("ShieldsNoneVisualizer:Begin");
+        _shieldsOnPlayer.SetActive(false);
     }
 
     public void PlayerScoreUpdate(int points)
