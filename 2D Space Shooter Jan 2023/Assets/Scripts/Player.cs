@@ -262,14 +262,8 @@ public class Player : MonoBehaviour
             _shieldsOnPlayer.transform.localScale = new Vector3(_shieldsScaling[_shieldStrength - 1], _shieldsScaling[_shieldStrength - 1], 1);
         } else
         {
-            ShieldsNoneVisualizer(); 
+            _shieldsOnPlayer.SetActive(false);
         }
-    }
-
-    private void ShieldsNoneVisualizer()
-    {
-        //Debug.Log("ShieldsNoneVisualizer:Begin");
-        _shieldsOnPlayer.SetActive(false);
     }
 
     public void PlayerScoreUpdate(int points)
