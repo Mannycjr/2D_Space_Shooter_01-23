@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private Vector3 _laserOffset = new Vector3(0, 1.05f, 0);
     [SerializeField] private float _firerate = 0.15f;
     private float _canFire = -1.0f;
+    [SerializeField] private int _ammoCount = 15;
 
     SpawnManager _spawnManager;
 
@@ -61,6 +62,10 @@ public class Player : MonoBehaviour
         if (_UIManager == null)
         {
             Debug.LogError("Player::Start:No _UIManager");
+        }
+        else
+        {
+            _UIManager.UpdateAmmo(_ammoCount);
         }
 
         _sfxAudioSource = GetComponent<AudioSource>();
@@ -128,21 +133,27 @@ public class Player : MonoBehaviour
 
     void Firelaser()
     {
-        Vector3 _laserPosition = transform.position + _laserOffset;
-
         _canFire = Time.time + _firerate;
 
-        if (_tripleShotActive)
+        if (_ammoCount > 0)
         {
-            Instantiate(_tripleShotlaserPrefab, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
-        }
+            Vector3 _laserPosition = transform.position + _laserOffset;
 
-        _sfxAudioSource.clip = _laserShotAudioClip;
-        _sfxAudioSource.Play();
+            if (_tripleShotActive)
+            {
+                Instantiate(_tripleShotlaserPrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+            }
+
+            _ammoCount--;
+            _UIManager.UpdateAmmo(_ammoCount);
+
+            _sfxAudioSource.clip = _laserShotAudioClip;
+            _sfxAudioSource.Play();
+        }
     }
 
     public void Damage()

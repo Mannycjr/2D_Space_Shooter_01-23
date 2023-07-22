@@ -8,7 +8,9 @@ public class UIManager : MonoBehaviour
 {
     //[SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _scoreText;
-    private string _scoreTextPrefix = "Score: ";
+    private string _scoreTextPrefix = "SCORE: ";
+    [SerializeField] private TMP_Text _ammoText;
+    private string _ammoTextPrefix = "AMMO: ";
     [SerializeField] private Image _livesImageDisplay;
     [SerializeField] private Sprite[] _livesSprites;
     [SerializeField] private TMP_Text _gameOverText;
@@ -78,5 +80,8 @@ public class UIManager : MonoBehaviour
         _restartText.gameObject.SetActive(true);
     }
 
-
+    public void UpdateAmmo(int _playerAmmo)
+    {
+        _ammoText.text = _ammoTextPrefix + _playerAmmo.ToString();
+    }
 }
