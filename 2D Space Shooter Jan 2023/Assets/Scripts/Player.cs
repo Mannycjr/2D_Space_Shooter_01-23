@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
 
     //SFX
     [SerializeField] private AudioClip _laserShotAudioClip;
+    [SerializeField] private AudioClip _noAmmoAudioClip;
     private AudioSource _sfxAudioSource;
 
     // Start is called before the first frame update
