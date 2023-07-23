@@ -290,4 +290,10 @@ public class Player : MonoBehaviour
         Destroy(_explosionInstance, 2.7f);
     }
 
+    public void AmmoRefill()
+    {
+        _ammoCount = 15;
+        _UIManager.UpdateAmmo(_ammoCount);
+    }
+
 }

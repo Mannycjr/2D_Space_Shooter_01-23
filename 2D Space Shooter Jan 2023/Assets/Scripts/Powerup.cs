@@ -10,7 +10,8 @@ public class Powerup : MonoBehaviour
     {
         TripleShot,
         SpeedBoost,
-        Shields
+        Shields,
+        Ammo
     }
     [SerializeField] private _powerupIDs _powerupID;
     private float _verticalLimit = 7.0f;
@@ -54,6 +55,10 @@ public class Powerup : MonoBehaviour
                     case _powerupIDs.Shields:
                         player.ShieldsActive();
                         Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=2 Shields");
+                        break;
+                    case _powerupIDs.Ammo:
+                        player.AmmoRefill();
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=3 Ammo");
                         break;
                     default:
                         Debug.Log("Powerup::OnTriggerEnter2D:switch No_powerupID");
