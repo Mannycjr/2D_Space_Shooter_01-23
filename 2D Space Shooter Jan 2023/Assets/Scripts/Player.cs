@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private Vector3 _laserOffset = new Vector3(0, 1.05f, 0);
     [SerializeField] private float _firerate = 0.15f;
     private float _canFire = -1.0f;
+    [SerializeField] private int _ammoCount = 15;
 
     SpawnManager _spawnManager;
 
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
 
     //SFX
     [SerializeField] private AudioClip _laserShotAudioClip;
+    [SerializeField] private AudioClip _noAmmoAudioClip;
     private AudioSource _sfxAudioSource;
 
     // Start is called before the first frame update
@@ -61,6 +63,10 @@ public class Player : MonoBehaviour
         if (_UIManager == null)
         {
             Debug.LogError("Player::Start:No _UIManager");
+        }
+        else
+        {
+            _UIManager.UpdateAmmo(_ammoCount);
         }
 
         _sfxAudioSource = GetComponent<AudioSource>();
@@ -128,21 +134,27 @@ public class Player : MonoBehaviour
 
     void Firelaser()
     {
-        Vector3 _laserPosition = transform.position + _laserOffset;
-
         _canFire = Time.time + _firerate;
 
-        if (_tripleShotActive)
+        if (_ammoCount > 0)
         {
-            Instantiate(_tripleShotlaserPrefab, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
-        }
+            Vector3 _laserPosition = transform.position + _laserOffset;
 
-        _sfxAudioSource.clip = _laserShotAudioClip;
-        _sfxAudioSource.Play();
+            if (_tripleShotActive)
+            {
+                Instantiate(_tripleShotlaserPrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+            }
+
+            _ammoCount--;
+            _UIManager.UpdateAmmo(_ammoCount);
+
+            _sfxAudioSource.clip = _laserShotAudioClip;
+            _sfxAudioSource.Play();
+        }
     }
 
     public void Damage()
@@ -262,14 +274,8 @@ public class Player : MonoBehaviour
             _shieldsOnPlayer.transform.localScale = new Vector3(_shieldsScaling[_shieldStrength - 1], _shieldsScaling[_shieldStrength - 1], 1);
         } else
         {
-            ShieldsNoneVisualizer(); 
+            _shieldsOnPlayer.SetActive(false);
         }
-    }
-
-    private void ShieldsNoneVisualizer()
-    {
-        //Debug.Log("ShieldsNoneVisualizer:Begin");
-        _shieldsOnPlayer.SetActive(false);
     }
 
     public void PlayerScoreUpdate(int points)
@@ -282,6 +288,12 @@ public class Player : MonoBehaviour
     {
         _explosionInstance = Instantiate(_explosionPrefab, transform.position, transform.rotation);
         Destroy(_explosionInstance, 2.7f);
+    }
+
+    public void AmmoRefill()
+    {
+        _ammoCount = 15;
+        _UIManager.UpdateAmmo(_ammoCount);
     }
 
 }
