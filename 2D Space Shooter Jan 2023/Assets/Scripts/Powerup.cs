@@ -11,7 +11,8 @@ public class Powerup : MonoBehaviour
         TripleShot,
         SpeedBoost,
         Shields,
-        Ammo
+        Ammo,
+        Health
     }
     [SerializeField] private _powerupIDs _powerupID;
     private float _verticalLimit = 7.0f;
