@@ -79,7 +79,7 @@ public class Laser : MonoBehaviour
 
             if (player != null)
             {
-                player.UpdateDamage();
+                player.Damage();
             }
             ExplosionAnim();
             Destroy(GetComponent<Collider2D>()); // Do not collide any more

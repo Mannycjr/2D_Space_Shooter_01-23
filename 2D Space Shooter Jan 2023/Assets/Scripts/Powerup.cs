@@ -63,7 +63,7 @@ public class Powerup : MonoBehaviour
                         break;
                     case _powerupIDs.Health:
                         Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=4 Health");
-                        player.AddLife();
+                        player.AddShip();
                         Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=4 went to AddLife");
                         break;
                     default:

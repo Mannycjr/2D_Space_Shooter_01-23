@@ -48,7 +48,7 @@ public class Asteroid : MonoBehaviour
         else if (other.tag == "Player")
         {
             ExplosionAnim();
-            _player.UpdateDamage();
+            _player.Damage();
             _spawnManager.StartSpawning();
         }
 
