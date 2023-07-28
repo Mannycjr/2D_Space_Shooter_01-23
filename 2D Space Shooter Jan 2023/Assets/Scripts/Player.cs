@@ -157,13 +157,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Damage()
+    public void UpdateDamage()
     {
         if (!_shieldsActiveAlready)
         {
             _lives--;
 
             _UIManager.UpdateLives(_lives);
+
             VFX_Smoke();
 
             if (_lives < 1)
@@ -172,6 +173,7 @@ public class Player : MonoBehaviour
                 _spawnManager.OnPlayerDeath();
                 _UIManager.GameOverSequence();
                 Destroy(this.gameObject);
+                
             }
         }
         else // _shieldsActiveAlready = true
@@ -190,26 +192,6 @@ public class Player : MonoBehaviour
             }
 
             ShieldsUpdateVisualization();
-        }
-
-    }
-
-    private void VFX_Smoke()
-    {
-        if (_lives == 2)
-        {
-            _damageSmokeLeft.SetActive(true);
-            _damageSmokeRight.SetActive(false);
-        } 
-        else if (_lives == 1)
-        {
-            _damageSmokeLeft.SetActive(true);
-            _damageSmokeRight.SetActive(true);
-        }
-        else
-        {
-            _damageSmokeLeft.SetActive(false);
-            _damageSmokeRight.SetActive(false);
         }
     }
 
@@ -294,6 +276,38 @@ public class Player : MonoBehaviour
     {
         _ammoCount = 15;
         _UIManager.UpdateAmmo(_ammoCount);
+    }
+
+    private void VFX_Smoke()
+    {
+        Debug.Log("Player::VFX_Smoke: _lives="+_lives);
+        if (_lives == 2)
+        {
+            _damageSmokeLeft.SetActive(true);
+            _damageSmokeRight.SetActive(false);
+        }
+        else if (_lives == 1)
+        {
+            _damageSmokeLeft.SetActive(true);
+            _damageSmokeRight.SetActive(true);
+        }
+        else
+        {
+            _damageSmokeLeft.SetActive(false);
+            _damageSmokeRight.SetActive(false);
+        }
+    }
+
+    public void AddLife()
+    {
+        Debug.Log("Player::AddLife: _lives=" + _lives);
+        if (_lives < 3)
+        {
+            _lives++;
+            VFX_Smoke();
+            _UIManager.UpdateLives(_lives);
+            UpdateDamage();
+        }
     }
 
 }

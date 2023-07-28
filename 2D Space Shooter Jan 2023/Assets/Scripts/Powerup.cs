@@ -61,6 +61,11 @@ public class Powerup : MonoBehaviour
                         player.AmmoRefill();
                         Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=3 Ammo");
                         break;
+                    case _powerupIDs.Health:
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=4 Health");
+                        player.AddLife();
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=4 went to AddLife");
+                        break;
                     default:
                         Debug.Log("Powerup::OnTriggerEnter2D:switch No_powerupID");
                         break;
