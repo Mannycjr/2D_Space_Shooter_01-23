@@ -7,6 +7,10 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject[] _powerupPrefab;
+    [SerializeField] private float _waitTimePowerupsNormalMin = 1.0f;
+    [SerializeField] private float _waitTimePowerupsNormalMax = 3.0f;
+    [SerializeField] private float _waitTimePowerupsInfreqMin = 5.0f;
+    [SerializeField] private float _waitTimePowerupsInfreqMax = 10.0f;
 
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;

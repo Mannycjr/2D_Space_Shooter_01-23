@@ -898,6 +898,10 @@ MonoBehaviour:
   - {fileID: 7462965167645492359, guid: 2a5bf8846bd43df4e82ee9f8bf3044de, type: 3}
   - {fileID: 7295739879116137568, guid: 111f78c67d0f7f0488942c2b03b0aa3c, type: 3}
   - {fileID: 8884838322766982656, guid: 98deb208ebeaa874b959237d93cd908a, type: 3}
+  _waitTimePowerupsNormalMin: 1
+  _waitTimePowerupsNormalMax: 3
+  _waitTimePowerupsInfreqMin: 5
+  _waitTimePowerupsInfreqMax: 10
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
