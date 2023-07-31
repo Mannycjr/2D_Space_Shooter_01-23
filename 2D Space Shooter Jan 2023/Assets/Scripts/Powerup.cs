@@ -67,7 +67,7 @@ public class Powerup : MonoBehaviour
                         Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=4 AddLife");
                         break;
                     case _powerupIDs.WideShot:
-                        player.WideShotActive(_powerupDuration);
+                        player.WideShotActive(5.0f);
                         Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=4 AddLife");
                         break;
                     default:
