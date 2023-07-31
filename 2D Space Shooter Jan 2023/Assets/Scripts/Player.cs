@@ -141,11 +141,15 @@ public class Player : MonoBehaviour
         {
             Vector3 _laserPosition = transform.position + _laserOffset;
 
-            if (_tripleShotActive)
+            if (_tripleShotActive == true && _wideShotActive == false)
             {
                 Instantiate(_tripleShotlaserPrefab, transform.position, Quaternion.identity);
             }
-            else
+            else if (_tripleShotActive == false && _wideShotActive == true)
+            {
+                FireWideShot();
+            }
+            else 
             {
                 Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
             }
@@ -156,6 +160,11 @@ public class Player : MonoBehaviour
             _sfxAudioSource.clip = _laserShotAudioClip;
             _sfxAudioSource.Play();
         }
+    }
+
+    void FireWideShot()
+    {
+
     }
 
     public void Damage()

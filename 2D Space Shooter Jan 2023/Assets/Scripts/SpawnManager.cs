@@ -7,15 +7,15 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject[] _powerupPrefab;
-    [SerializeField] private float _waitTimePowerupsNormalMin = 1.0f;
+    [SerializeField] private GameObject[] _powerupPrefabRare;
+    [SerializeField] private float _waitTimePowerupsNormalMin = 2.0f;
     [SerializeField] private float _waitTimePowerupsNormalMax = 3.0f;
-    [SerializeField] private float _waitTimePowerupsInfreqMin = 5.0f;
-    [SerializeField] private float _waitTimePowerupsInfreqMax = 10.0f;
+    [SerializeField] private float _waitTimePowerupsRareMin = 5.0f;
+    [SerializeField] private float _waitTimePowerupsRareMax = 10.0f;
 
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;
     float _randomX;
-    float _randomY;
     float _waitTimeEnemy = 5.0f;
     float _waitTimePowerups = 7.0f; // In between powerup spawning
     private bool _stopSpawning = false;
@@ -40,7 +40,8 @@ public class SpawnManager : MonoBehaviour
     public void StartSpawning()
     {
         StartCoroutine(SpawnEnemyRoutine());
-        StartCoroutine(SpawnPowerupRoutine());
+        StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
+        StartCoroutine(SpawnPowerupRoutine(_powerupPrefabRare, _waitTimePowerupsRareMin, _waitTimePowerupsRareMax));
     }
 
     IEnumerator SpawnEnemyRoutine()
@@ -58,7 +59,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnPowerupRoutine()
+    IEnumerator SpawnPowerupRoutine(GameObject[] _spawnList, float _waitTimeMin, float _waitTimeMax)
     {
         int _randomPowerUpIndex = 0;
 
