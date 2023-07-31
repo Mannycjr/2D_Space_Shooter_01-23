@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
 
     //Powerups variables
     [SerializeField] private bool _tripleShotActive = false;
+    [SerializeField] private bool _wideShotActive = false;
     [SerializeField] private bool _speedBoostPowerupActive = false;
     [SerializeField] private bool _speedBoostShiftActive = false;
     [SerializeField] private bool _shieldsActiveAlready = false;
@@ -195,13 +196,28 @@ public class Player : MonoBehaviour
     public void TripleShotActive(float _duration)
     {
         _tripleShotActive = true;
+        _wideShotActive = false;
         StartCoroutine(TripleShotDuration(_duration));
     }
 
-    IEnumerator TripleShotDuration(float delay)
+    IEnumerator TripleShotDuration(float _delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(_delay);
         _tripleShotActive = false;
+    }
+
+    public void WideShotActive(float _duration)
+    {
+        _tripleShotActive = false;
+        _wideShotActive = true;
+        StartCoroutine(WideShotDuration(_duration));
+    }
+
+    IEnumerator WideShotDuration(float _delay)
+    {
+        // wait 5 seconds
+        yield return new WaitForSeconds(_delay);
+        _wideShotActive = false;
     }
 
     public void SpeedBoostActive(float _duration)
