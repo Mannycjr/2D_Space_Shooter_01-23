@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
 
     //Powerups variables
     [SerializeField] private bool _tripleShotActive = false;
+    [SerializeField] private bool _wideShotActive = false;
     [SerializeField] private bool _speedBoostPowerupActive = false;
     [SerializeField] private bool _speedBoostShiftActive = false;
     [SerializeField] private bool _shieldsActiveAlready = false;
@@ -140,11 +141,15 @@ public class Player : MonoBehaviour
         {
             Vector3 _laserPosition = transform.position + _laserOffset;
 
-            if (_tripleShotActive)
+            if (_tripleShotActive == true && _wideShotActive == false)
             {
                 Instantiate(_tripleShotlaserPrefab, transform.position, Quaternion.identity);
             }
-            else
+            else if (_tripleShotActive == false && _wideShotActive == true)
+            {
+                FireWideShot();
+            }
+            else 
             {
                 Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
             }
@@ -155,6 +160,15 @@ public class Player : MonoBehaviour
             _sfxAudioSource.clip = _laserShotAudioClip;
             _sfxAudioSource.Play();
         }
+    }
+
+    void FireWideShot()
+    {
+        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, 45f));
+        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, 90f));
+        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, -45f));
+        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, -90f));
     }
 
     public void Damage()
@@ -195,13 +209,28 @@ public class Player : MonoBehaviour
     public void TripleShotActive(float _duration)
     {
         _tripleShotActive = true;
+        _wideShotActive = false;
         StartCoroutine(TripleShotDuration(_duration));
     }
 
-    IEnumerator TripleShotDuration(float delay)
+    IEnumerator TripleShotDuration(float _delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(_delay);
         _tripleShotActive = false;
+    }
+
+    public void WideShotActive(float _duration)
+    {
+        _tripleShotActive = false;
+        _wideShotActive = true;
+        StartCoroutine(WideShotDuration(_duration));
+    }
+
+    IEnumerator WideShotDuration(float _delay)
+    {
+        // wait 5 seconds
+        yield return new WaitForSeconds(_delay);
+        _wideShotActive = false;
     }
 
     public void SpeedBoostActive(float _duration)

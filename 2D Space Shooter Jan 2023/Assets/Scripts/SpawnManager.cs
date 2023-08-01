@@ -7,11 +7,15 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject[] _powerupPrefab;
+    [SerializeField] private GameObject[] _powerupPrefabRare;
+    [SerializeField] private float _waitTimePowerupsNormalMin = 2.0f;
+    [SerializeField] private float _waitTimePowerupsNormalMax = 5.0f;
+    [SerializeField] private float _waitTimePowerupsRareMin = 10.0f;
+    [SerializeField] private float _waitTimePowerupsRareMax = 20.0f;
 
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;
     float _randomX;
-    float _randomY;
     float _waitTimeEnemy = 5.0f;
     float _waitTimePowerups = 7.0f; // In between powerup spawning
     private bool _stopSpawning = false;
@@ -36,7 +40,13 @@ public class SpawnManager : MonoBehaviour
     public void StartSpawning()
     {
         StartCoroutine(SpawnEnemyRoutine());
-        StartCoroutine(SpawnPowerupRoutine());
+        StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
+        StartCoroutine(SpawnPowerupRoutine(_powerupPrefabRare, _waitTimePowerupsRareMin, _waitTimePowerupsRareMax));
+    }
+
+    IEnumerator InitialPowerupsDelay()
+    {
+        yield return new WaitForSeconds(10.0f);
     }
 
     IEnumerator SpawnEnemyRoutine()
@@ -54,24 +64,21 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnPowerupRoutine()
+    IEnumerator SpawnPowerupRoutine(GameObject[] _spawnList, float _waitTimeMin, float _waitTimeMax)
     {
         int _randomPowerUpIndex = 0;
 
         while (_stopSpawning == false)
         {
-            // spawn every 3-7 seconds
-            _waitTimePowerups = Random.Range(1.0f, 3.0f);
+            _waitTimePowerups = Random.Range(_waitTimeMin, _waitTimeMax);
 
+            yield return new WaitForSeconds(_waitTimePowerups);
+            
             // Instantiate prowerup prefab
             _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
             Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
-
-            _randomPowerUpIndex = Random.Range(0, _powerupPrefab.Length); // 
-
-            GameObject newPowerup = Instantiate(_powerupPrefab[_randomPowerUpIndex], spawnPosition, Quaternion.identity);
-
-            yield return new WaitForSeconds(_waitTimePowerups);
+            _randomPowerUpIndex = Random.Range(0, _spawnList.Length);
+            GameObject newPowerup = Instantiate(_spawnList[_randomPowerUpIndex], spawnPosition, Quaternion.identity);
         }
     }
 
