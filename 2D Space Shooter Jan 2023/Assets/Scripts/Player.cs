@@ -49,6 +49,16 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _noAmmoAudioClip;
     private AudioSource _sfxAudioSource;
 
+    //Thrusters
+    [SerializeField] private float _powerupTimeLimit = 5.0f;
+    [SerializeField] private float _powerupThrustersWaitTimeLimit = 3.0f;
+    [SerializeField] private float _thrusterChargeLevelMax = 10.0f;
+    [SerializeField] private float _thrusterChargeLevel;
+    [SerializeField] private float _changeDecreaseThrusterChargeBy = 1.5f;
+    [SerializeField] private float _changeIncreaseThrusterChargeBy = 0.01f;
+    [SerializeField] private bool _canUseThrusters = true;
+    [SerializeField] private bool _thrustersInUse = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +100,19 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Check charge level. Restrict to min, max values
+        _thrusterChargeLevel = Mathf.Clamp(_thrusterChargeLevel, 0, _thrusterChargeLevelMax);
+
+        // Set _canUseThrusters depending on _thrusterChargeLevel
+        if (_thrusterChargeLevel <= 0.0f)
+        {
+            _canUseThrusters = false;
+        }
+        else if (_thrusterChargeLevel >= (_thrusterChargeLevelMax / 0.75f))
+        {
+            _canUseThrusters = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             SpeedBoostActiveShift();

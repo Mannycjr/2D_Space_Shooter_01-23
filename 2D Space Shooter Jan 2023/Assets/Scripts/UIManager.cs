@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private float _textFlickerDelay = 0.25f;
 
+    [SerializeField] private Slider _thrustersSlider;
+    [SerializeField] private Image _thrustersSliderFill;
+
     private GameManager _gameManager;
 
     // Start is called before the first frame update
@@ -83,5 +86,25 @@ public class UIManager : MonoBehaviour
     public void UpdateAmmo(int _playerAmmo)
     {
         _ammoText.text = _ammoTextPrefix + _playerAmmo.ToString();
+    }
+
+    public void UpdateThrustersSlider(float thrustValue)
+    {
+        if (thrustValue >= 0 && thrustValue <= 10)
+        {
+            _thrustersSlider.value = thrustValue;
+        }
+    }
+
+    public void ThurstersSliderUsableColor(bool usableThrusters)
+    {
+        if (usableThrusters)
+        {
+            _thrustersSliderFill.color = Color.green;
+        }
+        else if (!usableThrusters)
+        {
+            _thrustersSliderFill.color = Color.red;
+        }
     }
 }
