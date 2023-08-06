@@ -113,11 +113,11 @@ public class Player : MonoBehaviour
             _canUseThrusters = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _canUseThrusters)
         {
             SpeedBoostActiveShift();
-        }
-
+        }  
+        
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             SpeedReset();
