@@ -39,6 +39,16 @@ public class UIManager : MonoBehaviour
             _gameManager.GameNotOver();
             Debug.Log("UIManager::Start : New Game Started");
         }
+
+        if (_thrustersSlider == null)
+        {
+            Debug.LogError("UIManager::Start : no _thrustersSlider");
+        }
+
+        if (_thrustersSliderFill == null)
+        {
+            Debug.LogError("UIManager::Start : no _thrustersSliderFill");
+        }
     }
 
     // Update is called once per frame
