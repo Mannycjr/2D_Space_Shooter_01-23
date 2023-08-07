@@ -116,6 +116,8 @@ public class Player : MonoBehaviour
             _canUseThrusters = true;
         }
 
+        Debug.Log("Player::Update:_thrusterChargeLevel=" + _thrusterChargeLevel + " _canUseThrusters="+ _canUseThrusters);
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && _canUseThrusters)
         {
             SpeedBoostActiveShift();
@@ -139,6 +141,8 @@ public class Player : MonoBehaviour
 
     void CalculateMovement()
     {
+        Debug.Log("Player::CalculateMovement:_thrustersInUse=" + _thrustersInUse);
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -172,6 +176,7 @@ public class Player : MonoBehaviour
     // Super Speed Thrusters are ON
     void ThrustersActive()
     {
+        Debug.Log("Player::ThrustersActive:_canUseThrusters=" + _canUseThrusters);
 
         if (_canUseThrusters = true)
         {
