@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _tripleShotActive = false;
     [SerializeField] private bool _wideShotActive = false;
     [SerializeField] private bool _speedBoostPowerupActive = false;
-    [SerializeField] private bool _speedBoostShiftActive = false;
+
     [SerializeField] private bool _shieldsActiveAlready = false;
     [SerializeField] private int _shieldStrength = 0;
     [SerializeField] private GameObject _shieldsOnPlayer;
@@ -57,7 +57,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _changeDecreaseThrusterChargeBy = 1.5f;
     [SerializeField] private float _changeIncreaseThrusterChargeBy = 0.01f;
     [SerializeField] private bool _canUseThrusters = true;
-    [SerializeField] private bool _thrustersInUse = false;
+    //[SerializeField] private bool _thrustersInUse = false;
+    [SerializeField] private bool _speedBoostShiftActive = false; //_thrustersInUse. Opposite of _speedBoostPowerupActive
 
     // Start is called before the first frame update
     void Start()
@@ -120,6 +121,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && _canUseThrusters)
         {
+            Debug.Log("Player::Update: GetKeyDown(KeyCode.LeftShift) _canUseThrusters=True. pre-SpeedBoostActiveShift()");
             SpeedBoostActiveShift();
         }  
         
@@ -141,7 +143,7 @@ public class Player : MonoBehaviour
 
     void CalculateMovement()
     {
-        Debug.Log("Player::CalculateMovement:_thrustersInUse=" + _thrustersInUse);
+        Debug.Log("Player::CalculateMovement:_speedBoostShiftActive=" + _speedBoostShiftActive);
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -162,11 +164,11 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(horizontalLimit, transform.position.y, 0);
         }
 
-        if (_thrustersInUse)
+        if (_speedBoostShiftActive)
         {
             ThrustersActive();
         }
-        else if (!_thrustersInUse)
+        else if (!_speedBoostShiftActive)
         {
             StartCoroutine(ThrustersPowerReplenishRoutine());
         }
@@ -184,12 +186,17 @@ public class Player : MonoBehaviour
             _UIManager.UpdateThrustersSlider(_thrusterChargeLevel); //Change thruster bar UI: reduce 
             //Debug.Log("_thrusterChargeLevel=" + _thrusterChargeLevel);
 
-            if (_thrusterChargeLevel <= 0)
+            if (_thrusterChargeLevel <= (_thrusterChargeLevelMax * 0.25))
             {
                 _UIManager.ThurstersSliderUsableColor(false);
-                _thrustersInUse = false;
-                _canUseThrusters = false;
-                SpeedReset();
+
+                if (_thrusterChargeLevel <= 0)
+                {
+                    _speedBoostShiftActive = false;
+                    _canUseThrusters = false;
+                    SpeedReset();
+                }
+
             }
         }
     }
@@ -202,7 +209,7 @@ public class Player : MonoBehaviour
         //
         yield return new WaitForSeconds(_powerupThrustersWaitTimeLimit);
 
-        while (_thrusterChargeLevel <= _thrusterChargeLevelMax && !_thrustersInUse)
+        while (_thrusterChargeLevel <= _thrusterChargeLevelMax && !_speedBoostShiftActive)
         {
             yield return null;
             _thrusterChargeLevel += Time.deltaTime * _changeIncreaseThrusterChargeBy; //
@@ -210,7 +217,7 @@ public class Player : MonoBehaviour
             //Debug.Log("_thrusterChargeLevel=" + _thrusterChargeLevel);
         }
 
-        if (_thrusterChargeLevel >= _thrusterChargeLevelMax)
+        if (_thrusterChargeLevel >= (_thrusterChargeLevelMax * 0.25))
         {
             _UIManager.ThurstersSliderUsableColor(true);
             _canUseThrusters = true;
