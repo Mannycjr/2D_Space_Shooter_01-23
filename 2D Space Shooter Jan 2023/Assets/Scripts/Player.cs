@@ -204,9 +204,6 @@ public class Player : MonoBehaviour
     // Thrusters NOT Active
     IEnumerator ThrustersPowerReplenishRoutine()
     {
-
-        // turn off thruster audio
-        //
         yield return new WaitForSeconds(_powerupThrustersWaitTimeLimit);
 
         while (_thrusterChargeLevel <= _thrusterChargeLevelMax && !_speedBoostShiftActive)
@@ -214,7 +211,6 @@ public class Player : MonoBehaviour
             yield return null;
             _thrusterChargeLevel += Time.deltaTime * _changeIncreaseThrusterChargeBy; //
             _UIManager.UpdateThrustersSlider(_thrusterChargeLevel); // Change thruster bar UI: increase
-            //Debug.Log("_thrusterChargeLevel=" + _thrusterChargeLevel);
         }
 
         if (_thrusterChargeLevel >= (_thrusterChargeLevelMax * 0.25))
