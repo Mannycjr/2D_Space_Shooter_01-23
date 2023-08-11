@@ -6,7 +6,6 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    //[SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _scoreText;
     private string _scoreTextPrefix = "SCORE: ";
     [SerializeField] private TMP_Text _ammoText;
@@ -17,6 +16,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _restartText;
 
     [SerializeField] private float _textFlickerDelay = 0.25f;
+
+    [SerializeField] private Slider _thrustersSlider;
+    [SerializeField] private Image _thrustersSliderFill;
 
     private GameManager _gameManager;
 
@@ -35,6 +37,16 @@ public class UIManager : MonoBehaviour
         {
             _gameManager.GameNotOver();
             Debug.Log("UIManager::Start : New Game Started");
+        }
+
+        if (_thrustersSlider == null)
+        {
+            Debug.LogError("UIManager::Start : no _thrustersSlider");
+        }
+
+        if (_thrustersSliderFill == null)
+        {
+            Debug.LogError("UIManager::Start : no _thrustersSliderFill");
         }
     }
 
@@ -83,5 +95,25 @@ public class UIManager : MonoBehaviour
     public void UpdateAmmo(int _playerAmmo)
     {
         _ammoText.text = _ammoTextPrefix + _playerAmmo.ToString();
+    }
+
+    public void UpdateThrustersSlider(float thrustValue)
+    {
+        if (thrustValue >= 0 && thrustValue <= 10)
+        {
+            _thrustersSlider.value = thrustValue;
+        }
+    }
+
+    public void ThurstersSliderUsableColor(bool usableThrusters)
+    {
+        if (usableThrusters)
+        {
+            _thrustersSliderFill.color = Color.green;
+        }
+        else if (!usableThrusters)
+        {
+            _thrustersSliderFill.color = Color.red; // 25% of total slider. Logic in Player.cs::ThrustersActive() 
+        }
     }
 }

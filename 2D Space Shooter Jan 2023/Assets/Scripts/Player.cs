@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _tripleShotActive = false;
     [SerializeField] private bool _wideShotActive = false;
     [SerializeField] private bool _speedBoostPowerupActive = false;
-    [SerializeField] private bool _speedBoostShiftActive = false;
+
     [SerializeField] private bool _shieldsActiveAlready = false;
     [SerializeField] private int _shieldStrength = 0;
     [SerializeField] private GameObject _shieldsOnPlayer;
@@ -49,10 +49,20 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _noAmmoAudioClip;
     private AudioSource _sfxAudioSource;
 
+    [Header("Shift Key Thrusters UI Bar")]
+    [SerializeField] private float _shiftKeyThrustersWaitTimeLimit = 3.0f;
+    [SerializeField] private float _thrusterChargeLevelMax = 10.0f;
+    [SerializeField] private float _thrusterChargeLevel;
+    [SerializeField] private float _changeDecreaseThrusterChargeBy = 1.5f;
+    [SerializeField] private float _changeIncreaseThrusterChargeBy = 0.001f;
+    [SerializeField] private bool _canUseThrusters = true;
+    [SerializeField] private bool _speedBoostShiftActive = false; // Opposite of _speedBoostPowerupActive
+
     // Start is called before the first frame update
     void Start()
     {
         transform.position = _initPosition;
+        _thrusterChargeLevel = _thrusterChargeLevelMax;
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
@@ -85,16 +95,34 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Player::Start:No Sprite Renderer in Shields Game Object");
         }
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        // Check charge level. Restrict to min, max values
+        _thrusterChargeLevel = Mathf.Clamp(_thrusterChargeLevel, 0, _thrusterChargeLevelMax);
+
+        // Set _canUseThrusters depending on _thrusterChargeLevel
+        if (_thrusterChargeLevel <= 0.0f)
         {
-            SpeedBoostActiveShift();
+            _canUseThrusters = false;
+        }
+        else if (_thrusterChargeLevel >= (_thrusterChargeLevelMax / 0.75f))
+        {
+            _canUseThrusters = true;
         }
 
+        //Debug.Log("Player::Update:_thrusterChargeLevel=" + _thrusterChargeLevel + " _canUseThrusters="+ _canUseThrusters);
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _canUseThrusters)
+        {
+            //Debug.Log("Player::Update: GetKeyDown(KeyCode.LeftShift) _canUseThrusters=True. pre-SpeedBoostActiveShift()");
+            SpeedBoostActiveShift();
+        }  
+        
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             SpeedReset();
@@ -113,6 +141,8 @@ public class Player : MonoBehaviour
 
     void CalculateMovement()
     {
+        Debug.Log("Player::CalculateMovement:_speedBoostShiftActive=" + _speedBoostShiftActive);
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -131,6 +161,69 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(horizontalLimit, transform.position.y, 0);
         }
+
+        if (_speedBoostShiftActive)
+        {
+            ThrustersActive();
+        }
+        else if (!_speedBoostShiftActive)
+        {
+            StartCoroutine(ThrustersPowerReplenishRoutine());
+        }
+
+    }
+
+    // Super Speed Thrusters are ON
+    void ThrustersActive()
+    {
+        Debug.Log("Player::ThrustersActive:_canUseThrusters=" + _canUseThrusters);
+
+        if (_canUseThrusters = true)
+        {
+            _thrusterChargeLevel -= Time.deltaTime * _changeDecreaseThrusterChargeBy;
+            _UIManager.UpdateThrustersSlider(_thrusterChargeLevel); //Change thruster bar UI: reduce 
+            //Debug.Log("_thrusterChargeLevel=" + _thrusterChargeLevel);
+
+            if (_thrusterChargeLevel <= (_thrusterChargeLevelMax * 0.25))
+            {
+                _UIManager.ThurstersSliderUsableColor(false);
+
+                if (_thrusterChargeLevel <= 0)
+                {
+                    _speedBoostShiftActive = false;
+                    _canUseThrusters = false;
+                    SpeedReset();
+                }
+
+            }
+            else
+            {
+                _UIManager.ThurstersSliderUsableColor(true);
+            }
+        }
+    }
+
+    // Shift Key Thrusters Cool Down System. Thrusters NOT Active
+    IEnumerator ThrustersPowerReplenishRoutine()
+    {
+        Debug.Log("Player::ThrustersPowerReplenishRoutine:Begin");
+
+        yield return new WaitForSeconds(_shiftKeyThrustersWaitTimeLimit);
+
+        while ((_thrusterChargeLevel <= _thrusterChargeLevelMax) && !_speedBoostShiftActive)
+        {
+            yield return null; // pause to prevent instant replenish
+            _thrusterChargeLevel += Time.deltaTime * _changeIncreaseThrusterChargeBy;
+            _UIManager.UpdateThrustersSlider(_thrusterChargeLevel); // Change thruster bar UI: increase
+
+            if (_thrusterChargeLevel >= (_thrusterChargeLevelMax * 0.25))
+            {
+                _UIManager.ThurstersSliderUsableColor(true);
+                _canUseThrusters = true;
+            }
+
+        }
+
     }
 
     void Firelaser()
