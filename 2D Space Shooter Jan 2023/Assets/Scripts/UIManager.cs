@@ -6,7 +6,6 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    //[SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _scoreText;
     private string _scoreTextPrefix = "SCORE: ";
     [SerializeField] private TMP_Text _ammoText;
@@ -114,7 +113,7 @@ public class UIManager : MonoBehaviour
         }
         else if (!usableThrusters)
         {
-            _thrustersSliderFill.color = Color.red;
+            _thrustersSliderFill.color = Color.red; // 25% of total slider. Logic in Player.cs::ThrustersActive() 
         }
     }
 }

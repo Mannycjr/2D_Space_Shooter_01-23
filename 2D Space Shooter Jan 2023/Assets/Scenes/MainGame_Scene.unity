@@ -448,7 +448,6 @@ MonoBehaviour:
   _tripleShotActive: 0
   _wideShotActive: 0
   _speedBoostPowerupActive: 0
-  _speedBoostShiftActive: 0
   _shieldsActiveAlready: 0
   _shieldStrength: 0
   _shieldsOnPlayer: {fileID: 1359052590}
@@ -466,14 +465,13 @@ MonoBehaviour:
   _explosionPrefab: {fileID: 5665125328609053333, guid: f053f236ed91d604b9ae33590978cf4f, type: 3}
   _laserShotAudioClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _noAmmoAudioClip: {fileID: 8300000, guid: 7a62940c5554b461ba1365320e42baad, type: 3}
-  _powerupTimeLimit: 5
   _powerupThrustersWaitTimeLimit: 3
   _thrusterChargeLevelMax: 10
   _thrusterChargeLevel: 0
   _changeDecreaseThrusterChargeBy: 1.5
-  _changeIncreaseThrusterChargeBy: 0.01
+  _changeIncreaseThrusterChargeBy: 0.001
   _canUseThrusters: 1
-  _thrustersInUse: 0
+  _speedBoostShiftActive: 0
 --- !u!212 &242333502
 SpriteRenderer:
   m_ObjectHideFlags: 0

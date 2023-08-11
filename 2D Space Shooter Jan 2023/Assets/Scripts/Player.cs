@@ -49,16 +49,14 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip _noAmmoAudioClip;
     private AudioSource _sfxAudioSource;
 
-    //Thrusters
-    [SerializeField] private float _powerupTimeLimit = 5.0f;
-    [SerializeField] private float _powerupThrustersWaitTimeLimit = 3.0f;
+    [Header("Shift Key Thrusters UI Bar")]
+    [SerializeField] private float _shiftKeyThrustersWaitTimeLimit = 3.0f;
     [SerializeField] private float _thrusterChargeLevelMax = 10.0f;
     [SerializeField] private float _thrusterChargeLevel;
     [SerializeField] private float _changeDecreaseThrusterChargeBy = 1.5f;
-    [SerializeField] private float _changeIncreaseThrusterChargeBy = 0.01f;
+    [SerializeField] private float _changeIncreaseThrusterChargeBy = 0.001f;
     [SerializeField] private bool _canUseThrusters = true;
-    //[SerializeField] private bool _thrustersInUse = false;
-    [SerializeField] private bool _speedBoostShiftActive = false; //_thrustersInUse. Opposite of _speedBoostPowerupActive
+    [SerializeField] private bool _speedBoostShiftActive = false; // Opposite of _speedBoostPowerupActive
 
     // Start is called before the first frame update
     void Start()
@@ -117,11 +115,11 @@ public class Player : MonoBehaviour
             _canUseThrusters = true;
         }
 
-        Debug.Log("Player::Update:_thrusterChargeLevel=" + _thrusterChargeLevel + " _canUseThrusters="+ _canUseThrusters);
+        //Debug.Log("Player::Update:_thrusterChargeLevel=" + _thrusterChargeLevel + " _canUseThrusters="+ _canUseThrusters);
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && _canUseThrusters)
         {
-            Debug.Log("Player::Update: GetKeyDown(KeyCode.LeftShift) _canUseThrusters=True. pre-SpeedBoostActiveShift()");
+            //Debug.Log("Player::Update: GetKeyDown(KeyCode.LeftShift) _canUseThrusters=True. pre-SpeedBoostActiveShift()");
             SpeedBoostActiveShift();
         }  
         
@@ -198,26 +196,34 @@ public class Player : MonoBehaviour
                 }
 
             }
+            else
+            {
+                _UIManager.ThurstersSliderUsableColor(true);
+            }
         }
     }
 
-    // Thrusters NOT Active
+    // Shift Key Thrusters Cool Down System. Thrusters NOT Active
     IEnumerator ThrustersPowerReplenishRoutine()
     {
-        yield return new WaitForSeconds(_powerupThrustersWaitTimeLimit);
+        Debug.Log("Player::ThrustersPowerReplenishRoutine:Begin");
 
-        while (_thrusterChargeLevel <= _thrusterChargeLevelMax && !_speedBoostShiftActive)
+        yield return new WaitForSeconds(_shiftKeyThrustersWaitTimeLimit);
+
+        while ((_thrusterChargeLevel <= _thrusterChargeLevelMax) && !_speedBoostShiftActive)
         {
-            yield return null;
-            _thrusterChargeLevel += Time.deltaTime * _changeIncreaseThrusterChargeBy; //
+            yield return null; // pause to prevent instant replenish
+            _thrusterChargeLevel += Time.deltaTime * _changeIncreaseThrusterChargeBy;
             _UIManager.UpdateThrustersSlider(_thrusterChargeLevel); // Change thruster bar UI: increase
+
+            if (_thrusterChargeLevel >= (_thrusterChargeLevelMax * 0.25))
+            {
+                _UIManager.ThurstersSliderUsableColor(true);
+                _canUseThrusters = true;
+            }
+
         }
 
-        if (_thrusterChargeLevel >= (_thrusterChargeLevelMax * 0.25))
-        {
-            _UIManager.ThurstersSliderUsableColor(true);
-            _canUseThrusters = true;
-        }
     }
 
     void Firelaser()
