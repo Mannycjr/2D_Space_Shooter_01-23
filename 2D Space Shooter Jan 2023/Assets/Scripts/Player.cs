@@ -58,6 +58,8 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _canUseThrusters = true;
     [SerializeField] private bool _speedBoostShiftActive = false; // Opposite of _speedBoostPowerupActive
 
+    private MainCamera _mainCamera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +67,7 @@ public class Player : MonoBehaviour
         _thrusterChargeLevel = _thrusterChargeLevelMax;
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _mainCamera = GameObject.Find("Main_Camera").GetComponent<MainCamera>();
 
         if (_spawnManager == null)
         {
@@ -96,6 +99,10 @@ public class Player : MonoBehaviour
             Debug.LogError("Player::Start:No Sprite Renderer in Shields Game Object");
         }
 
+        if (_mainCamera == null)
+        {
+            Debug.LogError("Player::Start: _mainCamera is NULL");
+        }
 
     }
 
@@ -271,6 +278,7 @@ public class Player : MonoBehaviour
             _lives--;
             _UIManager.UpdateLives(_lives);
             UpdateSmokeDamage();
+            _mainCamera.CameraShake();
 
             if (_lives < 1)
             {
