@@ -219,7 +219,6 @@ public class Player : MonoBehaviour
 
         while ((_thrusterChargeLevel <= _thrusterChargeLevelMax) && !_speedBoostShiftActive)
         {
-            yield return null; // pause to prevent instant replenish
             _thrusterChargeLevel += Time.deltaTime * _changeIncreaseThrusterChargeBy;
             _UIManager.UpdateThrustersSlider(_thrusterChargeLevel); // Change thruster bar UI: increase
 
@@ -227,7 +226,7 @@ public class Player : MonoBehaviour
             {
                 _UIManager.ThurstersSliderUsableColor(true);
             }
-
+            yield return new WaitForEndOfFrame();
         }
 
     }
