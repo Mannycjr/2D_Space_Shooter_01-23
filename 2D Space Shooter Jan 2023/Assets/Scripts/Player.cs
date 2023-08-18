@@ -117,7 +117,7 @@ public class Player : MonoBehaviour
         {
             _canUseThrusters = false;
         }
-        else if (_thrusterChargeLevel >= (_thrusterChargeLevelMax / 0.75f))
+        else if (_thrusterChargeLevel >= 0.0f)
         {
             _canUseThrusters = true;
         }
@@ -185,7 +185,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Player::ThrustersActive:_canUseThrusters=" + _canUseThrusters);
 
-        if (_canUseThrusters = true)
+        if (_canUseThrusters == true)
         {
             _thrusterChargeLevel -= Time.deltaTime * _changeDecreaseThrusterChargeBy;
             _UIManager.UpdateThrustersSlider(_thrusterChargeLevel); //Change thruster bar UI: reduce 
@@ -226,7 +226,6 @@ public class Player : MonoBehaviour
             if (_thrusterChargeLevel >= (_thrusterChargeLevelMax * 0.25))
             {
                 _UIManager.ThurstersSliderUsableColor(true);
-                _canUseThrusters = true;
             }
 
         }
