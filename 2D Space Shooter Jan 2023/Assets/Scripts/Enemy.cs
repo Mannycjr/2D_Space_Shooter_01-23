@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip _sfxClipLaserSmall;
 
     [SerializeField] private GameObject _laserPrefab;
-    private Vector3 _laserOffset = new Vector3(0, -1.05f, 0);
+    private Vector3 _laserOffset = new Vector3(0, -1.15f, 0);
 
     private float _fireRate = 3.0f;
     private float _canFireAtTime = -1;
@@ -115,7 +115,9 @@ public class Enemy : MonoBehaviour
             Vector3 _laserPosition = transform.position + _laserOffset;
 
 
-            GameObject _enemyLaser = Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+            //GameObject _enemyLaser = Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+            GameObject _enemyLaser = Instantiate(_laserPrefab, _laserPosition, transform.rotation);
+            //_enemyLaser.transform.RotateAround(transform.position, Vector3.up, Quaternion.identity.eulerAngles.z);
             Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
 
             for (int i = 0; i < lasers.Length; i++)
