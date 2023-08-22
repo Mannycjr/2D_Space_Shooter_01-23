@@ -20,6 +20,7 @@ public class SpawnManager : MonoBehaviour
     float _waitTimePowerups = 7.0f; // In between powerup spawning
     private bool _stopSpawning = false;
     private GameManager _gameManager;
+    float _randomZAngle;
 
     // Start is called before the first frame update
     void Start()
@@ -55,8 +56,9 @@ public class SpawnManager : MonoBehaviour
         {
             // Instantiate enemy prefab
             _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
+            _randomZAngle =  Random.Range(-45f,45f);
             Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
-            GameObject newEnemy = Instantiate(_enemyPrefab, spawnPosition, Quaternion.identity);
+            GameObject newEnemy = Instantiate(_enemyPrefab, spawnPosition, Quaternion.Euler(0,0, _randomZAngle));
             newEnemy.transform.parent = _enemyContainer.transform;
 
             // yield wait for 5 seconds
