@@ -92,9 +92,9 @@ public class UIManager : MonoBehaviour
         _restartText.gameObject.SetActive(true);
     }
 
-    public void UpdateAmmo(int _playerAmmo)
+    public void UpdateAmmo(int _playerAmmo, int _playerAmmoMax)
     {
-        _ammoText.text = _ammoTextPrefix + _playerAmmo.ToString();
+        _ammoText.text = _ammoTextPrefix + _playerAmmo.ToString() + " / " + _playerAmmoMax.ToString();
     }
 
     public void UpdateThrustersSlider(float thrustValue)
