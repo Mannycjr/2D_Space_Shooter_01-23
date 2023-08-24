@@ -17,7 +17,8 @@ public class Player : MonoBehaviour
     private Vector3 _laserOffset = new Vector3(0, 1.05f, 0);
     [SerializeField] private float _firerate = 0.15f;
     private float _canFire = -1.0f;
-    [SerializeField] private int _ammoCount = 15;
+    [SerializeField] private int _ammoCount = 20;
+    [SerializeField] private int _ammoMax = 20;
 
     SpawnManager _spawnManager;
 
@@ -80,7 +81,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            _UIManager.UpdateAmmo(_ammoCount);
+            _UIManager.UpdateAmmo(_ammoCount, _ammoMax);
         }
 
         _sfxAudioSource = GetComponent<AudioSource>();
@@ -253,7 +254,7 @@ public class Player : MonoBehaviour
             }
 
             _ammoCount--;
-            _UIManager.UpdateAmmo(_ammoCount);
+            _UIManager.UpdateAmmo(_ammoCount, _ammoMax);
 
             _sfxAudioSource.clip = _laserShotAudioClip;
             _sfxAudioSource.Play();
@@ -400,7 +401,7 @@ public class Player : MonoBehaviour
     public void AmmoRefill()
     {
         _ammoCount = 15;
-        _UIManager.UpdateAmmo(_ammoCount);
+        _UIManager.UpdateAmmo(_ammoCount, _ammoMax);
     }
 
     private void UpdateSmokeDamage()
