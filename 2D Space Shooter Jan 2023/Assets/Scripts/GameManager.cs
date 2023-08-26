@@ -39,4 +39,9 @@ public class GameManager : MonoBehaviour
     {
         _isGameOver = false;
     }
+
+    public void StartSpawning()
+    {
+
+    }
 }

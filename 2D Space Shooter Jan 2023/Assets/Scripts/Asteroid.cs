@@ -8,16 +8,10 @@ public class Asteroid : MonoBehaviour
     private GameObject _explosionInstance;
     private SpawnManager _spawnManager;
     private Player _player;
+    private GameManager _gameManager;
 
     void Start()
     {
-        //Debug.Log("Asteroid::Start: Begin.");
-
-        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        if (_spawnManager == null)
-        {
-            Debug.LogError("Asteroid::Start. Spawn Manager is NULL.");
-        }
 
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_spawnManager == null)
@@ -25,6 +19,11 @@ public class Asteroid : MonoBehaviour
             Debug.LogError("Asteroid::Start. Player is NULL.");
         }
 
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        if (_gameManager == null)
+        {
+            Debug.LogError("Asteroid::Start. Game Manager is NULL.");
+        }
     }
 
     // Update is called once per frame
@@ -41,14 +40,14 @@ public class Asteroid : MonoBehaviour
             //Debug.Log("Asteroid::OnTriggerEnter: if other.tag=" + other.tag);
             Destroy(other.gameObject);
             ExplosionAnim();
-            _spawnManager.StartSpawning();
+            _gameManager.StartSpawning();
     
         }
         else if (other.tag == "Player")
         {
             ExplosionAnim();
             _player.Damage();
-            _spawnManager.StartSpawning();
+            _gameManager.StartSpawning();
         }
 
         Destroy(this.gameObject,0.0f);
