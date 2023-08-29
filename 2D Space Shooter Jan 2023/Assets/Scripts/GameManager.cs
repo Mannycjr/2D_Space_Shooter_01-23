@@ -16,14 +16,13 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        _uiManagerScript = GameObject.Find("Canvas").GetComponent<UIManager>();
-
         if (_spawnManager == null)
         {
             Debug.LogError("GameManager::Start() Called. The Spawn Manager is NULL");
 
         }
 
+        _uiManagerScript = GameObject.Find("Canvas").GetComponent<UIManager>();
         if (_uiManagerScript == null)
         {
             Debug.LogError("GameManager::Start() Called. The UI Manager is NULL");
@@ -75,7 +74,7 @@ public class GameManager : MonoBehaviour
 
         _uiManagerScript.WaveDisplayOn();
         _uiManagerScript.WaveIDUpdate(_waveID);
-        StartCoroutine(WaveCountdown(_waveTime_));
+        StartCoroutine(WaveCountdown(_waveTime));
         _spawnManager.StartSpawning(_waveID);
     }
 

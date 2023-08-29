@@ -2527,7 +2527,7 @@ MonoBehaviour:
   _thrustersSliderFill: {fileID: 1617366325}
   _waveIDDisplay: {fileID: 0}
   _waveTimeDisplay: {fileID: 0}
-  _waveDisplay: {fileID: 0}
+  _waveDisplay: {fileID: 889168958}
   _waveEnded: 0
 --- !u!1 &1346897440
 GameObject:
@@ -3162,6 +3162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isGameOver: 0
+  _waveID: 0
 --- !u!4 &1639923392
 Transform:
   m_ObjectHideFlags: 0
@@ -3423,7 +3424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5804945403299343480, guid: a65978a0c9bb4fc408c070228606876a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a65978a0c9bb4fc408c070228606876a, type: 3}

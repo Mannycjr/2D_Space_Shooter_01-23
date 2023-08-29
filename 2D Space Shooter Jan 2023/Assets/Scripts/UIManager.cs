@@ -20,8 +20,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider _thrustersSlider;
     [SerializeField] private Image _thrustersSliderFill;
 
-    public Text _waveIDDisplay;
-    public Text _waveTimeDisplay;
+    public TMP_Text _waveIDDisplay;
+    public TMP_Text _waveTimeDisplay;
     public GameObject _waveDisplay;
     public bool _waveEnded = false;
 
