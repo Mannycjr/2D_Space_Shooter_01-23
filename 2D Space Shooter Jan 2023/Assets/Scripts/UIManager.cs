@@ -20,6 +20,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider _thrustersSlider;
     [SerializeField] private Image _thrustersSliderFill;
 
+    public TMP_Text _waveIDDisplay;
+    public TMP_Text _waveTimeDisplay;
+    public GameObject _waveDisplay;
+    public bool _waveEnded = false;
+
     private GameManager _gameManager;
 
     // Start is called before the first frame update
@@ -114,6 +119,49 @@ public class UIManager : MonoBehaviour
         else if (!usableThrusters)
         {
             _thrustersSliderFill.color = Color.red; // 25% of total slider. Logic in Player.cs::ThrustersActive() 
+        }
+    }
+
+    public void WaveDisplayOn()
+    {
+        _waveDisplay.SetActive(true);
+    }
+
+    public void WaveDisplayOff()
+    {
+        _waveDisplay.SetActive(false);
+    }
+
+    public void WaveIDUpdate(int waveID)
+    {
+        _waveIDDisplay.text = "Wave " + waveID.ToString();
+    }
+
+    public void WaveTimeUpdate(float _seconds)
+    {
+        float _waveTime = Mathf.RoundToInt(_seconds);
+        _waveTimeDisplay.text = _waveTime.ToString();
+
+        if (_waveTime > 0)
+        {
+            _waveEnded = false;
+        }
+        else
+        {
+            _waveEnded = true;
+            StartCoroutine(WaveDisplayFlickerRoutine());
+        }
+
+    }
+
+    private IEnumerator WaveDisplayFlickerRoutine()
+    {
+        while (_waveEnded)
+        {
+            yield return new WaitForSeconds(_textFlickerDelay);
+            _waveDisplay.SetActive(false);
+            yield return new WaitForSeconds(_textFlickerDelay);
+            _waveDisplay.SetActive(true);
         }
     }
 }

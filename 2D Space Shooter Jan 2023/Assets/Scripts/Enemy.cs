@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
 
     private bool _isDestroyed = false;
 
+    private bool _waveEnded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -143,5 +145,11 @@ public class Enemy : MonoBehaviour
         _speed = 0; // No movement after shot
 
         Destroy(this.gameObject, _explosionAnimLength);
+    }
+
+    public void ClearField()
+    {
+        _canFireAtTime = -1;
+        _waveEnded = true;
     }
 }

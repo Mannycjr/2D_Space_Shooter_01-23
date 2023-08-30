@@ -5,6 +5,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     private int _speed = 8;
+    private float _xLimit = 11.0f;
     private float _yLimit = 6.0f;
     private bool _isPlayerLaser = true;
 
@@ -29,7 +30,7 @@ public class Laser : MonoBehaviour
     {
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
 
-        if (transform.position.y > _yLimit )
+        if ( (transform.position.y > Mathf.Abs(_yLimit) ) | (transform.position.x > Mathf.Abs(_xLimit) ) )
         {
             //check if this object is a parent
 
