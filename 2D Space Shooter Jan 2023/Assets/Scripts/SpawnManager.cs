@@ -117,7 +117,7 @@ public class SpawnManager : MonoBehaviour
             {
                 yield return new WaitForSeconds(_waitTimeEnemy);
 
-                if (!_stopSpawning)
+                if (_stopSpawning == false)
                 {
                     // Instantiate enemy prefab
                     _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);

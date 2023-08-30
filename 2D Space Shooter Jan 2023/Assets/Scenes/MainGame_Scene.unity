@@ -1833,7 +1833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &889168959
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2525,8 +2525,8 @@ MonoBehaviour:
   _textFlickerDelay: 0.25
   _thrustersSlider: {fileID: 412722290}
   _thrustersSliderFill: {fileID: 1617366325}
-  _waveIDDisplay: {fileID: 0}
-  _waveTimeDisplay: {fileID: 0}
+  _waveIDDisplay: {fileID: 69774333}
+  _waveTimeDisplay: {fileID: 830041610}
   _waveDisplay: {fileID: 889168958}
   _waveEnded: 0
 --- !u!1 &1346897440
