@@ -13,8 +13,11 @@ public class Powerup : MonoBehaviour
         Shields,
         Ammo,
         Health,
-        WideShot
+        WideShot,
+        NoAmmo
     }
+
+
     [SerializeField] private _powerupIDs _powerupID;
     private float _verticalLimit = 7.0f;
 
@@ -48,33 +51,37 @@ public class Powerup : MonoBehaviour
                 {
                     case _powerupIDs.TripleShot:
                         player.TripleShotActive(_powerupDuration);
-                        Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=0 TripleShot");
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch TripleShot");
                         break;
                     case _powerupIDs.SpeedBoost:
                         player.SpeedBoostActive(_powerupDuration);
-                        Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=1 SpeedBoost");
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch SpeedBoost");
                         break;
                     case _powerupIDs.Shields:
                         player.ShieldsActive();
-                        Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=2 Shields");
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch Shields");
                         break;
                     case _powerupIDs.Ammo:
                         player.AmmoRefill();
-                        Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=3 Ammo");
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch Ammo");
                         break;
                     case _powerupIDs.Health:
                         player.AddShip();
-                        Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=4 AddLife");
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch AddLife");
                         break;
                     case _powerupIDs.WideShot:
                         player.WideShotActive(5.0f);
-                        Debug.Log("Powerup::OnTriggerEnter2D:switch _powerupID=4 AddLife");
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch WideShot");
+                        break;
+                    case _powerupIDs.NoAmmo:
+                        player.NoAmmo();
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch NoAmmo");
                         break;
                     default:
                         Debug.Log("Powerup::OnTriggerEnter2D:switch No_powerupID");
                         break;
                 }
-                
+
             }
             else
             {

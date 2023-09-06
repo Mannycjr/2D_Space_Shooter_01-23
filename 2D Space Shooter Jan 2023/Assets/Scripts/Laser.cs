@@ -30,7 +30,7 @@ public class Laser : MonoBehaviour
     {
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
 
-        if ( (transform.position.y > Mathf.Abs(_yLimit) ) | (transform.position.x > Mathf.Abs(_xLimit) ) )
+        if ( (Mathf.Abs(transform.position.y) > _yLimit ) | (Mathf.Abs(transform.position.x) > _xLimit ) )
         {
             //check if this object is a parent
 

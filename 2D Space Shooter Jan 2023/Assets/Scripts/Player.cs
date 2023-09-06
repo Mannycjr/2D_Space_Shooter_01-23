@@ -436,4 +436,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void NoAmmo()
+    {
+        _ammoCount = 0;
+        _UIManager.UpdateAmmo(_ammoCount, _ammoMax);
+    }
 }
