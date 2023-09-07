@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public enum _powerupIDs
+    {
+        Standard,
+        Sidewards
+    }
+
     [SerializeField] private float _speed = 4.0f;
     private float _verticalLimit = 7.0f;
     private float _horizontalLimit = 11.0f;
 
     private Player _player;
+
+    [Header("Standard Enemy")]
     // handle to animator component
     private Animator _enemyAnimator;
     private float _explosionAnimLength = 2.6f;
