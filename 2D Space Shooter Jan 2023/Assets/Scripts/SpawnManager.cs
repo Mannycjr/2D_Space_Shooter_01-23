@@ -19,7 +19,7 @@ public class SpawnManager : MonoBehaviour
     float _waitTimePowerups = 7.0f; // In between powerup spawning
     private bool _stopSpawning = false;
     private GameManager _gameManager;
-    float _randomZAngle;
+    float _spawnZAngle;
 
     float _waitTimeEnemy = 5.0f; // Enemy spawning looping wait time between individual enemies
     float _waitTimeWaves = 7.0f; // Waves spawning looping wait time between waves of enemies
@@ -127,13 +127,26 @@ public class SpawnManager : MonoBehaviour
                 {
                     // Instantiate enemy prefab
                     _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
-                    _randomZAngle =  Random.Range(-45f,45f);
+                    _spawnZAngle =  Random.Range(-45f,45f);
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
-                    if (_gameManager._waveID > 2) // Second wave
+
+                    if (_gameManager._waveID > 0) // *** After wave 2, include spawning new enemy
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }
-                    GameObject newEnemy = Instantiate(_enemyPrefab[_enemyIndex], spawnPosition, Quaternion.Euler(0,0, _randomZAngle));
+                    if (_gameManager._waveID < 3) // Less than wave 3, no angle yet for simple enemies 
+                    {
+                        _spawnZAngle = 0;
+                    }
+                    
+                    if (_enemyIndex == 1) // New enemy can spawn from the sides
+                    {
+                        spawnPosition.x = -_xPositionLimit;
+                        spawnPosition.y = Random.Range(0, _yPositionLimit);
+                        _spawnZAngle = 90;
+                    }
+
+                    GameObject newEnemy = Instantiate(_enemyPrefab[_enemyIndex], spawnPosition, Quaternion.Euler(0, 0, _spawnZAngle)); // Quaternion.Euler(0,0, _spawnZAngle)
                     newEnemy.transform.parent = _enemyContainer.transform;
                 }
 

@@ -49,7 +49,7 @@ public class Laser : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y < -_yLimit)
+        if ( (transform.position.y < -_yLimit) | (Mathf.Abs(transform.position.x) > _xLimit))
         {
             if (this.transform.parent != null)
             {

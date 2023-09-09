@@ -27,7 +27,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip _sfxClipLaserSmall;
 
     [SerializeField] private GameObject _laserPrefab;
-    private Vector3 _laserOffset = new Vector3(0, -1.15f, 0);
+    private Vector3 _laserOffset = new Vector3(); //Vector3(0, -1.15f, 0);
+
 
     private float _fireRate = 3.0f;
     private float _canFireAtTime = -1;
@@ -39,6 +40,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _laserOffset.forward;
+        
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player == null)
         {
@@ -96,8 +99,15 @@ public class Enemy : MonoBehaviour
         //if bottom of screen
         if (transform.position.y <= -_verticalLimit)
         {
-            //respawn at top with a new random x position
+            //move to top with a new random x position
             transform.position = new Vector3(_randomXPos, _verticalLimit, 0);
+        }
+
+        // if left or right side of screen
+        if (Mathf.Abs(transform.position.x) > _horizontalLimit)
+        {
+            float _randomYPos = Random.Range(-_verticalLimit, _verticalLimit);
+            transform.position = new Vector3(-transform.position.x, _randomYPos, 0);
         }
     }
 

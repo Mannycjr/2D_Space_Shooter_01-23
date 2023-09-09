@@ -64,9 +64,9 @@ public class GameManager : MonoBehaviour
     public void StartSpawning()
     {
         _waveID++;
-        _waveTime += 10;
+        _waveTime += 10f;
 
-        if (_waveID > 5)
+        if (_waveID > 6)
         {
             Debug.Log("You Win!");
             return;

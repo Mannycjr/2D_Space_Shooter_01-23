@@ -45,7 +45,12 @@ public class Powerup : MonoBehaviour
             Player player = other.transform.GetComponent<Player>();
             if (player != null)
             {
-                AudioSource.PlayClipAtPoint(_powerupAudioClip, new Vector3(0, 0, -9));
+                float _audioPositionZ = -9f;
+                if (_powerupID == _powerupIDs.NoAmmo)
+                {
+                    _audioPositionZ = -9.5f; // Closer to camera, a little louder
+                }
+                AudioSource.PlayClipAtPoint(_powerupAudioClip, new Vector3(0, 0, _audioPositionZ));
 
                 switch (_powerupID)
                 {
