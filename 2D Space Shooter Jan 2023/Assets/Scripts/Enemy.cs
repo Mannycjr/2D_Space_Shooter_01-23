@@ -74,11 +74,13 @@ public class Enemy : MonoBehaviour
         {
             case _enemyIDs.Sidewards:
                 //CalculateMovementSidewards();
+                CalculateMovementStandard();
+                FireLaser();
                 break;
             case _enemyIDs.Standard:
             default:
                 CalculateMovementStandard();
-                FireLaser();                
+                FireLaser();
                 break;
         }
 

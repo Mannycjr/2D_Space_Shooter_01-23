@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2679d734ef7dd4a48945101537e71dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyID: 1
   _speed: 4
   _sfxClipExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _sfxClipLaserSmall: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}

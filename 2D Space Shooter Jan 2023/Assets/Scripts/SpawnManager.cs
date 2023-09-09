@@ -111,7 +111,7 @@ public class SpawnManager : MonoBehaviour
     {
         Debug.Log("SpawnManager::spawnEnemyRoutine() Called");
 
-        int _randomEnemyIndex = 0;
+        int _enemyIndex = 0; // Initialized to Standard Enemy
 
         while (_stopSpawning == false)
         {
@@ -125,8 +125,11 @@ public class SpawnManager : MonoBehaviour
                     _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
                     _randomZAngle =  Random.Range(-45f,45f);
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
-                    _randomEnemyIndex = Random.Range(0, _enemyPrefab.Length);
-                    GameObject newEnemy = Instantiate(_enemyPrefab[_randomEnemyIndex], spawnPosition, Quaternion.Euler(0,0, _randomZAngle));
+                    if (_gameManager._waveID > 1) // Second wave
+                    {
+                        _enemyIndex = Random.Range(0, _enemyPrefab.Length);
+                    }
+                    GameObject newEnemy = Instantiate(_enemyPrefab[_enemyIndex], spawnPosition, Quaternion.Euler(0,0, _randomZAngle));
                     newEnemy.transform.parent = _enemyContainer.transform;
                 }
 
