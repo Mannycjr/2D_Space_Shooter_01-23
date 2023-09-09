@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _enemyPrefab;
+    [SerializeField] private GameObject[] _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     [SerializeField] private GameObject[] _powerupPrefab;
     [SerializeField] private GameObject[] _powerupPrefabRare;
@@ -111,6 +111,8 @@ public class SpawnManager : MonoBehaviour
     {
         Debug.Log("SpawnManager::spawnEnemyRoutine() Called");
 
+        int _randomEnemyIndex = 0;
+
         while (_stopSpawning == false)
         {
             for (int i = 0; i < _maxEnemies; i++)
@@ -123,7 +125,8 @@ public class SpawnManager : MonoBehaviour
                     _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
                     _randomZAngle =  Random.Range(-45f,45f);
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
-                    GameObject newEnemy = Instantiate(_enemyPrefab, spawnPosition, Quaternion.Euler(0,0, _randomZAngle));
+                    _randomEnemyIndex = Random.Range(0, _enemyPrefab.Length);
+                    GameObject newEnemy = Instantiate(_enemyPrefab[_randomEnemyIndex], spawnPosition, Quaternion.Euler(0,0, _randomZAngle));
                     newEnemy.transform.parent = _enemyContainer.transform;
                 }
 

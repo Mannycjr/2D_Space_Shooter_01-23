@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public enum _powerupIDs
+    public enum _enemyIDs
     {
         Standard,
         Sidewards
     }
 
+    [SerializeField] private _enemyIDs _enemyID;
     [SerializeField] private float _speed = 4.0f;
     private float _verticalLimit = 7.0f;
     private float _horizontalLimit = 11.0f;
@@ -62,19 +63,43 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            //_laserPrefab
+            //_laserPrefab assigned in Inspector
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        CalculateMovement();
-        FireLaser();
+        switch (_enemyID)
+        {
+            case _enemyIDs.Sidewards:
+                //CalculateMovementSidewards();
+                break;
+            case _enemyIDs.Standard:
+            default:
+                CalculateMovementStandard();
+                FireLaser();                
+                break;
+        }
+
 
     }
 
-    private void CalculateMovement()
+    private void CalculateMovementStandard()
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+        float _randomXPos = Random.Range(-_horizontalLimit, _horizontalLimit);
+
+        //if bottom of screen
+        if (transform.position.y <= -_verticalLimit)
+        {
+            //respawn at top with a new random x position
+            transform.position = new Vector3(_randomXPos, _verticalLimit, 0);
+        }
+    }
+
+    private void CalculateMovementSidewards()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
