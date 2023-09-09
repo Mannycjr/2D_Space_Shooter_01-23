@@ -88,20 +88,24 @@ public class SpawnManager : MonoBehaviour
                 _waitTimeEnemy = 3.5f;
                 break;
             case 2:
-                _maxEnemies = 4;
+                _maxEnemies = 3;
                 _waitTimeEnemy = 3.0f;
                 break;
             case 3:
-                _maxEnemies = 6;
+                _maxEnemies = 4;
                 _waitTimeEnemy = 2.5f;
                 break;
             case 4:
-                _maxEnemies = 8;
+                _maxEnemies = 6;
                 _waitTimeEnemy = 2.0f;
                 break;
             case 5:
-                _maxEnemies = 10;
+                _maxEnemies = 8;
                 _waitTimeEnemy = 1.0f;
+                break;
+            case 6:
+                _maxEnemies = 4;
+                _waitTimeEnemy = 0.5f;
                 break;
         }
 
@@ -125,7 +129,7 @@ public class SpawnManager : MonoBehaviour
                     _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
                     _randomZAngle =  Random.Range(-45f,45f);
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
-                    if (_gameManager._waveID > 1) // Second wave
+                    if (_gameManager._waveID > 2) // Second wave
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }
