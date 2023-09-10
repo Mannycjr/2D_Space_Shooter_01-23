@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private _enemyIDs _enemyID;
     [SerializeField] private float _speed = 4.0f;
+    GameObject _laserSpawnPoint;
     private float _verticalLimit = 7.0f;
     private float _horizontalLimit = 11.0f;
 
@@ -27,7 +28,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip _sfxClipLaserSmall;
 
     [SerializeField] private GameObject _laserPrefab;
-    private Vector3 _laserOffset = new Vector3(); //Vector3(0, -1.15f, 0);
+    //private Vector3 _laserOffset = new Vector3(); //Vector3(0, -1.15f, 0);
 
 
     private float _fireRate = 3.0f;
@@ -40,7 +41,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _laserOffset.forward;
+        //_laserOffset.forward;
         
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player == null)
@@ -67,6 +68,12 @@ public class Enemy : MonoBehaviour
         else
         {
             //_laserPrefab assigned in Inspector
+        }
+
+        _laserSpawnPoint = this.gameObject.transform.GetChild(0).gameObject;
+        if (_laserSpawnPoint == null)
+        {
+            Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL.");
         }
     }
 
@@ -159,12 +166,9 @@ public class Enemy : MonoBehaviour
         {
             _fireRate = Random.Range(3f, 7f);
             _canFireAtTime = Time.time + _fireRate;
-            Vector3 _laserPosition = transform.position + _laserOffset;
+            Vector3 _laserPosition = _laserSpawnPoint.transform.position;
 
-
-            //GameObject _enemyLaser = Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
             GameObject _enemyLaser = Instantiate(_laserPrefab, _laserPosition, transform.rotation);
-            //_enemyLaser.transform.RotateAround(transform.position, Vector3.up, Quaternion.identity.eulerAngles.z);
             Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
 
             for (int i = 0; i < lasers.Length; i++)
