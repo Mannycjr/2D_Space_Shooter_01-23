@@ -83,7 +83,7 @@ public class Enemy : MonoBehaviour
         switch (_enemyID)
         {
             case _enemyIDs.Sidewards:
-                //CalculateMovementSidewards();
+                //CalculateMovementWavy();
                 CalculateMovementStandard();
                 FireLaser();
                 break;
@@ -101,6 +101,18 @@ public class Enemy : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
+        CalcMovementAtScreenLimits();
+    }
+
+    private void CalculateMovementWavy()
+    {
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+        CalcMovementAtScreenLimits();
+    }
+
+    private void CalcMovementAtScreenLimits()
+    {
         float _randomXPos = Random.Range(-_horizontalLimit, _horizontalLimit);
 
         //if bottom of screen
@@ -115,20 +127,6 @@ public class Enemy : MonoBehaviour
         {
             float _randomYPos = Random.Range(-_verticalLimit, _verticalLimit);
             transform.position = new Vector3(-transform.position.x, _randomYPos, 0);
-        }
-    }
-
-    private void CalculateMovementSidewards()
-    {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-        float _randomXPos = Random.Range(-_horizontalLimit, _horizontalLimit);
-
-        //if bottom of screen
-        if (transform.position.y <= -_verticalLimit)
-        {
-            //respawn at top with a new random x position
-            transform.position = new Vector3(_randomXPos, _verticalLimit, 0);
         }
     }
 

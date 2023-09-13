@@ -400,7 +400,7 @@ public class Player : MonoBehaviour
 
     public void AmmoRefill()
     {
-        _ammoCount = 15;
+        _ammoCount = 20;
         _UIManager.UpdateAmmo(_ammoCount, _ammoMax);
     }
 

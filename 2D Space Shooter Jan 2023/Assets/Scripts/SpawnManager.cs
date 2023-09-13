@@ -130,20 +130,13 @@ public class SpawnManager : MonoBehaviour
                     _spawnZAngle =  Random.Range(-45f,45f);
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
 
-                    if (_gameManager._waveID > 5) // *** After wave 2, include spawning new enemy type
+                    if (_gameManager._waveID > 2) // *** After wave 2, include spawning new enemy type
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }
                     if (_gameManager._waveID < 3) // Less than wave 3, no angle yet for simple enemies 
                     {
                         _spawnZAngle = 0;
-                    }
-                    
-                    if (_enemyIndex == 1) // New enemy can spawn from the sides
-                    {
-                        spawnPosition.x = -_xPositionLimit;
-                        spawnPosition.y = Random.Range(0, _yPositionLimit);
-                        _spawnZAngle = 90;
                     }
 
                     GameObject newEnemy = Instantiate(_enemyPrefab[_enemyIndex], spawnPosition, Quaternion.Euler(0, 0, _spawnZAngle)); // Quaternion.Euler(0,0, _spawnZAngle)
