@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6306808904748087996}
   m_Layer: 0
-  m_Name: EnemyLasersTwo
+  m_Name: Enemy_Lasers_Two
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

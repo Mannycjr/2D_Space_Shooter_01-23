@@ -71,9 +71,9 @@ public class Enemy : MonoBehaviour
         }
 
         _laserSpawnPoint = this.gameObject.transform.GetChild(0).gameObject;
-        if (_laserSpawnPoint == null)
+        if ((_laserSpawnPoint == null) | (this.gameObject.transform.GetChild(0).name != "Laser_Spawn"))
         {
-            Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL.");
+            Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL or not Laser_Spawn.");
         }
     }
 
@@ -166,9 +166,8 @@ public class Enemy : MonoBehaviour
         {
             _fireRate = Random.Range(3f, 7f);
             _canFireAtTime = Time.time + _fireRate;
-            Vector3 _laserPosition = _laserSpawnPoint.transform.position;
 
-            GameObject _enemyLaser = Instantiate(_laserPrefab, _laserPosition, transform.rotation);
+            GameObject _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
             Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
 
             for (int i = 0; i < lasers.Length; i++)

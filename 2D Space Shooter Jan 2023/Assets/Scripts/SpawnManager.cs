@@ -130,7 +130,7 @@ public class SpawnManager : MonoBehaviour
                     _spawnZAngle =  Random.Range(-45f,45f);
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
 
-                    if (_gameManager._waveID > 0) // *** After wave 2, include spawning new enemy
+                    if (_gameManager._waveID > 5) // *** After wave 2, include spawning new enemy type
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }
