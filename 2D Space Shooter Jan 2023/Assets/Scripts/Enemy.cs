@@ -174,6 +174,13 @@ public class Enemy : MonoBehaviour
 
             }
 
+            /*
+            if ( ) //(_enemyLaser._laserID == _laserIDs.LaserBeam)
+            {
+
+            }
+            */
+
             _audioSource.clip = _sfxClipLaserSmall;
             _audioSource.Play(0);
         }

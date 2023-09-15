@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
+    public enum _laserIDs
+    {
+        Normal,
+        LaserBeam
+    }
+
+    public _laserIDs _laserID;
     private int _speed = 8;
     private float _xLimit = 11.0f;
     private float _yLimit = 6.0f;
@@ -19,9 +26,12 @@ public class Laser : MonoBehaviour
         {
             MoveUp();
         }
-        else
+        else 
         {
-            MoveDown();
+            if (_laserID == _laserIDs.Normal)
+            { 
+                MoveDown();
+            }
         }
 
     }
