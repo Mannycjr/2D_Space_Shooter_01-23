@@ -49,11 +49,9 @@ public class Asteroid : MonoBehaviour
         Debug.Log("Hit! Asteroid::OnTriggerEnter: Begin. other.tag=" + other.tag);
         if (other.tag == "Laser" ) 
         {
-            //Debug.Log("Asteroid::OnTriggerEnter: if other.tag=" + other.tag);
             Destroy(other.gameObject);
             ExplosionAnim();
             _gameManager.StartSpawning();
-            //_gameManager.
         }
         else if (other.tag == "Player")
         {

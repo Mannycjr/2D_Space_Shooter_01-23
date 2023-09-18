@@ -7,11 +7,13 @@ public class Enemy : MonoBehaviour
     public enum _enemyIDs
     {
         Standard,
-        Sidewards
+        LaserBeam
     }
 
     [SerializeField] private _enemyIDs _enemyID;
     [SerializeField] private float _speed = 4.0f;
+    [SerializeField] private GameObject _explosionPrefab;
+    private GameObject _explosionInstance;
     GameObject _laserSpawnPoint;
     private float _verticalLimit = 7.0f;
     private float _horizontalLimit = 11.0f;
@@ -28,8 +30,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private AudioClip _sfxClipLaserSmall;
 
     [SerializeField] private GameObject _laserPrefab;
-    //private Vector3 _laserOffset = new Vector3(); //Vector3(0, -1.15f, 0);
-
 
     private float _fireRate = 3.0f;
     private float _canFireAtTime = -1;
@@ -38,10 +38,11 @@ public class Enemy : MonoBehaviour
 
     private bool _waveEnded = false;
 
+    private GameObject _enemyLaserProjectile;
+
     // Start is called before the first frame update
     void Start()
     {
-        //_laserOffset.forward;
         
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player == null)
@@ -65,16 +66,26 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Enemy::Start() _laserPrefab is NULL. Add prefab in Inspector.");
         }
-        else
-        {
-            //_laserPrefab assigned in Inspector
-        }
 
         _laserSpawnPoint = this.gameObject.transform.GetChild(0).gameObject;
         if ((_laserSpawnPoint == null) | (this.gameObject.transform.GetChild(0).name != "Laser_Spawn"))
         {
             Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL or not Laser_Spawn.");
         }
+
+        
+        if (_enemyID == _enemyIDs.LaserBeam) // If enemy is LaserBeam enemy type, instantiate immediately and hid laser.
+        {
+            /*
+            Debug.Log("Enemy::Start:LaserBeam prefab instantiated");
+            _enemyLaserProjectile = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
+            LaserBeamOff();
+            _enemyLaserProjectile.GetComponent<Laser>().EnemyLaser(); // Marks it as enemy laser instead of player's laser
+            _enemyLaserProjectile.transform.parent = transform; //Parent LaserBeam to this enemy
+            */
+            _explosionAnimLength = 0.0f;
+        }
+        
     }
 
     // Update is called once per frame
@@ -82,15 +93,15 @@ public class Enemy : MonoBehaviour
     {
         switch (_enemyID)
         {
-            case _enemyIDs.Sidewards:
+            case _enemyIDs.LaserBeam:
                 //CalculateMovementWavy();
                 CalculateMovementStandard();
-                FireLaser();
+                FireLaserBeam();
                 break;
             case _enemyIDs.Standard:
             default:
                 CalculateMovementStandard();
-                FireLaser();
+                FireLaserNormal();
                 break;
         }
 
@@ -156,9 +167,9 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private void FireLaser()
+    private void FireLaserNormal()
     {
-        //Debug.Log("Enemy::FireLaser: Begin");
+        //Debug.Log("Enemy::FireLaserNormal: Begin");
         
         if (Time.time > _canFireAtTime && _isDestroyed == false)
         {
@@ -170,16 +181,9 @@ public class Enemy : MonoBehaviour
 
             for (int i = 0; i < lasers.Length; i++)
             {
-                lasers[i].EnemyLaser();
+                lasers[i].EnemyLaser(); // Marks it as enemy laser instead of player's laser
 
             }
-
-            /*
-            if ( ) //(_enemyLaser._laserID == _laserIDs.LaserBeam)
-            {
-
-            }
-            */
 
             _audioSource.clip = _sfxClipLaserSmall;
             _audioSource.Play(0);
@@ -187,17 +191,68 @@ public class Enemy : MonoBehaviour
 
     }
 
+    private void FireLaserBeam()
+    {
+        Debug.Log("Enemy::FireLaserBeam: Begin");
+
+        if ((Time.time > _canFireAtTime) && _isDestroyed == false)
+        {
+            Debug.Log("Enemy::FireLaserBeam: Firing Laser Beam");
+            float _laserBeamDuration = 2.0f;//Random.Range(1f, 3f);
+
+            _fireRate = 1f;// Random.Range(1f, 7f);
+            _canFireAtTime = Time.time + _fireRate;
+
+            _audioSource.clip = _sfxClipLaserSmall;
+            _audioSource.Play(0);
+            StartCoroutine(LaserBeamOn(_laserBeamDuration));
+            
+        }
+    }
+
+    IEnumerator LaserBeamOn(float Duration)
+    {
+        Debug.Log("Enemy::LaserBeamOn Coroutine: Begin");
+        //_enemyLaserProjectile.SetActive(true);
+        _enemyLaserProjectile = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
+        _enemyLaserProjectile.GetComponent<Laser>().EnemyLaser(); // Marks it as enemy laser instead of player's laser
+        _enemyLaserProjectile.transform.parent = transform; //Parent LaserBeam to this enemy
+        Debug.Log("Enemy::LaserBeamOn Coroutine: _enemyLaserProjectile.activeInHierarchy=" + _enemyLaserProjectile.activeInHierarchy);
+        yield return new WaitForSeconds(Duration);
+        LaserBeamOff();
+        Debug.Log("Enemy::LaserBeamOn Coroutine: End");
+    }
+
+    private void LaserBeamOff()
+    {
+        Debug.Log("Enemy::LaserBeamOFF: Begin and DESTROY");
+        Destroy(_enemyLaserProjectile);
+    }
+
     private void DestoryEnemy()
     {
         _isDestroyed = true;
         _audioSource.clip = _sfxClipExplosion;
         _audioSource.Play(0);
-        _enemyAnimator.SetTrigger("OnEnemyDeath"); // Explosion animaiton
+        if (_enemyID == _enemyIDs.LaserBeam)
+        {
+            ExplosionOnlyAnim();
+        } else if (_enemyID == _enemyIDs.Standard)
+        {
+            _enemyAnimator.SetTrigger("OnEnemyDeath"); // Explosion animaiton with Standard Enemy in beginning
+        }
+        
 
         Destroy(GetComponent<Collider2D>()); // Do not collide any more
         _speed = 0; // No movement after shot
 
         Destroy(this.gameObject, _explosionAnimLength);
+    }
+
+    private void ExplosionOnlyAnim()
+    {
+        _explosionInstance = Instantiate(_explosionPrefab, transform.position, transform.rotation);
+        Destroy(_explosionInstance, 4.0f);
     }
 
     public void ClearField()

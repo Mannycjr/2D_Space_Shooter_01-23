@@ -10,7 +10,7 @@ public class Laser : MonoBehaviour
         LaserBeam
     }
 
-    public _laserIDs _laserID;
+    public _laserIDs _laserType;
     private int _speed = 8;
     private float _xLimit = 11.0f;
     private float _yLimit = 6.0f;
@@ -28,7 +28,7 @@ public class Laser : MonoBehaviour
         }
         else 
         {
-            if (_laserID == _laserIDs.Normal)
+            if (_laserType == _laserIDs.Normal)
             { 
                 MoveDown();
             }
@@ -59,7 +59,7 @@ public class Laser : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if ( (transform.position.y < -_yLimit) | (Mathf.Abs(transform.position.x) > _xLimit))
+        if ( (transform.position.y < -_yLimit) | (Mathf.Abs(transform.position.x) > _xLimit) )
         {
             if (this.transform.parent != null)
             {
@@ -92,16 +92,23 @@ public class Laser : MonoBehaviour
             {
                 player.Damage();
             }
-            ExplosionAnim();
-            Destroy(GetComponent<Collider2D>()); // Do not collide any more
-            Destroy(GetComponent<SpriteRenderer>());
-            Destroy(this.gameObject, 2.7f);
+            
+            if (_laserType==_laserIDs.Normal)
+            {
+                ExplosionAnim(transform.position);
+                Destroy(GetComponent<Collider2D>()); // Do not collide any more
+                Destroy(GetComponent<SpriteRenderer>());
+                Destroy(this.gameObject, 2.7f);
+            } else if (_laserType == _laserIDs.LaserBeam)
+            {
+                ExplosionAnim(other.transform.position);
+            }
         }
     }
 
-    private void ExplosionAnim()
+    private void ExplosionAnim(Vector3 _explosionPosition)
     {
-        _explosionInstance = Instantiate(_explosionPrefab, transform.position, transform.rotation);
+        _explosionInstance = Instantiate(_explosionPrefab, _explosionPosition, transform.rotation);
 
         Destroy(_explosionInstance, 2.7f);
     }

@@ -24,7 +24,7 @@ public class SpawnManager : MonoBehaviour
     float _waitTimeEnemy = 5.0f; // Enemy spawning looping wait time between individual enemies
     float _waitTimeWaves = 7.0f; // Waves spawning looping wait time between waves of enemies
     int _maxEnemies = 1;
-    int _enemiesSpawned = 0;
+    //int _enemiesSpawned = 0;
 
 
     // Start is called before the first frame update
@@ -130,7 +130,7 @@ public class SpawnManager : MonoBehaviour
                     _spawnZAngle =  Random.Range(-45f,45f);
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
 
-                    if (_gameManager._waveID > 2) // *** After wave 2, include spawning new enemy type
+                    if (_gameManager._waveID > 0) // *** After wave 2, include spawning new enemy type
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }
@@ -138,8 +138,8 @@ public class SpawnManager : MonoBehaviour
                     {
                         _spawnZAngle = 0;
                     }
-
-                    GameObject newEnemy = Instantiate(_enemyPrefab[_enemyIndex], spawnPosition, Quaternion.Euler(0, 0, _spawnZAngle)); // Quaternion.Euler(0,0, _spawnZAngle)
+                    // ** _enemyPrefab[_enemyIndex]
+                    GameObject newEnemy = Instantiate(_enemyPrefab[1], spawnPosition, Quaternion.Euler(0, 0, _spawnZAngle)); // Quaternion.Euler(0,0, _spawnZAngle)
                     newEnemy.transform.parent = _enemyContainer.transform;
                 }
 
