@@ -130,7 +130,7 @@ public class SpawnManager : MonoBehaviour
                     _spawnZAngle =  Random.Range(-45f,45f);
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
 
-                    if (_gameManager._waveID > 0) // *** After wave 2, include spawning new enemy type
+                    if (_gameManager._waveID > 2) // After wave 2, include spawning new enemy type
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }
@@ -139,7 +139,7 @@ public class SpawnManager : MonoBehaviour
                         _spawnZAngle = 0;
                     }
                     // ** _enemyPrefab[_enemyIndex]
-                    GameObject newEnemy = Instantiate(_enemyPrefab[1], spawnPosition, Quaternion.Euler(0, 0, _spawnZAngle)); // Quaternion.Euler(0,0, _spawnZAngle)
+                    GameObject newEnemy = Instantiate(_enemyPrefab[_enemyIndex], spawnPosition, Quaternion.Euler(0, 0, _spawnZAngle));
                     newEnemy.transform.parent = _enemyContainer.transform;
                 }
 

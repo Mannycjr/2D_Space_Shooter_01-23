@@ -40,6 +40,9 @@ public class Enemy : MonoBehaviour
 
     private GameObject _enemyLaserProjectile;
 
+    [Header("LaserBeam Enemy Only")]
+    private bool _LaserBeamON = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -195,25 +198,24 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Enemy::FireLaserBeam: Begin");
 
-        if ((Time.time > _canFireAtTime) && _isDestroyed == false)
+        if ( (Time.time > _canFireAtTime) && (_isDestroyed == false) && (_LaserBeamON == false) )
         {
             Debug.Log("Enemy::FireLaserBeam: Firing Laser Beam");
-            float _laserBeamDuration = 2.0f;//Random.Range(1f, 3f);
+            float _laserBeamDuration = 2.75f; //Random.Range(0.5f, 3f);
 
-            _fireRate = 1f;// Random.Range(1f, 7f);
+            _fireRate = Random.Range(1f, 7f);
             _canFireAtTime = Time.time + _fireRate;
 
             _audioSource.clip = _sfxClipLaserSmall;
             _audioSource.Play(0);
             StartCoroutine(LaserBeamOn(_laserBeamDuration));
-            
         }
     }
 
     IEnumerator LaserBeamOn(float Duration)
     {
         Debug.Log("Enemy::LaserBeamOn Coroutine: Begin");
-        //_enemyLaserProjectile.SetActive(true);
+        _LaserBeamON = true;
         _enemyLaserProjectile = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
         _enemyLaserProjectile.GetComponent<Laser>().EnemyLaser(); // Marks it as enemy laser instead of player's laser
         _enemyLaserProjectile.transform.parent = transform; //Parent LaserBeam to this enemy
@@ -227,6 +229,7 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("Enemy::LaserBeamOFF: Begin and DESTROY");
         Destroy(_enemyLaserProjectile);
+        _LaserBeamON = false;
     }
 
     private void DestoryEnemy()

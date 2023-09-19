@@ -54,7 +54,7 @@ MonoBehaviour:
   _speed: 4
   _explosionPrefab: {fileID: 5665125328609053333, guid: f053f236ed91d604b9ae33590978cf4f, type: 3}
   _sfxClipExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
-  _sfxClipLaserSmall: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _sfxClipLaserSmall: {fileID: 8300000, guid: a9e3fee688cf000499bded40dd54ff48, type: 3}
   _laserPrefab: {fileID: 4046566714044603437, guid: cda8a98fc940d0245a6f2d4b7d5127b3, type: 3}
 --- !u!212 &4746186775749362755
 SpriteRenderer:
