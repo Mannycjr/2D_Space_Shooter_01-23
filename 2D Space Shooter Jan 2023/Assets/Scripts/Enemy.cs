@@ -196,7 +196,7 @@ public class Enemy : MonoBehaviour
 
     private void FireLaserBeam()
     {
-        Debug.Log("Enemy::FireLaserBeam: Begin");
+        //Debug.Log("Enemy::FireLaserBeam: Begin");
 
         if ( (Time.time > _canFireAtTime) && (_isDestroyed == false) && (_LaserBeamON == false) )
         {
@@ -208,21 +208,22 @@ public class Enemy : MonoBehaviour
 
             _audioSource.clip = _sfxClipLaserSmall;
             _audioSource.Play(0);
+            _audioSource.volume = 0.25f;
             StartCoroutine(LaserBeamOn(_laserBeamDuration));
         }
     }
 
     IEnumerator LaserBeamOn(float Duration)
     {
-        Debug.Log("Enemy::LaserBeamOn Coroutine: Begin");
+        //Debug.Log("Enemy::LaserBeamOn Coroutine: Begin");
         _LaserBeamON = true;
         _enemyLaserProjectile = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
         _enemyLaserProjectile.GetComponent<Laser>().EnemyLaser(); // Marks it as enemy laser instead of player's laser
         _enemyLaserProjectile.transform.parent = transform; //Parent LaserBeam to this enemy
-        Debug.Log("Enemy::LaserBeamOn Coroutine: _enemyLaserProjectile.activeInHierarchy=" + _enemyLaserProjectile.activeInHierarchy);
+        //Debug.Log("Enemy::LaserBeamOn Coroutine: _enemyLaserProjectile.activeInHierarchy=" + _enemyLaserProjectile.activeInHierarchy);
         yield return new WaitForSeconds(Duration);
         LaserBeamOff();
-        Debug.Log("Enemy::LaserBeamOn Coroutine: End");
+        //Debug.Log("Enemy::LaserBeamOn Coroutine: End");
     }
 
     private void LaserBeamOff()
@@ -240,6 +241,7 @@ public class Enemy : MonoBehaviour
         if (_enemyID == _enemyIDs.LaserBeam)
         {
             ExplosionOnlyAnim();
+            Destroy(this.GetComponentInChildren<Laser>());
         } else if (_enemyID == _enemyIDs.Standard)
         {
             _enemyAnimator.SetTrigger("OnEnemyDeath"); // Explosion animaiton with Standard Enemy in beginning
@@ -250,6 +252,7 @@ public class Enemy : MonoBehaviour
         _speed = 0; // No movement after shot
 
         Destroy(this.gameObject, _explosionAnimLength);
+        
     }
 
     private void ExplosionOnlyAnim()

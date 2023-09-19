@@ -117,13 +117,13 @@ public class SpawnManager : MonoBehaviour
 
         int _enemyIndex = 0; // Initialized to Standard Enemy
 
-        while (_stopSpawning == false)
+        while ((_stopSpawning == false) && (_gameManager._isGameOver == false))
         {
             for (int i = 0; i < _maxEnemies; i++)
             {
                 yield return new WaitForSeconds(_waitTimeEnemy);
 
-                if (_stopSpawning == false)
+                if ((_stopSpawning == false) && (_gameManager._isGameOver == false))
                 {
                     // Instantiate enemy prefab
                     _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
@@ -138,9 +138,12 @@ public class SpawnManager : MonoBehaviour
                     {
                         _spawnZAngle = 0;
                     }
-                    // ** _enemyPrefab[_enemyIndex]
                     GameObject newEnemy = Instantiate(_enemyPrefab[_enemyIndex], spawnPosition, Quaternion.Euler(0, 0, _spawnZAngle));
                     newEnemy.transform.parent = _enemyContainer.transform;
+                    if ((_stopSpawning == true) && (_gameManager._isGameOver == true))
+                    {
+                        yield break;
+                    }
                 }
 
             }
@@ -173,6 +176,7 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+        _gameManager.GameOver();
     }
 
 }
