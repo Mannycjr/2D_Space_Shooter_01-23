@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
         LaserBeam
     }
 
-    [SerializeField] private _enemyIDs _enemyID;
+    public _enemyIDs _enemyID;
     [SerializeField] private float _speed = 4.0f;
     [SerializeField] private GameObject _explosionPrefab;
     private GameObject _explosionInstance;
@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
 
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _sfxClipExplosion;
-    [SerializeField] private AudioClip _sfxClipLaserSmall;
+    [SerializeField] private AudioClip _sfxClipLaser;
 
     [SerializeField] private GameObject _laserPrefab;
 
@@ -77,15 +77,8 @@ public class Enemy : MonoBehaviour
         }
 
         
-        if (_enemyID == _enemyIDs.LaserBeam) // If enemy is LaserBeam enemy type, instantiate immediately and hid laser.
+        if (_enemyID == _enemyIDs.LaserBeam)
         {
-            /*
-            Debug.Log("Enemy::Start:LaserBeam prefab instantiated");
-            _enemyLaserProjectile = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
-            LaserBeamOff();
-            _enemyLaserProjectile.GetComponent<Laser>().EnemyLaser(); // Marks it as enemy laser instead of player's laser
-            _enemyLaserProjectile.transform.parent = transform; //Parent LaserBeam to this enemy
-            */
             _explosionAnimLength = 0.0f;
         }
         
@@ -97,7 +90,6 @@ public class Enemy : MonoBehaviour
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
-                //CalculateMovementWavy();
                 CalculateMovementStandard();
                 FireLaserBeam();
                 break;
@@ -107,8 +99,6 @@ public class Enemy : MonoBehaviour
                 FireLaserNormal();
                 break;
         }
-
-
     }
 
     private void CalculateMovementStandard()
@@ -188,7 +178,7 @@ public class Enemy : MonoBehaviour
 
             }
 
-            _audioSource.clip = _sfxClipLaserSmall;
+            _audioSource.clip = _sfxClipLaser;
             _audioSource.Play(0);
         }
 
@@ -196,17 +186,15 @@ public class Enemy : MonoBehaviour
 
     private void FireLaserBeam()
     {
-        //Debug.Log("Enemy::FireLaserBeam: Begin");
 
         if ( (Time.time > _canFireAtTime) && (_isDestroyed == false) && (_LaserBeamON == false) )
         {
-            Debug.Log("Enemy::FireLaserBeam: Firing Laser Beam");
             float _laserBeamDuration = 2.75f; //Random.Range(0.5f, 3f);
 
             _fireRate = Random.Range(1f, 7f);
             _canFireAtTime = Time.time + _fireRate;
 
-            _audioSource.clip = _sfxClipLaserSmall;
+            _audioSource.clip = _sfxClipLaser;
             _audioSource.Play(0);
             _audioSource.volume = 0.25f;
             StartCoroutine(LaserBeamOn(_laserBeamDuration));
@@ -215,15 +203,12 @@ public class Enemy : MonoBehaviour
 
     IEnumerator LaserBeamOn(float Duration)
     {
-        //Debug.Log("Enemy::LaserBeamOn Coroutine: Begin");
         _LaserBeamON = true;
         _enemyLaserProjectile = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
         _enemyLaserProjectile.GetComponent<Laser>().EnemyLaser(); // Marks it as enemy laser instead of player's laser
         _enemyLaserProjectile.transform.parent = transform; //Parent LaserBeam to this enemy
-        //Debug.Log("Enemy::LaserBeamOn Coroutine: _enemyLaserProjectile.activeInHierarchy=" + _enemyLaserProjectile.activeInHierarchy);
         yield return new WaitForSeconds(Duration);
         LaserBeamOff();
-        //Debug.Log("Enemy::LaserBeamOn Coroutine: End");
     }
 
     private void LaserBeamOff()

@@ -103,15 +103,6 @@ public class Laser : MonoBehaviour
             {
                 ExplosionAnim(other.transform.position);
             }
-        } else if (other.tag == "Enemy")
-        {
-            /*
-            ExplosionAnim(other.transform.position);
-            
-            Destroy(other.GetComponent<Collider2D>());
-            Destroy(other.GetComponent<SpriteRenderer>());
-            Destroy(other, 2.7f);
-            */
         }
     }
 
