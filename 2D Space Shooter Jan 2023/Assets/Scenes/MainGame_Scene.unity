@@ -1200,7 +1200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10367ea088f1202488c95e6949add82c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 2020700719460078783, guid: d4498c15a976dd746a6cf8c23bb2c9f8, type: 3}
+  _enemyPrefab:
+  - {fileID: 2020700719460078783, guid: d4498c15a976dd746a6cf8c23bb2c9f8, type: 3}
+  - {fileID: 2020700719460078783, guid: a764598c572a36240866fb7d162be9cf, type: 3}
   _enemyContainer: {fileID: 395430345}
   _powerupPrefab:
   - {fileID: 4183205521747697883, guid: c1db6df7b47bb8e45adf1cf0ebd2ac6d, type: 3}
@@ -2526,7 +2528,7 @@ MonoBehaviour:
   _textFlickerDelay: 0.25
   _thrustersSlider: {fileID: 412722290}
   _thrustersSliderFill: {fileID: 1617366325}
-  _waveIDDisplay: {fileID: 69774333}
+  waveIDDisplay: {fileID: 69774333}
   _waveTimeDisplay: {fileID: 830041610}
   _waveDisplay: {fileID: 889168958}
   _waveEnded: 0
@@ -3163,7 +3165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isGameOver: 0
-  _waveID: 0
+  waveID: 0
 --- !u!4 &1639923392
 Transform:
   m_ObjectHideFlags: 0

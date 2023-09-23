@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
 
     void CalculateMovement()
     {
-        Debug.Log("Player::CalculateMovement:_speedBoostShiftActive=" + _speedBoostShiftActive);
+        //Debug.Log("Player::CalculateMovement:_speedBoostShiftActive=" + _speedBoostShiftActive);
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -214,7 +214,7 @@ public class Player : MonoBehaviour
     // Shift Key Thrusters Cool Down System. Thrusters NOT Active
     IEnumerator ThrustersPowerReplenishRoutine()
     {
-        Debug.Log("Player::ThrustersPowerReplenishRoutine:Begin");
+        //Debug.Log("Player::ThrustersPowerReplenishRoutine:Begin");
 
         yield return new WaitForSeconds(_shiftKeyThrustersWaitTimeLimit);
 
@@ -400,13 +400,13 @@ public class Player : MonoBehaviour
 
     public void AmmoRefill()
     {
-        _ammoCount = 15;
+        _ammoCount = 20;
         _UIManager.UpdateAmmo(_ammoCount, _ammoMax);
     }
 
     private void UpdateSmokeDamage()
     {
-        Debug.Log("Player::VFX_Smoke: _lives="+_lives);
+        //Debug.Log("Player::VFX_Smoke: _lives="+_lives);
         if (_lives == 2)
         {
             _damageSmokeLeft.SetActive(true);

@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private bool _isGameOver = true;
+    public bool _isGameOver = true;
     private UIManager _uiManagerScript;
 
     private SpawnManager _spawnManager;
-    public int _waveID = 0;
+    public int waveID = 0;
     private float _waveTime = 5.0f;
     private float _holdTime = 2.0f;
 
@@ -63,19 +63,19 @@ public class GameManager : MonoBehaviour
 
     public void StartSpawning()
     {
-        _waveID++;
-        _waveTime += 10;
+        waveID++;
+        _waveTime += 10f;
 
-        if (_waveID > 5)
+        if (waveID > 6)
         {
             Debug.Log("You Win!");
             return;
         }
 
         _uiManagerScript.WaveDisplayOn();
-        _uiManagerScript.WaveIDUpdate(_waveID);
+        _uiManagerScript.WaveIDUpdate(waveID);
         StartCoroutine(WaveCountdown(_waveTime));
-        _spawnManager.StartSpawning(_waveID);
+        _spawnManager.StartSpawning(waveID);
     }
 
     private IEnumerator WaveCountdown(float _time)
