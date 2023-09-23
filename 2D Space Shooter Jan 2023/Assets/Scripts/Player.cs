@@ -406,7 +406,7 @@ public class Player : MonoBehaviour
 
     private void UpdateSmokeDamage()
     {
-        Debug.Log("Player::VFX_Smoke: _lives="+_lives);
+        //Debug.Log("Player::VFX_Smoke: _lives="+_lives);
         if (_lives == 2)
         {
             _damageSmokeLeft.SetActive(true);

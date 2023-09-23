@@ -2528,7 +2528,7 @@ MonoBehaviour:
   _textFlickerDelay: 0.25
   _thrustersSlider: {fileID: 412722290}
   _thrustersSliderFill: {fileID: 1617366325}
-  _waveIDDisplay: {fileID: 69774333}
+  waveIDDisplay: {fileID: 69774333}
   _waveTimeDisplay: {fileID: 830041610}
   _waveDisplay: {fileID: 889168958}
   _waveEnded: 0
@@ -3165,7 +3165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isGameOver: 0
-  _waveID: 0
+  waveID: 0
 --- !u!4 &1639923392
 Transform:
   m_ObjectHideFlags: 0

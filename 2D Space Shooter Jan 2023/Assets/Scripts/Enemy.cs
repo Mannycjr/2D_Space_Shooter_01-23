@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
     public _enemyIDs _enemyID;
     [SerializeField] private float _speed = 4.0f;
     [SerializeField] private GameObject _explosionPrefab;
+
+    private GameManager _gameManager;
+
     private GameObject _explosionInstance;
     GameObject _laserSpawnPoint;
     private float _verticalLimit = 7.0f;
@@ -53,6 +56,12 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy::Start() No _player");
         }
 
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        if (_gameManager == null)
+        {
+            Debug.LogError("Enemy::Start(). Game Manager is NULL");
+        }
+
         _enemyAnimator = GetComponent<Animator>();
         if (_enemyAnimator == null)
         {
@@ -90,7 +99,13 @@ public class Enemy : MonoBehaviour
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
-                CalculateMovementStandard();
+                if (_gameManager.waveID > 3)
+                {
+                    CalculateMovementWavy();
+                } else
+                {
+                    CalculateMovementStandard();
+                }
                 FireLaserBeam();
                 break;
             case _enemyIDs.Standard:
@@ -111,7 +126,9 @@ public class Enemy : MonoBehaviour
     private void CalculateMovementWavy()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
+        float _newRotation = Mathf.Cos(Time.time) * Time.deltaTime * 45f;
+        //Debug.Log("Enemy::CalculateMovementWavy:_newRotation=" + _newRotation);
+        transform.Rotate(0,0, _newRotation);
         CalcMovementAtScreenLimits();
     }
 
@@ -136,6 +153,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Enemy::OnTriggerEnter2D:Begin");
         if (other.tag == "Player")
         {
             // Damage the player
@@ -149,6 +167,7 @@ public class Enemy : MonoBehaviour
         }
         else if (other.tag == "Laser")
         {
+
             Destroy(other.gameObject);
 
             if (_player != null)
@@ -213,7 +232,7 @@ public class Enemy : MonoBehaviour
 
     private void LaserBeamOff()
     {
-        Debug.Log("Enemy::LaserBeamOFF: Begin and DESTROY");
+        //Debug.Log("Enemy::LaserBeamOFF: Begin and DESTROY");
         Destroy(_enemyLaserProjectile);
         _LaserBeamON = false;
     }

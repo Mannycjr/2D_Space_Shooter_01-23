@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider _thrustersSlider;
     [SerializeField] private Image _thrustersSliderFill;
 
-    public TMP_Text _waveIDDisplay;
+    public TMP_Text waveIDDisplay;
     public TMP_Text _waveTimeDisplay;
     public GameObject _waveDisplay;
     public bool _waveEnded = false;
@@ -73,7 +73,7 @@ public class UIManager : MonoBehaviour
 
     public void GameOverSequence()
     {
-        Debug.Log("UIManager::DisplayGameOver start");
+        //Debug.Log("UIManager::DisplayGameOver start");
         _gameOverText.gameObject.SetActive(true);
         _restartText.gameObject.SetActive(true);
         _gameManager.GameOver();
@@ -134,7 +134,7 @@ public class UIManager : MonoBehaviour
 
     public void WaveIDUpdate(int waveID)
     {
-        _waveIDDisplay.text = "Wave " + waveID.ToString();
+        waveIDDisplay.text = "Wave " + waveID.ToString();
     }
 
     public void WaveTimeUpdate(float _seconds)

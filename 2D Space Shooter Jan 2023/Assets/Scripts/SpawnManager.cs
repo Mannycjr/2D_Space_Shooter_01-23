@@ -43,11 +43,11 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    public void StartSpawning(int _waveID)
+    public void StartSpawning(int waveID)
     {
         Debug.Log("SpawnManager::StartSpawning() Started");
         _stopSpawning = false;
-        GetWaveInfo(_waveID);
+        GetWaveInfo(waveID);
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
         StartCoroutine(SpawnPowerupRoutine(_powerupPrefabRare, _waitTimePowerupsRareMin, _waitTimePowerupsRareMax));
@@ -75,13 +75,13 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private void GetWaveInfo(int _waveID)
+    private void GetWaveInfo(int waveID)
     {
         Debug.Log("SpawnManager::GetWaveInfo() Called");
         WaitForSeconds _respawnTime = new WaitForSeconds(10);
 
 
-        switch (_waveID)
+        switch (waveID)
         {
             case 1:
                 _maxEnemies = 2;
@@ -128,11 +128,11 @@ public class SpawnManager : MonoBehaviour
                     _spawnZAngle =  Random.Range(-45f,45f);
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
 
-                    if (_gameManager._waveID > 2) // After wave 2, include spawning new enemy type
+                    if (_gameManager.waveID > 2) // After wave 2, include spawning new enemy type
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }
-                    if (_gameManager._waveID < 3) // Less than wave 3, no angle yet for simple enemies 
+                    if (_gameManager.waveID < 3) // Less than wave 3, no angle yet for simple enemies 
                     {
                         _spawnZAngle = 0;
                     }

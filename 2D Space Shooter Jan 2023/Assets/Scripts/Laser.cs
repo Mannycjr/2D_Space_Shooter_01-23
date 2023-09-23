@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    public enum _laserIDs
+    public enum laserIDs
     {
         Normal,
         LaserBeam
     }
 
-    public _laserIDs _laserType;
+    public laserIDs laserType;
     private int _speed = 8;
     private float _xLimit = 11.0f;
     private float _yLimit = 6.0f;
@@ -28,7 +28,7 @@ public class Laser : MonoBehaviour
         }
         else 
         {
-            if (_laserType == _laserIDs.Normal)
+            if (laserType == laserIDs.Normal)
             { 
                 MoveDown();
             }
@@ -42,7 +42,7 @@ public class Laser : MonoBehaviour
 
         if ( (Mathf.Abs(transform.position.y) > _yLimit ) | (Mathf.Abs(transform.position.x) > _xLimit ) )
         {
-            //check if this object is a parent
+            //check if this object is a parent such as Triple Shot Laser
 
             if (this.transform.parent != null)
             {
@@ -93,13 +93,13 @@ public class Laser : MonoBehaviour
                 player.Damage();
             }
             
-            if (_laserType==_laserIDs.Normal)
+            if (laserType==laserIDs.Normal)
             {
                 ExplosionAnim(transform.position);
                 Destroy(GetComponent<Collider2D>()); // Do not collide any more
                 Destroy(GetComponent<SpriteRenderer>());
                 Destroy(this.gameObject, 2.7f);
-            } else if (_laserType == _laserIDs.LaserBeam)
+            } else if (laserType == laserIDs.LaserBeam)
             {
                 ExplosionAnim(other.transform.position);
             }
