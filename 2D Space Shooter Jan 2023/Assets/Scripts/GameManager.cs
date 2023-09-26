@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator WaveCountdown(float _time)
     {
-        while(_time > 0 )
+        while ((_time > 0 ) && (!_isGameOver))
         {
             _time -= Time.deltaTime;
             _uiManagerScript.WaveTimeUpdate(_time);

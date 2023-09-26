@@ -157,7 +157,7 @@ public class SpawnManager : MonoBehaviour
     {
         int _randomPowerUpIndex = 0;
 
-        while (_stopSpawning == false)
+        while ((_stopSpawning == false) && (_gameManager._isGameOver == false))
         {
             _waitTimePowerups = Random.Range(_waitTimeMin, _waitTimeMax);
 
