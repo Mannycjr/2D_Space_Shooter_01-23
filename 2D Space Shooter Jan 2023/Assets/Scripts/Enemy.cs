@@ -45,6 +45,7 @@ public class Enemy : MonoBehaviour
 
     [Header("LaserBeam Enemy Only")]
     private bool _LaserBeamON = false;
+    public int afterLevelXLaserBeamEnemyWavyMove = 4; // When Laser Beam Enemy can move in Wavy motion, difficult for player
 
     // Start is called before the first frame update
     void Start()
@@ -99,7 +100,7 @@ public class Enemy : MonoBehaviour
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
-                if (_gameManager.waveID > 3)
+                if (_gameManager.waveID > afterLevelXLaserBeamEnemyWavyMove) // afterLevelXLaserBeamEnemyWavyMove = 4 (Default)
                 {
                     CalculateMovementWavy();
                 } else

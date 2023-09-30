@@ -17,7 +17,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float _waitTimePowerupsRareMax = 25.0f;
 
     public int afterLevelXNewEnemySpawn = 3;
-    public int afterLevelXNewEnemyWavyMove = 6;
+    public int afterLevelXNewEnemyAngledSpawned = 6;
 
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;
@@ -146,7 +146,7 @@ public class SpawnManager : MonoBehaviour
 
                 if ((_stopSpawning == false) && (_gameManager._isGameOver == false))
                 {
-                    Debug.Log("SpawnManager::SpawnEnemyRoutine:_gameManager.waveID="+ _gameManager.waveID);
+                    Debug.Log("SpawnManager::SpawnEnemyRoutine:_gameManager.waveID="+ _gameManager.waveID + ". _spawnZAngle="+ _spawnZAngle);
 
                     // Instantiate enemy prefab
                     _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
@@ -157,10 +157,11 @@ public class SpawnManager : MonoBehaviour
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }
-                    if (_gameManager.waveID > afterLevelXNewEnemyWavyMove) // After wave 6 (default), no angle yet for simple enemies 
+                    if (_gameManager.waveID > afterLevelXNewEnemyAngledSpawned) // Before wave 6 (default), no angle yet for ALL enemies 
                     {
                         _spawnZAngle = Random.Range(-45f, 45f);
                     }
+                    // Note: Laser Beam Enemy Wavy Movement set in Enemy.cs in afterLevelXLaserBeamEnemyWavyMove
                     GameObject newEnemy = Instantiate(_enemyPrefab[_enemyIndex], spawnPosition, Quaternion.Euler(0, 0, _spawnZAngle));
                     newEnemy.transform.parent = _enemyContainer.transform;
                     if ((_stopSpawning == true) && (_gameManager._isGameOver == true))

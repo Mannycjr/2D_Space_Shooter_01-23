@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     private SpawnManager _spawnManager;
     public int waveID = 0;
+    public int waveLast = 10;
     private float _waveTime = 5.0f;
     private float _holdTime = 2.0f;
 
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviour
         waveID++;
         _waveTime += 10f;
 
-        if (waveID > 6)
+        if (waveID > waveLast)
         {
             Debug.Log("You Win!");
             return;
