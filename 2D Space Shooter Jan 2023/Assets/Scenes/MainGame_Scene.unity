@@ -1204,19 +1204,24 @@ MonoBehaviour:
   - {fileID: 2020700719460078783, guid: d4498c15a976dd746a6cf8c23bb2c9f8, type: 3}
   - {fileID: 2020700719460078783, guid: a764598c572a36240866fb7d162be9cf, type: 3}
   _enemyContainer: {fileID: 395430345}
+  _powerupPrefabFrequent:
+  - {fileID: 7295739879116137568, guid: 111f78c67d0f7f0488942c2b03b0aa3c, type: 3}
   _powerupPrefab:
   - {fileID: 4183205521747697883, guid: c1db6df7b47bb8e45adf1cf0ebd2ac6d, type: 3}
   - {fileID: 9044674762967548964, guid: 6351496bdfdda0c42b96eb9f7c8b4eb7, type: 3}
   - {fileID: 7462965167645492359, guid: 2a5bf8846bd43df4e82ee9f8bf3044de, type: 3}
-  - {fileID: 7295739879116137568, guid: 111f78c67d0f7f0488942c2b03b0aa3c, type: 3}
-  - {fileID: 8884838322766982656, guid: 98deb208ebeaa874b959237d93cd908a, type: 3}
   - {fileID: 1894892863904505316, guid: c4fe37246d6cde34080870a5fcf4fef1, type: 3}
   _powerupPrefabRare:
+  - {fileID: 8884838322766982656, guid: 98deb208ebeaa874b959237d93cd908a, type: 3}
   - {fileID: 3423743573829851199, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+  _waitTimePowerupsFrequentMin: 2
+  _waitTimePowerupsFrequentMax: 5
   _waitTimePowerupsNormalMin: 2
   _waitTimePowerupsNormalMax: 5
   _waitTimePowerupsRareMin: 10
   _waitTimePowerupsRareMax: 20
+  afterLevelXNewEnemySpawn: 3
+  afterLevelXNewEnemyWavyMove: 6
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

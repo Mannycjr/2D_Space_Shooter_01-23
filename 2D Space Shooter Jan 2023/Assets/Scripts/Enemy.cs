@@ -208,9 +208,9 @@ public class Enemy : MonoBehaviour
 
         if ( (Time.time > _canFireAtTime) && (_isDestroyed == false) && (_LaserBeamON == false) )
         {
-            float _laserBeamDuration = 2.75f; //Random.Range(0.5f, 3f);
+            float _laserBeamDuration = 2.75f; 
 
-            _fireRate = Random.Range(1f, 7f);
+            _fireRate = Random.Range(10f, 20f); // Infrequent firing
             _canFireAtTime = Time.time + _fireRate;
 
             _audioSource.clip = _sfxClipLaser;

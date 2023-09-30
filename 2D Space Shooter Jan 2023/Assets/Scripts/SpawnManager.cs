@@ -6,12 +6,18 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
+    [SerializeField] private GameObject[] _powerupPrefabFrequent;
     [SerializeField] private GameObject[] _powerupPrefab;
     [SerializeField] private GameObject[] _powerupPrefabRare;
-    [SerializeField] private float _waitTimePowerupsNormalMin = 2.0f;
-    [SerializeField] private float _waitTimePowerupsNormalMax = 5.0f;
-    [SerializeField] private float _waitTimePowerupsRareMin = 10.0f;
-    [SerializeField] private float _waitTimePowerupsRareMax = 20.0f;
+    [SerializeField] private float _waitTimePowerupsFrequentMin = 2.0f;
+    [SerializeField] private float _waitTimePowerupsFrequentMax = 5.0f;
+    [SerializeField] private float _waitTimePowerupsNormalMin = 5.0f;
+    [SerializeField] private float _waitTimePowerupsNormalMax = 15.0f;
+    [SerializeField] private float _waitTimePowerupsRareMin = 15.0f;
+    [SerializeField] private float _waitTimePowerupsRareMax = 25.0f;
+
+    public int afterLevelXNewEnemySpawn = 3;
+    public int afterLevelXNewEnemyWavyMove = 6;
 
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;
@@ -19,11 +25,11 @@ public class SpawnManager : MonoBehaviour
     float _waitTimePowerups = 7.0f; // In between powerup spawning
     private bool _stopSpawning = false;
     private GameManager _gameManager;
-    float _spawnZAngle;
+    float _spawnZAngle = 0;
 
     float _waitTimeEnemy = 5.0f; // Enemy spawning looping wait time between individual enemies
     float _waitTimeWaves = 7.0f; // Waves spawning looping wait time between waves of enemies
-    int _maxEnemies = 1;
+    int maxEnemiesSpawned = 1;
     //int _enemiesSpawned = 0;
 
 
@@ -49,6 +55,7 @@ public class SpawnManager : MonoBehaviour
         _stopSpawning = false;
         GetWaveInfo(waveID);
         StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnPowerupRoutine(_powerupPrefabFrequent, _waitTimePowerupsFrequentMin, _waitTimePowerupsFrequentMax));
         StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
         StartCoroutine(SpawnPowerupRoutine(_powerupPrefabRare, _waitTimePowerupsRareMin, _waitTimePowerupsRareMax));
     }
@@ -84,28 +91,44 @@ public class SpawnManager : MonoBehaviour
         switch (waveID)
         {
             case 1:
-                _maxEnemies = 2;
+                maxEnemiesSpawned = 2;
                 _waitTimeEnemy = 3.5f;
                 break;
             case 2:
-                _maxEnemies = 3;
+                maxEnemiesSpawned = 2;
                 _waitTimeEnemy = 3.0f;
                 break;
             case 3:
-                _maxEnemies = 4;
+                maxEnemiesSpawned = 3;
                 _waitTimeEnemy = 2.5f;
                 break;
             case 4:
-                _maxEnemies = 6;
+                maxEnemiesSpawned = 3;
                 _waitTimeEnemy = 2.0f;
                 break;
             case 5:
-                _maxEnemies = 8;
+                maxEnemiesSpawned = 1;
                 _waitTimeEnemy = 1.0f;
                 break;
             case 6:
-                _maxEnemies = 4;
+                maxEnemiesSpawned = 1;
                 _waitTimeEnemy = 0.5f;
+                break;
+            case 7:
+                maxEnemiesSpawned = 2;
+                _waitTimeEnemy = 3.5f;
+                break;
+            case 8:
+                maxEnemiesSpawned = 3;
+                _waitTimeEnemy = 4.0f;
+                break;
+            case 9:
+                maxEnemiesSpawned = 4;
+                _waitTimeEnemy = 6.0f;
+                break;
+            case 10:
+                maxEnemiesSpawned = 5;
+                _waitTimeEnemy = 10.0f;
                 break;
         }
 
@@ -117,24 +140,26 @@ public class SpawnManager : MonoBehaviour
 
         while ((_stopSpawning == false) && (_gameManager._isGameOver == false))
         {
-            for (int i = 0; i < _maxEnemies; i++)
+            for (int i = 0; i < maxEnemiesSpawned; i++)
             {
                 yield return new WaitForSeconds(_waitTimeEnemy);
 
                 if ((_stopSpawning == false) && (_gameManager._isGameOver == false))
                 {
+                    Debug.Log("SpawnManager::SpawnEnemyRoutine:_gameManager.waveID="+ _gameManager.waveID);
+
                     // Instantiate enemy prefab
                     _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
-                    _spawnZAngle =  Random.Range(-45f,45f);
+                    
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
 
-                    if (_gameManager.waveID > 2) // After wave 2, include spawning new enemy type
+                    if (_gameManager.waveID > afterLevelXNewEnemySpawn) // After wave 3 (default), include spawning new enemy type
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }
-                    if (_gameManager.waveID < 3) // Less than wave 3, no angle yet for simple enemies 
+                    if (_gameManager.waveID > afterLevelXNewEnemyWavyMove) // After wave 6 (default), no angle yet for simple enemies 
                     {
-                        _spawnZAngle = 0;
+                        _spawnZAngle = Random.Range(-45f, 45f);
                     }
                     GameObject newEnemy = Instantiate(_enemyPrefab[_enemyIndex], spawnPosition, Quaternion.Euler(0, 0, _spawnZAngle));
                     newEnemy.transform.parent = _enemyContainer.transform;
