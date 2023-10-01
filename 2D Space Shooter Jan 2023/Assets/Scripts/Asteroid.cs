@@ -46,7 +46,7 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Hit! Asteroid::OnTriggerEnter: Begin. other.tag=" + other.tag);
+        //Debug.Log("Hit! Asteroid::OnTriggerEnter: Begin. other.tag=" + other.tag);
         if (other.tag == "Laser" ) 
         {
             Destroy(other.gameObject);

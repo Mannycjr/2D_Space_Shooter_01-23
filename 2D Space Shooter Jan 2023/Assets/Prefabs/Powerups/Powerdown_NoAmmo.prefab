@@ -102,7 +102,9 @@ MonoBehaviour:
   _speed: 3
   _powerupDuration: 7
   _powerupID: 6
+  _explosionPrefab: {fileID: 5665125328609053333, guid: f053f236ed91d604b9ae33590978cf4f, type: 3}
   _powerupAudioClip: {fileID: 8300000, guid: c9f197bfebc5f764cbadb5e65541566e, type: 3}
+  _sfxClipExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!50 &6524936122399991797
 Rigidbody2D:
   serializedVersion: 4

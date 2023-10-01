@@ -30,8 +30,6 @@ public class SpawnManager : MonoBehaviour
     float _waitTimeEnemy = 5.0f; // Enemy spawning looping wait time between individual enemies
     float _waitTimeWaves = 7.0f; // Waves spawning looping wait time between waves of enemies
     int maxEnemiesSpawned = 1;
-    //int _enemiesSpawned = 0;
-
 
     // Start is called before the first frame update
     void Start()
@@ -55,9 +53,16 @@ public class SpawnManager : MonoBehaviour
         _stopSpawning = false;
         GetWaveInfo(waveID);
         StartCoroutine(SpawnEnemyRoutine());
-        StartCoroutine(SpawnPowerupRoutine(_powerupPrefabFrequent, _waitTimePowerupsFrequentMin, _waitTimePowerupsFrequentMax));
-        StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
-        StartCoroutine(SpawnPowerupRoutine(_powerupPrefabRare, _waitTimePowerupsRareMin, _waitTimePowerupsRareMax));
+        if (waveID < 2) // Start spawning powerup coroutines only in wave 1
+        {
+            StartCoroutine(SpawnPowerupRoutine(_powerupPrefabFrequent, _waitTimePowerupsFrequentMin, _waitTimePowerupsFrequentMax));
+            StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
+            StartCoroutine(SpawnPowerupRoutine(_powerupPrefabRare, _waitTimePowerupsRareMin, _waitTimePowerupsRareMax));
+        }
+        if (waveID == 7) // Add another powerup coroutine to help the player at more difficult waves 
+        {
+            StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
+        }
     }
 
     IEnumerator InitialPowerupsDelay()
@@ -84,10 +89,6 @@ public class SpawnManager : MonoBehaviour
 
     private void GetWaveInfo(int waveID)
     {
-        Debug.Log("SpawnManager::GetWaveInfo() Called");
-        WaitForSeconds _respawnTime = new WaitForSeconds(10);
-
-
         switch (waveID)
         {
             case 1:
@@ -103,7 +104,7 @@ public class SpawnManager : MonoBehaviour
                 _waitTimeEnemy = 2.5f;
                 break;
             case 4:
-                maxEnemiesSpawned = 3;
+                maxEnemiesSpawned = 2;
                 _waitTimeEnemy = 2.0f;
                 break;
             case 5:
@@ -188,12 +189,15 @@ public class SpawnManager : MonoBehaviour
             _waitTimePowerups = Random.Range(_waitTimeMin, _waitTimeMax);
 
             yield return new WaitForSeconds(_waitTimePowerups);
-            
-            // Instantiate prowerup prefab
-            _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
-            Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
-            _randomPowerUpIndex = Random.Range(0, _spawnList.Length);
-            GameObject newPowerup = Instantiate(_spawnList[_randomPowerUpIndex], spawnPosition, Quaternion.identity);
+
+            if ((_stopSpawning == false) && (_gameManager._isGameOver == false))
+            {
+                // Instantiate prowerup prefab
+                _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
+                Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
+                _randomPowerUpIndex = Random.Range(0, _spawnList.Length);
+                GameObject newPowerup = Instantiate(_spawnList[_randomPowerUpIndex], spawnPosition, Quaternion.identity);
+            }
         }
     }
 

@@ -576,7 +576,7 @@ MonoBehaviour:
   verticalLimit: 5
   horizontalLimit: 11
   _laserPrefab: {fileID: 1810411115264252563, guid: 8b484725a1d03fe4bb2f41246bfc7252, type: 3}
-  _tripleShotlaserPrefab: {fileID: 6391372228156131305, guid: ce7344bf7cb4f1b45b0bc7a5a74efcbe, type: 3}
+  _tripleShotlaserPrefab: {fileID: 6391372228156131305, guid: a9235a7220e3830419c91b6f8d70a42a, type: 3}
   _firerate: 0.15
   _ammoCount: 20
   _ammoMax: 20
@@ -1221,7 +1221,7 @@ MonoBehaviour:
   _waitTimePowerupsRareMin: 10
   _waitTimePowerupsRareMax: 20
   afterLevelXNewEnemySpawn: 3
-  afterLevelXNewEnemyWavyMove: 6
+  afterLevelXNewEnemyAngledSpawned: 6
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3171,6 +3171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isGameOver: 0
   waveID: 0
+  waveLast: 10
 --- !u!4 &1639923392
 Transform:
   m_ObjectHideFlags: 0
