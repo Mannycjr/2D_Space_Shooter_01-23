@@ -21,8 +21,13 @@ public class Powerup : MonoBehaviour
     [SerializeField] private _powerupIDs _powerupID;
     private float _verticalLimit = 7.0f;
 
+    [SerializeField] private GameObject _explosionPrefab;
+    private GameObject _explosionInstance;
+
     // SFX
     [SerializeField] private AudioClip _powerupAudioClip;
+    [SerializeField] private AudioClip _sfxClipExplosion;
+    private float _audioPositionZ = -9f;
 
     // Update is called once per frame
     void Update()
@@ -45,7 +50,6 @@ public class Powerup : MonoBehaviour
             Player player = other.transform.GetComponent<Player>();
             if (player != null)
             {
-                float _audioPositionZ = -9f;
                 if (_powerupID == _powerupIDs.NoAmmo)
                 {
                     _audioPositionZ = -9.5f; // Closer to camera, a little louder
@@ -95,7 +99,17 @@ public class Powerup : MonoBehaviour
 
             // 
             Destroy(this.gameObject);
+        } else if ((other.tag == "Laser") && (_powerupID == _powerupIDs.NoAmmo))
+        {
+            AudioSource.PlayClipAtPoint(_sfxClipExplosion, new Vector3(0, 0, _audioPositionZ));
+            ExplosionOnlyAnim();
+            Destroy(this.gameObject);
         }
     }
 
+    private void ExplosionOnlyAnim()
+    {
+        _explosionInstance = Instantiate(_explosionPrefab, transform.position, transform.rotation);
+        Destroy(_explosionInstance, 4.0f);
+    }
 }

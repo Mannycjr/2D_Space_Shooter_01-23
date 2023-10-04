@@ -13,10 +13,10 @@ public class Enemy : MonoBehaviour
     public _enemyIDs _enemyID;
     [SerializeField] private float _speed = 4.0f;
     [SerializeField] private GameObject _explosionPrefab;
+    private GameObject _explosionInstance;
 
     private GameManager _gameManager;
-
-    private GameObject _explosionInstance;
+ 
     GameObject _laserSpawnPoint;
     private float _verticalLimit = 7.0f;
     private float _horizontalLimit = 11.0f;
@@ -40,11 +40,13 @@ public class Enemy : MonoBehaviour
     private bool _isDestroyed = false;
 
     private bool _waveEnded = false;
+    private float _randomWaitWavyTurn = -1;
 
     private GameObject _enemyLaserProjectile;
 
     [Header("LaserBeam Enemy Only")]
     private bool _LaserBeamON = false;
+    public int afterLevelXLaserBeamEnemyWavyMove = 3; // When Laser Beam Enemy can move in Wavy motion, difficult for player
 
     // Start is called before the first frame update
     void Start()
@@ -99,7 +101,7 @@ public class Enemy : MonoBehaviour
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
-                if (_gameManager.waveID > 3)
+                if (_gameManager.waveID > afterLevelXLaserBeamEnemyWavyMove) // afterLevelXLaserBeamEnemyWavyMove = 4 (Default)
                 {
                     CalculateMovementWavy();
                 } else
@@ -126,7 +128,15 @@ public class Enemy : MonoBehaviour
     private void CalculateMovementWavy()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        float _newRotation = Mathf.Cos(Time.time) * Time.deltaTime * 45f;
+        
+        int _randomMultiplier = 1;
+        if (Time.time > _randomWaitWavyTurn)
+        {
+            _randomWaitWavyTurn = Time.time + Random.Range(0f, 2f);
+            _randomMultiplier = Random.Range(-45,45);
+        }
+
+        float _newRotation = Mathf.Cos(Time.time* _randomMultiplier) * Time.deltaTime * 45f;
         //Debug.Log("Enemy::CalculateMovementWavy:_newRotation=" + _newRotation);
         transform.Rotate(0,0, _newRotation);
         CalcMovementAtScreenLimits();
@@ -208,9 +218,9 @@ public class Enemy : MonoBehaviour
 
         if ( (Time.time > _canFireAtTime) && (_isDestroyed == false) && (_LaserBeamON == false) )
         {
-            float _laserBeamDuration = 2.75f; //Random.Range(0.5f, 3f);
+            float _laserBeamDuration = 2.75f; 
 
-            _fireRate = Random.Range(1f, 7f);
+            _fireRate = Random.Range(10f, 20f); // Infrequent firing
             _canFireAtTime = Time.time + _fireRate;
 
             _audioSource.clip = _sfxClipLaser;

@@ -105,6 +105,10 @@ public class Player : MonoBehaviour
             Debug.LogError("Player::Start: _mainCamera is NULL");
         }
 
+        if (_tripleShotlaserPrefab == null)
+        {
+            Debug.LogError("Player::Start:_tripleShotlaserPrefab is NULL");
+        }
     }
 
     // Update is called once per frame
