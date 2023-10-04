@@ -56,7 +56,7 @@ MonoBehaviour:
   _sfxClipExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _sfxClipLaser: {fileID: 8300000, guid: a9e3fee688cf000499bded40dd54ff48, type: 3}
   _laserPrefab: {fileID: 4046566714044603437, guid: cda8a98fc940d0245a6f2d4b7d5127b3, type: 3}
-  afterLevelXLaserBeamEnemyWavyMove: 3
+  afterLevelXLaserBeamEnemyWavyMove: 8
 --- !u!212 &4746186775749362755
 SpriteRenderer:
   m_ObjectHideFlags: 0

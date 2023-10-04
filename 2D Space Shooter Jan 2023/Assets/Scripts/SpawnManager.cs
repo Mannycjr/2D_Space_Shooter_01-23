@@ -147,8 +147,6 @@ public class SpawnManager : MonoBehaviour
 
                 if ((_stopSpawning == false) && (_gameManager._isGameOver == false))
                 {
-                    Debug.Log("SpawnManager::SpawnEnemyRoutine:_gameManager.waveID="+ _gameManager.waveID + ". _spawnZAngle="+ _spawnZAngle);
-
                     // Instantiate enemy prefab
                     _randomX = Random.Range(-_xPositionLimit, _xPositionLimit);
                     
@@ -158,7 +156,7 @@ public class SpawnManager : MonoBehaviour
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }
-                    if (_gameManager.waveID > afterLevelXNewEnemyAngledSpawned) // Before wave 6 (default), no angle yet for ALL enemies 
+                    if (_gameManager.waveID > afterLevelXNewEnemyAngledSpawned) // After wave 6 (default), different spawn angles for ALL enemies 
                     {
                         _spawnZAngle = Random.Range(-45f, 45f);
                     }
