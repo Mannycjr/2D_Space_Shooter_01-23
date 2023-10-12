@@ -18,6 +18,7 @@ public class SpawnManager : MonoBehaviour
 
     public int afterLevelXNewEnemySpawn = 3;
     public int afterLevelXNewEnemyAngledSpawned = 6;
+    public int afterLevelXStartEnemyShields = 2;
 
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;
@@ -163,6 +164,11 @@ public class SpawnManager : MonoBehaviour
                     // Note: Laser Beam Enemy Wavy Movement set in Enemy.cs in afterLevelXLaserBeamEnemyWavyMove
                     GameObject newEnemy = Instantiate(_enemyPrefab[_enemyIndex], spawnPosition, Quaternion.Euler(0, 0, _spawnZAngle));
                     newEnemy.transform.parent = _enemyContainer.transform;
+                    if (_gameManager.waveID > afterLevelXStartEnemyShields)
+                    {
+                        newEnemy.GetComponent<Enemy>().enemyShieldsChances = 4;
+                    }
+
                     if ((_stopSpawning == true) && (_gameManager._isGameOver == true))
                     {
                         yield break;

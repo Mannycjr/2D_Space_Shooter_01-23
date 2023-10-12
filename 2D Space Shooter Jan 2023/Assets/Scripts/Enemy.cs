@@ -48,6 +48,14 @@ public class Enemy : MonoBehaviour
     private bool _LaserBeamON = false;
     public int afterLevelXLaserBeamEnemyWavyMove = 3; // When Laser Beam Enemy can move in Wavy motion, difficult for player
 
+    [Header("Enemy Shields Only")]
+    public int enemyShieldsChances = 0; // Chance for enemy to have shields. Higher number, less chance to have shields. 1 = has shields. 0 = no shields at all.
+    [SerializeField] private bool _enemyShieldsActiveAlready = false;
+    [SerializeField] private int _enemyShieldstrength = 0; // Max = 1
+    [SerializeField] private GameObject _enemyShieldsOnEnemy;
+    [SerializeField] private float _enemyShieldsScaling;
+    [SerializeField] private Color _enemyShieldsColor; // Double check user-set color's Alpha channel setting in Inspector.
+
     // Start is called before the first frame update
     void Start()
     {
@@ -92,12 +100,28 @@ public class Enemy : MonoBehaviour
         {
             _explosionAnimLength = 0.0f;
         }
-        
+
+        if (_enemyShieldsOnEnemy == null)
+        {
+            Debug.LogError("Enemy::Start: No Enemy Shields Game Object");
+        }
+
+        Invoke("SheildsInitialize", 0.1f);
+    }
+
+    private void SheildsInitialize()
+    {
+        if ((enemyShieldsChances > 0) && (Random.Range(1, enemyShieldsChances) == 1)) // 
+        {
+            ShieldsActive();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
@@ -173,7 +197,7 @@ public class Enemy : MonoBehaviour
                 player.Damage();
             }
             // trigger anim
-            DestoryEnemy();
+            DamageEnemy();
         }
         else if (other.tag == "Laser")
         {
@@ -184,7 +208,7 @@ public class Enemy : MonoBehaviour
             {
                 _player.PlayerScoreUpdate(10);
             }
-            DestoryEnemy();
+            DamageEnemy();
         }
 
     }
@@ -247,6 +271,19 @@ public class Enemy : MonoBehaviour
         _LaserBeamON = false;
     }
 
+    private void DamageEnemy()
+    {
+        if (_enemyShieldsActiveAlready)
+        {
+            ExplosionOnlyAnim();
+            ShieldsNOTActive();
+        }
+        else
+        {
+            DestoryEnemy();
+        }
+    }
+
     private void DestoryEnemy()
     {
         _isDestroyed = true;
@@ -279,5 +316,20 @@ public class Enemy : MonoBehaviour
     {
         _canFireAtTime = -1;
         _waveEnded = true;
+    }
+
+    public void ShieldsActive()
+    {
+        //Debug.Log("Enemy::ShieldsActive:Begin");
+        _enemyShieldsOnEnemy.SetActive(true);
+        _enemyShieldsActiveAlready = true;
+        _enemyShieldstrength = 1;
+    }
+
+    public void ShieldsNOTActive()
+    {
+        _enemyShieldsOnEnemy.SetActive(false);
+        _enemyShieldsActiveAlready = false;
+        _enemyShieldstrength = 0;
     }
 }
