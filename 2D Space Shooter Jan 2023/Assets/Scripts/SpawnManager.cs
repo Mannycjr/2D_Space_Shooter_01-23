@@ -16,9 +16,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float _waitTimePowerupsRareMin = 15.0f;
     [SerializeField] private float _waitTimePowerupsRareMax = 25.0f;
 
-    public int afterLevelXNewEnemySpawn = 3;
+    public int afterLevelXNewEnemySpawn = 3; 
     public int afterLevelXNewEnemyAngledSpawned = 6;
-    public int afterLevelXStartEnemyShields = 2;
+    public int afterLevelXStartEnemyShields = 1;
 
     float _yPositionLimit = 6f;
     float _xPositionLimit = 9.0f;

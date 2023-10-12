@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
     public int afterLevelXLaserBeamEnemyWavyMove = 3; // When Laser Beam Enemy can move in Wavy motion, difficult for player
 
     [Header("Enemy Shields Only")]
-    public int enemyShieldsChances = 0; // Chance for enemy to have shields. Higher number, less chance to have shields. 1 = has shields. 0 = no shields at all.
+    public int enemyShieldsChances = 0; // Chance for enemy to have shields. Higher number, less chance to have shields. 1 = has shields. 0 = no shields at all, Default.
     [SerializeField] private bool _enemyShieldsActiveAlready = false;
     [SerializeField] private int _enemyShieldstrength = 0; // Max = 1
     [SerializeField] private GameObject _enemyShieldsOnEnemy;
@@ -187,7 +187,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Enemy::OnTriggerEnter2D:Begin");
+        //Debug.Log("Enemy::OnTriggerEnter2D:Begin");
         if (other.tag == "Player")
         {
             // Damage the player
@@ -196,7 +196,6 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
-            // trigger anim
             DamageEnemy();
         }
         else if (other.tag == "Laser")
@@ -210,7 +209,7 @@ public class Enemy : MonoBehaviour
             }
             DamageEnemy();
         }
-
+        // Any other collision will not damage enemy
     }
 
     private void FireLaserNormal()
@@ -320,7 +319,6 @@ public class Enemy : MonoBehaviour
 
     public void ShieldsActive()
     {
-        //Debug.Log("Enemy::ShieldsActive:Begin");
         _enemyShieldsOnEnemy.SetActive(true);
         _enemyShieldsActiveAlready = true;
         _enemyShieldstrength = 1;
