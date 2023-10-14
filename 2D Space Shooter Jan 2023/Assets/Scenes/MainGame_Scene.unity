@@ -1220,7 +1220,7 @@ MonoBehaviour:
   _waitTimePowerupsNormalMax: 5
   _waitTimePowerupsRareMin: 10
   _waitTimePowerupsRareMax: 20
-  afterLevelXNewEnemySpawn: 3
+  afterLevelXNewEnemySpawn: 1
   afterLevelXNewEnemyAngledSpawned: 6
   afterLevelXStartEnemyShields: 1
 --- !u!1 &705507993

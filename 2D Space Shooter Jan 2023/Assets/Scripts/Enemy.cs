@@ -56,6 +56,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _enemyShieldsScaling;
     [SerializeField] private Color _enemyShieldsColor; // Double check user-set color's Alpha channel setting in Inspector.
 
+    public int afterLevelXLaserBeamEnemyRamPlayerMove = 1; // Default = 7
+    [SerializeField] private bool _aggressiveEnemy = false;
+    public float _rammingDistance = 5.0f;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -120,18 +125,24 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
-                if (_gameManager.waveID > afterLevelXLaserBeamEnemyWavyMove) // afterLevelXLaserBeamEnemyWavyMove = 4 (Default)
+                if (!_aggressiveEnemy)
                 {
-                    CalculateMovementWavy();
-                } else
+                    if (_gameManager.waveID > afterLevelXLaserBeamEnemyWavyMove) // afterLevelXLaserBeamEnemyWavyMove = 4 (Default)
+                    {
+                        CalculateMovementWavy();
+                    }
+                    else
+                    {
+                        CalculateMovementStandard();
+                    }
+                } else if (_aggressiveEnemy) // Enemy is close enough to player to Ram and advanced Wave Level
                 {
-                    CalculateMovementStandard();
+                    RamPlayer();
                 }
+
                 FireLaserBeam();
                 break;
             case _enemyIDs.Standard:
@@ -140,6 +151,8 @@ public class Enemy : MonoBehaviour
                 FireLaserNormal();
                 break;
         }
+
+        DetermineEnemyAggression();  // sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
     }
 
     private void CalculateMovementStandard()
@@ -330,4 +343,31 @@ public class Enemy : MonoBehaviour
         _enemyShieldsActiveAlready = false;
         _enemyShieldstrength = 0;
     }
+
+    private void DetermineEnemyAggression() //sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
+    {
+        if ((_gameManager.waveID > afterLevelXLaserBeamEnemyRamPlayerMove) && _player != null)
+        {
+            float _distanceToPlayer = Vector3.Distance(this.transform.position, _player.transform.position);
+            Debug.Log("Enemy::DetermineEnemyAggression:_distance=" + _distanceToPlayer);
+            if (_distanceToPlayer < _rammingDistance) // (Random.Range(1,4)==1
+            {
+                //
+                _aggressiveEnemy = true;
+            }
+        } else
+        {
+            _aggressiveEnemy = false;
+        }
+    }
+
+    private void RamPlayer()
+    {
+        Debug.Log("Enemy::RamPlayer:Begin");
+        if (_player != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _speed * 2 * Time.deltaTime);
+        }   
+    }
+
 }
