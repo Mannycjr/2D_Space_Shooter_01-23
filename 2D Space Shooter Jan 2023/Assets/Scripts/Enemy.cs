@@ -349,10 +349,10 @@ public class Enemy : MonoBehaviour
         if ((_gameManager.waveID > afterLevelXLaserBeamEnemyRamPlayerMove) && _player != null)
         {
             float _distanceToPlayer = Vector3.Distance(this.transform.position, _player.transform.position);
-            Debug.Log("Enemy::DetermineEnemyAggression:_distance=" + _distanceToPlayer);
-            if (_distanceToPlayer < _rammingDistance) // (Random.Range(1,4)==1
+            //Debug.Log("Enemy::DetermineEnemyAggression:_distance=" + _distanceToPlayer);
+
+            if (_distanceToPlayer < _rammingDistance)
             {
-                //
                 _aggressiveEnemy = true;
             }
         } else
@@ -363,10 +363,10 @@ public class Enemy : MonoBehaviour
 
     private void RamPlayer()
     {
-        Debug.Log("Enemy::RamPlayer:Begin");
+        //Debug.Log("Enemy::RamPlayer:Begin");
         if (_player != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _speed * 2 * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _speed * 1.5f * Time.deltaTime);
         }   
     }
 

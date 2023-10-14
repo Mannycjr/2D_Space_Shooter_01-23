@@ -50,7 +50,7 @@ public class SpawnManager : MonoBehaviour
 
     public void StartSpawning(int waveID)
     {
-        Debug.Log("SpawnManager::StartSpawning() Started");
+        //Debug.Log("SpawnManager::StartSpawning() Started");
         _stopSpawning = false;
         GetWaveInfo(waveID);
         StartCoroutine(SpawnEnemyRoutine());
