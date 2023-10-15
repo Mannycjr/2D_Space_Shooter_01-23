@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
 
     [Header("LaserBeam Enemy Only")]
     private bool _LaserBeamON = false;
-    public int afterLevelXLaserBeamEnemyWavyMove = 3; // When Laser Beam Enemy can move in Wavy motion, difficult for player
+    public int afterLevelXLaserBeamEnemyWavyMove = 7; // When Laser Beam Enemy can move in Wavy motion, difficult for player
 
     [Header("Enemy Shields Only")]
     public int enemyShieldsChances = 0; // Chance for enemy to have shields. Higher number, less chance to have shields. 1 = has shields. 0 = no shields at all, Default.
@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _enemyShieldsScaling;
     [SerializeField] private Color _enemyShieldsColor; // Double check user-set color's Alpha channel setting in Inspector.
 
-    public int afterLevelXLaserBeamEnemyRamPlayerMove = 1; // Default = 7
+    public int afterLevelXLaserBeamEnemyRamPlayerMove = 1; // Default = 8
     [SerializeField] private bool _aggressiveEnemy = false;
     public float _rammingDistance = 5.0f;
 
@@ -130,7 +130,7 @@ public class Enemy : MonoBehaviour
             case _enemyIDs.LaserBeam:
                 if (!_aggressiveEnemy)
                 {
-                    if (_gameManager.waveID > afterLevelXLaserBeamEnemyWavyMove) // afterLevelXLaserBeamEnemyWavyMove = 4 (Default)
+                    if (_gameManager.waveID > afterLevelXLaserBeamEnemyWavyMove) // afterLevelXLaserBeamEnemyWavyMove = 7 (Default)
                     {
                         CalculateMovementWavy();
                     }
@@ -344,7 +344,7 @@ public class Enemy : MonoBehaviour
         _enemyShieldstrength = 0;
     }
 
-    private void DetermineEnemyAggression() //sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
+    private void DetermineEnemyAggression() //sets _aggressiveEnemy according to wave level, distance to player
     {
         if ((_gameManager.waveID > afterLevelXLaserBeamEnemyRamPlayerMove) && _player != null)
         {
