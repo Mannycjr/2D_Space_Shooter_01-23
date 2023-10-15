@@ -95,6 +95,9 @@ MonoBehaviour:
   _enemyShieldsOnEnemy: {fileID: 5424372891360502066}
   _enemyShieldsScaling: 0
   _enemyShieldsColor: {r: 0, g: 0, b: 0, a: 0}
+  afterLevelXLaserBeamEnemyRamPlayerMove: 1
+  _aggressiveEnemy: 0
+  _rammingDistance: 5
 --- !u!212 &4746186775749362755
 SpriteRenderer:
   m_ObjectHideFlags: 0
