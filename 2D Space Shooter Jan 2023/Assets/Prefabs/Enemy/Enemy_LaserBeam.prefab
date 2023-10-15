@@ -57,13 +57,16 @@ MonoBehaviour:
   _sfxClipExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _sfxClipLaser: {fileID: 8300000, guid: a9e3fee688cf000499bded40dd54ff48, type: 3}
   _laserPrefab: {fileID: 4046566714044603437, guid: cda8a98fc940d0245a6f2d4b7d5127b3, type: 3}
-  afterLevelXLaserBeamEnemyWavyMove: 8
+  afterLevelXLaserBeamEnemyWavyMove: 7
   enemyShieldsChances: 0
   _enemyShieldsActiveAlready: 0
   _enemyShieldstrength: 0
   _enemyShieldsOnEnemy: {fileID: 7060045361432875134}
   _enemyShieldsScaling: 0
   _enemyShieldsColor: {r: 0, g: 0, b: 0, a: 0}
+  afterLevelXLaserBeamEnemyRamPlayerMove: 8
+  _aggressiveEnemy: 0
+  _rammingDistance: 5
 --- !u!212 &4746186775749362755
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -303,7 +306,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8930061132688149226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.97, z: 0}
+  m_LocalPosition: {x: 0, y: -3.83, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

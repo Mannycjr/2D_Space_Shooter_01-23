@@ -46,15 +46,20 @@ public class Enemy : MonoBehaviour
 
     [Header("LaserBeam Enemy Only")]
     private bool _LaserBeamON = false;
-    public int afterLevelXLaserBeamEnemyWavyMove = 3; // When Laser Beam Enemy can move in Wavy motion, difficult for player
+    public int afterLevelXLaserBeamEnemyWavyMove = 7; // When Laser Beam Enemy can move in Wavy motion, difficult for player
 
     [Header("Enemy Shields Only")]
-    public int enemyShieldsChances = 0; // Chance for enemy to have shields. Higher number, less chance to have shields. 1 = has shields. 0 = no shields at all.
+    public int enemyShieldsChances = 0; // Chance for enemy to have shields. Higher number, less chance to have shields. 1 = has shields. 0 = no shields at all, Default.
     [SerializeField] private bool _enemyShieldsActiveAlready = false;
     [SerializeField] private int _enemyShieldstrength = 0; // Max = 1
     [SerializeField] private GameObject _enemyShieldsOnEnemy;
     [SerializeField] private float _enemyShieldsScaling;
     [SerializeField] private Color _enemyShieldsColor; // Double check user-set color's Alpha channel setting in Inspector.
+
+    public int afterLevelXLaserBeamEnemyRamPlayerMove = 1; // Default = 8
+    [SerializeField] private bool _aggressiveEnemy = false;
+    public float _rammingDistance = 5.0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -120,18 +125,24 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
-                if (_gameManager.waveID > afterLevelXLaserBeamEnemyWavyMove) // afterLevelXLaserBeamEnemyWavyMove = 4 (Default)
+                if (!_aggressiveEnemy)
                 {
-                    CalculateMovementWavy();
-                } else
+                    if (_gameManager.waveID > afterLevelXLaserBeamEnemyWavyMove) // afterLevelXLaserBeamEnemyWavyMove = 7 (Default)
+                    {
+                        CalculateMovementWavy();
+                    }
+                    else
+                    {
+                        CalculateMovementStandard();
+                    }
+                } else if (_aggressiveEnemy) // Enemy is close enough to player to Ram and advanced Wave Level
                 {
-                    CalculateMovementStandard();
+                    RamPlayer();
                 }
+
                 FireLaserBeam();
                 break;
             case _enemyIDs.Standard:
@@ -140,6 +151,8 @@ public class Enemy : MonoBehaviour
                 FireLaserNormal();
                 break;
         }
+
+        DetermineEnemyAggression();  // sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
     }
 
     private void CalculateMovementStandard()
@@ -187,7 +200,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Enemy::OnTriggerEnter2D:Begin");
+        //Debug.Log("Enemy::OnTriggerEnter2D:Begin");
         if (other.tag == "Player")
         {
             // Damage the player
@@ -196,7 +209,6 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
-            // trigger anim
             DamageEnemy();
         }
         else if (other.tag == "Laser")
@@ -210,7 +222,7 @@ public class Enemy : MonoBehaviour
             }
             DamageEnemy();
         }
-
+        // Any other collision will not damage enemy
     }
 
     private void FireLaserNormal()
@@ -320,7 +332,6 @@ public class Enemy : MonoBehaviour
 
     public void ShieldsActive()
     {
-        //Debug.Log("Enemy::ShieldsActive:Begin");
         _enemyShieldsOnEnemy.SetActive(true);
         _enemyShieldsActiveAlready = true;
         _enemyShieldstrength = 1;
@@ -332,4 +343,31 @@ public class Enemy : MonoBehaviour
         _enemyShieldsActiveAlready = false;
         _enemyShieldstrength = 0;
     }
+
+    private void DetermineEnemyAggression() //sets _aggressiveEnemy according to wave level, distance to player
+    {
+        if ((_gameManager.waveID > afterLevelXLaserBeamEnemyRamPlayerMove) && _player != null)
+        {
+            float _distanceToPlayer = Vector3.Distance(this.transform.position, _player.transform.position);
+            //Debug.Log("Enemy::DetermineEnemyAggression:_distance=" + _distanceToPlayer);
+
+            if (_distanceToPlayer < _rammingDistance)
+            {
+                _aggressiveEnemy = true;
+            }
+        } else
+        {
+            _aggressiveEnemy = false;
+        }
+    }
+
+    private void RamPlayer()
+    {
+        //Debug.Log("Enemy::RamPlayer:Begin");
+        if (_player != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _speed * 1.5f * Time.deltaTime);
+        }   
+    }
+
 }

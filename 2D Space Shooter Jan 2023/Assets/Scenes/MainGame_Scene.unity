@@ -1220,9 +1220,9 @@ MonoBehaviour:
   _waitTimePowerupsNormalMax: 5
   _waitTimePowerupsRareMin: 10
   _waitTimePowerupsRareMax: 20
-  afterLevelXNewEnemySpawn: 3
+  afterLevelXNewEnemySpawn: 1
   afterLevelXNewEnemyAngledSpawned: 6
-  afterLevelXStartEnemyShields: 5
+  afterLevelXStartEnemyShields: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3378,6 +3378,10 @@ PrefabInstance:
     - target: {fileID: 3487475423349823688, guid: c3d19ba1a2e59114ba072a2b9641ba7d, type: 3}
       propertyPath: m_Name
       value: Shields_Visualization
+      objectReference: {fileID: 0}
+    - target: {fileID: 3487475423349823688, guid: c3d19ba1a2e59114ba072a2b9641ba7d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3487475423349823689, guid: c3d19ba1a2e59114ba072a2b9641ba7d, type: 3}
       propertyPath: m_RootOrder
