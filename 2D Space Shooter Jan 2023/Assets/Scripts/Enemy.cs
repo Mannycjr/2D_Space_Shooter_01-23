@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
     private GameManager _gameManager;
  
     GameObject _laserSpawnPoint;
+    GameObject _laserSpawnPointBack;
     private float _verticalLimit = 7.0f;
     private float _horizontalLimit = 11.0f;
 
@@ -95,16 +96,24 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy::Start() _laserPrefab is NULL. Add prefab in Inspector.");
         }
 
-        _laserSpawnPoint = this.gameObject.transform.GetChild(0).gameObject;
-        if ((_laserSpawnPoint == null) | (this.gameObject.transform.GetChild(0).name != "Laser_Spawn"))
+        _laserSpawnPoint = this.gameObject.transform.GetChild(0).gameObject; // First child object is the front spawn point
+        if ((_laserSpawnPoint == null) | (this.gameObject.transform.GetChild(0).name != "Laser_Spawn_Front"))
         {
-            Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL or not Laser_Spawn.");
+            Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL or not Laser_Spawn_Front.");
         }
 
-        
+
+
         if (_enemyID == _enemyIDs.LaserBeam)
         {
             _explosionAnimLength = 0.0f;
+        } else if (_enemyID == _enemyIDs.Standard)
+        {
+            _laserSpawnPointBack = this.gameObject.transform.GetChild(1).gameObject; // Second child object is the front back point
+            if ((_laserSpawnPointBack == null) | (this.gameObject.transform.GetChild(1).name != "Laser_Spawn_Back"))
+            {
+                Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL or not Laser_Spawn_Back.");
+            }
         }
 
         if (_enemyShieldsOnEnemy == null)
@@ -154,7 +163,7 @@ public class Enemy : MonoBehaviour
         }
 
         DetermineEnemyAggression();  // sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
-        DetermineSmartEnemy();
+        //DetermineSmartEnemy();
     }
 
     private void CalculateMovementStandard()
@@ -231,8 +240,6 @@ public class Enemy : MonoBehaviour
     {
         //Debug.Log("Enemy::FireLaserNormal: Begin");
 
-        //private Quaternion _laserRotation = Quaternion.identity;
-
         if (Time.time > _canFireAtTime && _isDestroyed == false)
         {
             //_fireRate = Random.Range(3f, 7f);
@@ -240,6 +247,26 @@ public class Enemy : MonoBehaviour
             _canFireAtTime = Time.time + _fireRate;
 
             GameObject _enemyLaser;
+            /*
+            if (_player != null)
+            {
+
+                // Determine if enemy is behind player
+                if ((transform.position.y < _player.transform.position.y) && (Mathf.Abs(transform.position.x - _player.transform.position.x) < 0.5f))
+                {
+                    smartEnemy = true;
+                    Debug.Log("Enemy::DetermineSmartEnemy: smartEnemy = true *****************");
+                }
+                else // Enemy is in front of player
+                {
+                    smartEnemy = false;
+                }
+
+            }
+
+            */
+
+            DetermineSmartEnemy();
 
             if (!smartEnemy)
             {
@@ -247,10 +274,11 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                Vector3 _newLaserSpawnPoint = new Vector3(_laserSpawnPoint.transform.position.x, -_laserSpawnPoint.transform.position.y, _laserSpawnPoint.transform.position.z);
+                _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPointBack.transform.position, Quaternion.Euler(0,0,180f));
 
-                _enemyLaser = Instantiate(_laserPrefab, _newLaserSpawnPoint, Quaternion.Euler(0,0,180f));
+                Debug.Log("Enemy::FireLaserNormal:smartEnemy:****************************");
             }
+
 
             Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
 
@@ -391,7 +419,7 @@ public class Enemy : MonoBehaviour
     {
         if (_player != null)
         {
-            if ((transform.position.y < _player.transform.position.y) && ( Mathf.Abs(transform.position.x-_player.transform.position.x) < 5 ))
+            if ((transform.position.y < _player.transform.position.y) && ( Mathf.Abs(transform.position.x-_player.transform.position.x) < 0.5f ))
             {
                 smartEnemy = true;
                 Debug.Log("Enemy::DetermineSmartEnemy: smartEnemy = true *****************");
