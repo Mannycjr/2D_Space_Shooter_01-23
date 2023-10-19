@@ -60,6 +60,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private bool _aggressiveEnemy = false;
     public float _rammingDistance = 5.0f;
 
+    public bool smartEnemy = false;
 
     // Start is called before the first frame update
     void Start()
@@ -153,6 +154,7 @@ public class Enemy : MonoBehaviour
         }
 
         DetermineEnemyAggression();  // sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
+        DetermineSmartEnemy();
     }
 
     private void CalculateMovementStandard()
@@ -228,13 +230,28 @@ public class Enemy : MonoBehaviour
     private void FireLaserNormal()
     {
         //Debug.Log("Enemy::FireLaserNormal: Begin");
-        
+
+        //private Quaternion _laserRotation = Quaternion.identity;
+
         if (Time.time > _canFireAtTime && _isDestroyed == false)
         {
-            _fireRate = Random.Range(3f, 7f);
+            //_fireRate = Random.Range(3f, 7f);
+            _fireRate = 1f;
             _canFireAtTime = Time.time + _fireRate;
 
-            GameObject _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
+            GameObject _enemyLaser;
+
+            if (!smartEnemy)
+            {
+                _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
+            }
+            else
+            {
+                Vector3 _newLaserSpawnPoint = new Vector3(_laserSpawnPoint.transform.position.x, -_laserSpawnPoint.transform.position.y, _laserSpawnPoint.transform.position.z);
+
+                _enemyLaser = Instantiate(_laserPrefab, _newLaserSpawnPoint, Quaternion.Euler(0,0,180f));
+            }
+
             Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
 
             for (int i = 0; i < lasers.Length; i++)
@@ -370,4 +387,19 @@ public class Enemy : MonoBehaviour
         }   
     }
 
+    private void DetermineSmartEnemy()
+    {
+        if (_player != null)
+        {
+            if ((transform.position.y < _player.transform.position.y) && ( Mathf.Abs(transform.position.x-_player.transform.position.x) < 5 ))
+            {
+                smartEnemy = true;
+                Debug.Log("Enemy::DetermineSmartEnemy: smartEnemy = true *****************");
+            } else
+            {
+                smartEnemy = false;
+            }
+        }
+
+    }
 }

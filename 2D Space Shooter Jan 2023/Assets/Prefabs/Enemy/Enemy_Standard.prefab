@@ -98,6 +98,7 @@ MonoBehaviour:
   afterLevelXLaserBeamEnemyRamPlayerMove: 1
   _aggressiveEnemy: 0
   _rammingDistance: 5
+  smartEnemy: 0
 --- !u!212 &4746186775749362755
 SpriteRenderer:
   m_ObjectHideFlags: 0
