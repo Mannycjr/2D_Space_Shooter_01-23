@@ -242,41 +242,21 @@ public class Enemy : MonoBehaviour
 
         if (Time.time > _canFireAtTime && _isDestroyed == false)
         {
-            //_fireRate = Random.Range(3f, 7f);
-            _fireRate = 1f;
+            _fireRate = Random.Range(0f, 5f);
             _canFireAtTime = Time.time + _fireRate;
 
             GameObject _enemyLaser;
-            /*
-            if (_player != null)
-            {
-
-                // Determine if enemy is behind player
-                if ((transform.position.y < _player.transform.position.y) && (Mathf.Abs(transform.position.x - _player.transform.position.x) < 0.5f))
-                {
-                    smartEnemy = true;
-                    Debug.Log("Enemy::DetermineSmartEnemy: smartEnemy = true *****************");
-                }
-                else // Enemy is in front of player
-                {
-                    smartEnemy = false;
-                }
-
-            }
-
-            */
 
             DetermineSmartEnemy();
 
-            if (!smartEnemy)
+            if (smartEnemy)
             {
-                _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
+                _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPointBack.transform.position, Quaternion.Euler(0,0,180f));
             }
             else
             {
-                _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPointBack.transform.position, Quaternion.Euler(0,0,180f));
-
-                Debug.Log("Enemy::FireLaserNormal:smartEnemy:****************************");
+                
+                _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
             }
 
 
