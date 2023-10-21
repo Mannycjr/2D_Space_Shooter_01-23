@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private bool _aggressiveEnemy = false;
     public float _rammingDistance = 5.0f;
 
-    public bool smartEnemy = false;
+    public bool enemyBehindPlayer = false;
 
     // Start is called before the first frame update
     void Start()
@@ -163,7 +163,6 @@ public class Enemy : MonoBehaviour
         }
 
         DetermineEnemyAggression();  // sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
-        //DetermineSmartEnemy();
     }
 
     private void CalculateMovementStandard()
@@ -243,13 +242,14 @@ public class Enemy : MonoBehaviour
         if (Time.time > _canFireAtTime && _isDestroyed == false)
         {
             _fireRate = Random.Range(0f, 5f);
+            //_fireRate = 1.0f;
             _canFireAtTime = Time.time + _fireRate;
 
             GameObject _enemyLaser;
 
-            DetermineSmartEnemy();
+            DetermineIfBehind();
 
-            if (smartEnemy)
+            if (enemyBehindPlayer)
             {
                 _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPointBack.transform.position, Quaternion.Euler(0,0,180f));
             }
@@ -395,17 +395,23 @@ public class Enemy : MonoBehaviour
         }   
     }
 
-    private void DetermineSmartEnemy()
+    private void DetermineIfBehind()
     {
         if (_player != null)
         {
-            if ((transform.position.y < _player.transform.position.y) && ( Mathf.Abs(transform.position.x-_player.transform.position.x) < 0.5f ))
+
+            Vector3 direction = _player.transform.position - transform.position;
+            direction.Normalize();
+
+            float checkBehind = Vector3.Dot(direction, -transform.up);
+            //Debug.Log("Enemy::DetermineIfBehind: checkBehind=" + checkBehind+ " *****************");
+            if ((checkBehind > -0.75f) & (checkBehind < 0.0f))
             {
-                smartEnemy = true;
-                Debug.Log("Enemy::DetermineSmartEnemy: smartEnemy = true *****************");
+                enemyBehindPlayer = true;
+                //Debug.Log("Enemy::DetermineIfBehind: enemyBehindPlayer = true *****************");
             } else
             {
-                smartEnemy = false;
+                enemyBehindPlayer = false;
             }
         }
 
