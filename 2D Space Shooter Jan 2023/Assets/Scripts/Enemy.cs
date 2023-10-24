@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     [Header("Standard Enemy")]
     // handle to animator component
     private Animator _enemyAnimator;
-    private float _explosionAnimLength = 2.6f;
+    private float _explosionAnimLength = 0.0f;
 
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _sfxClipExplosion;
@@ -108,21 +108,25 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy::Start: No Enemy Shields Game Object");
         }
 
-        if (_enemyID == _enemyIDs.LaserBeam)
+        switch (_enemyID)
         {
-            _explosionAnimLength = 0.0f;
-        } else if (_enemyID == _enemyIDs.Standard)
-        {
-            Invoke("SheildsInitialize", 0.1f);
-        } else if (_enemyID == _enemyIDs.SmartRearLaser)
-        {
-            _laserSpawnPointBack = this.gameObject.transform.GetChild(1).gameObject; // Second child object is the front back point
-            if ((_laserSpawnPointBack == null) | (this.gameObject.transform.GetChild(1).name != "Laser_Spawn_Back"))
-            {
-                Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL or not Laser_Spawn_Back.");
-            }
+            case _enemyIDs.LaserBeam:
+                _explosionAnimLength = 0.0f;
+                break;
+            case _enemyIDs.SmartRearLaser:
+                _explosionAnimLength = 0.0f;
+                _laserSpawnPointBack = this.gameObject.transform.GetChild(1).gameObject; // Second child object is the front back point
+                if ((_laserSpawnPointBack == null) | (this.gameObject.transform.GetChild(1).name != "Laser_Spawn_Back"))
+                {
+                    Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL or not Laser_Spawn_Back.");
+                }
+                break;
+            case _enemyIDs.Standard:
+            default:
+                _explosionAnimLength = 2.6f;
+                Invoke("SheildsInitialize", 0.1f);
+                break;
         }
-        
     }
 
     private void SheildsInitialize()
