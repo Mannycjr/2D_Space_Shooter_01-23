@@ -153,7 +153,7 @@ public class SpawnManager : MonoBehaviour
                     
                     Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
 
-                    if (_gameManager.waveID > afterLevelXNewEnemySpawn) // After wave 3 (default), include spawning new enemy type
+                    if (_gameManager.waveID > afterLevelXNewEnemySpawn) // After wave 3 (default), include spawning new enemy types
                     {
                         _enemyIndex = Random.Range(0, _enemyPrefab.Length);
                     }

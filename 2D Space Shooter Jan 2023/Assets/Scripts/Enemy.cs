@@ -7,7 +7,8 @@ public class Enemy : MonoBehaviour
     public enum _enemyIDs
     {
         Standard,
-        LaserBeam
+        LaserBeam,
+        SmartRearLaser
     }
 
     public _enemyIDs _enemyID;
@@ -102,12 +103,18 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL or not Laser_Spawn_Front.");
         }
 
-
+        if (_enemyShieldsOnEnemy == null)
+        {
+            Debug.LogError("Enemy::Start: No Enemy Shields Game Object");
+        }
 
         if (_enemyID == _enemyIDs.LaserBeam)
         {
             _explosionAnimLength = 0.0f;
         } else if (_enemyID == _enemyIDs.Standard)
+        {
+            Invoke("SheildsInitialize", 0.1f);
+        } else if (_enemyID == _enemyIDs.SmartRearLaser)
         {
             _laserSpawnPointBack = this.gameObject.transform.GetChild(1).gameObject; // Second child object is the front back point
             if ((_laserSpawnPointBack == null) | (this.gameObject.transform.GetChild(1).name != "Laser_Spawn_Back"))
@@ -115,13 +122,7 @@ public class Enemy : MonoBehaviour
                 Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL or not Laser_Spawn_Back.");
             }
         }
-
-        if (_enemyShieldsOnEnemy == null)
-        {
-            Debug.LogError("Enemy::Start: No Enemy Shields Game Object");
-        }
-
-        Invoke("SheildsInitialize", 0.1f);
+        
     }
 
     private void SheildsInitialize()
@@ -154,6 +155,10 @@ public class Enemy : MonoBehaviour
                 }
 
                 FireLaserBeam();
+                break;
+            case _enemyIDs.SmartRearLaser:
+                CalculateMovementStandard();
+                FireLaserBehind();
                 break;
             case _enemyIDs.Standard:
             default:
@@ -245,20 +250,7 @@ public class Enemy : MonoBehaviour
             //_fireRate = 1.0f;
             _canFireAtTime = Time.time + _fireRate;
 
-            GameObject _enemyLaser;
-
-            DetermineIfBehind();
-
-            if (enemyBehindPlayer)
-            {
-                _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPointBack.transform.position, Quaternion.Euler(0,0,180f));
-            }
-            else
-            {
-                
-                _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
-            }
-
+            GameObject _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
 
             Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
 
@@ -288,6 +280,37 @@ public class Enemy : MonoBehaviour
             _audioSource.Play(0);
             _audioSource.volume = 0.25f;
             StartCoroutine(LaserBeamOn(_laserBeamDuration));
+        }
+    }
+
+    private void FireLaserBehind()
+    {
+        //Debug.Log("Enemy::FireLaserBehind: Begin");
+
+        if (Time.time > _canFireAtTime && _isDestroyed == false)
+        {
+            //_fireRate = Random.Range(0f, 5f);
+            _fireRate = 1.0f;
+            _canFireAtTime = Time.time + _fireRate;
+
+            DetermineIfBehind();
+
+            if (enemyBehindPlayer)
+            {
+               GameObject _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPointBack.transform.position, Quaternion.Euler(0, 0, 180f));
+
+                Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
+
+                for (int i = 0; i < lasers.Length; i++)
+                {
+                    lasers[i].EnemyLaser(); // Marks it as enemy laser instead of player's laser
+
+                }
+
+                _audioSource.clip = _sfxClipLaser;
+                _audioSource.Play(0);
+            }
+
         }
     }
 
@@ -326,15 +349,21 @@ public class Enemy : MonoBehaviour
         _isDestroyed = true;
         _audioSource.clip = _sfxClipExplosion;
         _audioSource.Play(0);
-        if (_enemyID == _enemyIDs.LaserBeam)
+
+        switch (_enemyID)
         {
-            ExplosionOnlyAnim();
-            Destroy(this.GetComponentInChildren<Laser>());
-        } else if (_enemyID == _enemyIDs.Standard)
-        {
-            _enemyAnimator.SetTrigger("OnEnemyDeath"); // Explosion animaiton with Standard Enemy in beginning
+            case _enemyIDs.LaserBeam:
+                ExplosionOnlyAnim();
+                Destroy(this.GetComponentInChildren<Laser>());
+                break;
+            case _enemyIDs.SmartRearLaser:
+                ExplosionOnlyAnim();
+                break;
+            case _enemyIDs.Standard:
+            default:
+                _enemyAnimator.SetTrigger("OnEnemyDeath"); // Explosion animaiton with Standard Enemy in beginning
+                break;
         }
-        
 
         Destroy(GetComponent<Collider2D>()); // Do not collide any more
         _speed = 0; // No movement after shot
