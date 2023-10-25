@@ -67,6 +67,7 @@ MonoBehaviour:
   afterLevelXLaserBeamEnemyRamPlayerMove: 8
   _aggressiveEnemy: 0
   _rammingDistance: 5
+  smartEnemy: 0
 --- !u!212 &4746186775749362755
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -292,7 +293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8165835103554981593}
   m_Layer: 0
-  m_Name: Laser_Spawn
+  m_Name: Laser_Spawn_Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
