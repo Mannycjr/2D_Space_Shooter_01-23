@@ -68,7 +68,6 @@ MonoBehaviour:
   afterLevelXLaserBeamEnemyRamPlayerMove: 8
   _aggressiveEnemy: 0
   _rammingDistance: 5
-  enemyBehindPlayer: 0
 --- !u!212 &5653028064590811112
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -155,7 +154,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01696384, y: -0.119540215}
+  m_Offset: {x: -0.06717563, y: -0.6454127}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -166,7 +165,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.977704, y: 3.8703384}
+  m_Size: {x: 7.0811954, y: 6.2683167}
   m_EdgeRadius: 0
 --- !u!95 &5374528522069492221
 Animator:
@@ -308,7 +307,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7207157375334633258}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.8000002, z: 0}
+  m_LocalPosition: {x: 0, y: 4.35, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []

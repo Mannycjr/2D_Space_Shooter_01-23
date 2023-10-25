@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private bool _aggressiveEnemy = false;
     public float _rammingDistance = 5.0f;
 
-    public bool enemyBehindPlayer = false;
+    private bool enemyBehindPlayer = false;
 
     // Start is called before the first frame update
     void Start()
@@ -103,17 +103,13 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy::Start() _laserSpawnPoint is NULL or not Laser_Spawn_Front.");
         }
 
-        if (_enemyShieldsOnEnemy == null)
-        {
-            Debug.LogError("Enemy::Start: No Enemy Shields Game Object");
-        }
-
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
                 _explosionAnimLength = 0.0f;
                 break;
             case _enemyIDs.SmartRearLaser:
+          
                 _explosionAnimLength = 0.0f;
                 _laserSpawnPointBack = this.gameObject.transform.GetChild(1).gameObject; // Second child object is the front back point
                 if ((_laserSpawnPointBack == null) | (this.gameObject.transform.GetChild(1).name != "Laser_Spawn_Back"))
@@ -123,6 +119,10 @@ public class Enemy : MonoBehaviour
                 break;
             case _enemyIDs.Standard:
             default:
+                if (_enemyShieldsOnEnemy == null)
+                {
+                    Debug.LogError("Enemy::Start: No Enemy Shields Game Object");
+                }
                 _explosionAnimLength = 2.6f;
                 Invoke("SheildsInitialize", 0.1f);
                 break;
@@ -301,7 +301,7 @@ public class Enemy : MonoBehaviour
 
             if (enemyBehindPlayer)
             {
-               GameObject _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPointBack.transform.position, Quaternion.Euler(0, 0, 180f));
+                GameObject _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPointBack.transform.position, Quaternion.Euler(0, 0, 180f));
 
                 Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
 
