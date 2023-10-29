@@ -80,6 +80,8 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy::Start(). Game Manager is NULL");
         }
 
+        //allPowerUps = GameObject.Find("").
+
         _enemyAnimator = GetComponent<Animator>();
         if (_enemyAnimator == null)
         {
@@ -125,6 +127,22 @@ public class Enemy : MonoBehaviour
                 }
                 _explosionAnimLength = 2.6f;
                 Invoke("SheildsInitialize", 0.1f);
+                // Make array of powerups
+                Debug.Log("This enemy's parent is " + transform.parent.parent.name);
+                Powerup[] _allPowerUps = transform.parent.parent.GetChild(1).GetComponentsInChildren<Powerup>();
+                for (int i = 0; i < _allPowerUps.Length; i++)
+                {
+                    Vector3 directionPowerup = _allPowerUps[i].transform.position - transform.position;
+                    directionPowerup.Normalize();
+
+                    // Check if the powerup is in front of this enemy
+                    float checkFront = Vector3.Dot(directionPowerup, -transform.up);
+                    if ((checkFront > -0.75f) & (checkFront < 0.0f) )
+                    {
+                        Invoke("FireLaserNormal", 0.1f);
+                    }
+                }
+                
                 break;
         }
     }
@@ -168,10 +186,12 @@ public class Enemy : MonoBehaviour
             default:
                 CalculateMovementStandard();
                 FireLaserNormal();
+                // DetermineIfPowerupInfront(); // Fires laser if powerup is in front of enemy
                 break;
         }
 
         DetermineEnemyAggression();  // sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
+        
     }
 
     private void CalculateMovementStandard()
@@ -448,5 +468,14 @@ public class Enemy : MonoBehaviour
             }
         }
 
+    }
+
+    private void DetermineIfPowerupInfront()
+    {
+        // enemy type is not LaserBeam
+        if (true)
+        {
+
+        }
     }
 }

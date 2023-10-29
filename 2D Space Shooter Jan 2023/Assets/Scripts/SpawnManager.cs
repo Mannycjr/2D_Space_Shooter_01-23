@@ -70,10 +70,12 @@ public class SpawnManager : MonoBehaviour
             StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
             StartCoroutine(SpawnPowerupRoutine(_powerupPrefabRare, _waitTimePowerupsRareMin, _waitTimePowerupsRareMax));
         }
+        /*
         if (waveID == 7) // Add another powerup coroutine to help the player at more difficult waves 
         {
             StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
         }
+        */
     }
 
     IEnumerator InitialPowerupsDelay()
