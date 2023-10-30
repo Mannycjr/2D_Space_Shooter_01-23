@@ -127,22 +127,7 @@ public class Enemy : MonoBehaviour
                 }
                 _explosionAnimLength = 2.6f;
                 Invoke("SheildsInitialize", 0.1f);
-                // Make array of powerups
-                Debug.Log("This enemy's parent is " + transform.parent.parent.name);
-                Powerup[] _allPowerUps = transform.parent.parent.GetChild(1).GetComponentsInChildren<Powerup>();
-                for (int i = 0; i < _allPowerUps.Length; i++)
-                {
-                    Vector3 directionPowerup = _allPowerUps[i].transform.position - transform.position;
-                    directionPowerup.Normalize();
-
-                    // Check if the powerup is in front of this enemy
-                    float checkFront = Vector3.Dot(directionPowerup, -transform.up);
-                    if ((checkFront > -0.75f) & (checkFront < 0.0f) )
-                    {
-                        Invoke("FireLaserNormal", 0.1f);
-                    }
-                }
-                
+                DetermineIfPowerupInfront();
                 break;
         }
     }
@@ -227,6 +212,7 @@ public class Enemy : MonoBehaviour
         {
             //move to top with a new random x position
             transform.position = new Vector3(_randomXPos, _verticalLimit, 0);
+            DetermineIfPowerupInfront();
         }
 
         // if left or right side of screen
@@ -234,7 +220,9 @@ public class Enemy : MonoBehaviour
         {
             float _randomYPos = Random.Range(-_verticalLimit, _verticalLimit);
             transform.position = new Vector3(-transform.position.x, _randomYPos, 0);
+            DetermineIfPowerupInfront();
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -472,10 +460,21 @@ public class Enemy : MonoBehaviour
 
     private void DetermineIfPowerupInfront()
     {
-        // enemy type is not LaserBeam
-        if (true)
+        // Make array of powerups
+        Debug.Log("Enemy::Start:This enemy's parent is " + transform.parent.parent.name);
+        Powerup[] _allPowerUps = transform.parent.parent.GetChild(1).GetComponentsInChildren<Powerup>();
+        Debug.Log("Enemy::Start:_allPowerUps.Length= " + _allPowerUps.Length);
+        for (int i = 0; i < _allPowerUps.Length; i++)
         {
+            Vector3 directionPowerup = _allPowerUps[i].transform.position - transform.position;
+            directionPowerup.Normalize();
 
+            // Check if the powerup is in front of this enemy
+            float checkFront = Vector3.Dot(directionPowerup, -transform.up);
+            if ((checkFront > -0.75f) & (checkFront < 0.0f))
+            {
+                Invoke("FireLaserNormal", 0.1f);
+            }
         }
     }
 }
