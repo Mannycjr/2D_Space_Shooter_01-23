@@ -6,6 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
+    public GameObject _powerupContainer;
     [SerializeField] private GameObject[] _powerupPrefabFrequent;
     [SerializeField] private GameObject[] _powerupPrefab;
     [SerializeField] private GameObject[] _powerupPrefabRare;
@@ -40,6 +41,15 @@ public class SpawnManager : MonoBehaviour
         {
             Debug.LogError("SpawnManager::Start(). Game Manager is NULL");
         }
+
+        if (_enemyContainer == null)
+        {
+            Debug.LogError("SpawnManager::Start(). Enemy Container is NULL");
+        }
+        if (_powerupContainer == null)
+        {
+            Debug.LogError("SpawnManager::Start(). Powerup Container is NULL");
+        }
     }
 
     // Update is called once per frame
@@ -60,10 +70,12 @@ public class SpawnManager : MonoBehaviour
             StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
             StartCoroutine(SpawnPowerupRoutine(_powerupPrefabRare, _waitTimePowerupsRareMin, _waitTimePowerupsRareMax));
         }
+        /*
         if (waveID == 7) // Add another powerup coroutine to help the player at more difficult waves 
         {
             StartCoroutine(SpawnPowerupRoutine(_powerupPrefab, _waitTimePowerupsNormalMin, _waitTimePowerupsNormalMax));
         }
+        */
     }
 
     IEnumerator InitialPowerupsDelay()
@@ -201,6 +213,7 @@ public class SpawnManager : MonoBehaviour
                 Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
                 _randomPowerUpIndex = Random.Range(0, _spawnList.Length);
                 GameObject newPowerup = Instantiate(_spawnList[_randomPowerUpIndex], spawnPosition, Quaternion.identity);
+                newPowerup.transform.parent = _powerupContainer.transform;
             }
         }
     }

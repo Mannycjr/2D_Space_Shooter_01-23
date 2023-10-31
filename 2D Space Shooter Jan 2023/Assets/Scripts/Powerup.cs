@@ -99,11 +99,11 @@ public class Powerup : MonoBehaviour
 
             // 
             Destroy(this.gameObject);
-        } else if ((other.tag == "Laser") && (_powerupID == _powerupIDs.NoAmmo))
+        } else if (other.tag == "Laser")
         {
             AudioSource.PlayClipAtPoint(_sfxClipExplosion, new Vector3(0, 0, _audioPositionZ));
             ExplosionOnlyAnim();
-            Destroy(this.gameObject);
+            Destroy(this.gameObject);                
         }
     }
 

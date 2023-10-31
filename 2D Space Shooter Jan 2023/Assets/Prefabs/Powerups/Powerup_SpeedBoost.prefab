@@ -103,7 +103,9 @@ MonoBehaviour:
   _speed: 3
   _powerupDuration: 7
   _powerupID: 1
+  _explosionPrefab: {fileID: 5665125328609053333, guid: f053f236ed91d604b9ae33590978cf4f, type: 3}
   _powerupAudioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _sfxClipExplosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
 --- !u!95 &3362996504754290172
 Animator:
   serializedVersion: 5
