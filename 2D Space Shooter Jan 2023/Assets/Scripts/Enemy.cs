@@ -80,8 +80,6 @@ public class Enemy : MonoBehaviour
             Debug.LogError("Enemy::Start(). Game Manager is NULL");
         }
 
-        //allPowerUps = GameObject.Find("").
-
         _enemyAnimator = GetComponent<Animator>();
         if (_enemyAnimator == null)
         {
@@ -171,7 +169,6 @@ public class Enemy : MonoBehaviour
             default:
                 CalculateMovementStandard();
                 FireLaserNormal();
-                // DetermineIfPowerupInfront(); // Fires laser if powerup is in front of enemy
                 break;
         }
 
@@ -460,7 +457,7 @@ public class Enemy : MonoBehaviour
 
     private void DetermineIfPowerupInfront()
     {
-        // Make array of powerups
+        // Make array of powerups. Second child of the Spawn_Manager will always be the "Powerup_Container" game object
         Debug.Log("Enemy::Start:This enemy's parent is " + transform.parent.parent.name);
         Powerup[] _allPowerUps = transform.parent.parent.GetChild(1).GetComponentsInChildren<Powerup>();
         Debug.Log("Enemy::Start:_allPowerUps.Length= " + _allPowerUps.Length);
