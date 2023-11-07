@@ -140,6 +140,41 @@ public class Player : MonoBehaviour
             SpeedReset();
         }
 
+        // If "c" key is pressed, call method to make powerups move towards player
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (_spawnManager.powerupContainer != null)
+            {
+                Powerup[] _allPowerups = _spawnManager.powerupContainer.GetComponentsInChildren<Powerup>();
+                if (_allPowerups.Length > 0)
+                {
+                    for (int i = 0; i < _allPowerups.Length; i++)
+                    {
+                        _allPowerups[i].MoveTowardsPlayerEnable();
+                    }
+
+                }
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            if (_spawnManager.powerupContainer != null)
+            {
+                Powerup[] _allPowerups = _spawnManager.powerupContainer.GetComponentsInChildren<Powerup>();
+                if (_allPowerups.Length > 0)
+                {
+                    for (int i = 0; i < _allPowerups.Length; i++)
+                    {
+                        _allPowerups[i].MoveTowardsPlayerDisable();
+                    }
+
+                }
+            }
+
+        }
+
+
         CalculateMovement();
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire )

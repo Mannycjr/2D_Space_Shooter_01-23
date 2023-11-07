@@ -6,7 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
-    public GameObject _powerupContainer;
+    public GameObject powerupContainer;
     [SerializeField] private GameObject[] _powerupPrefabFrequent;
     [SerializeField] private GameObject[] _powerupPrefab;
     [SerializeField] private GameObject[] _powerupPrefabRare;
@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour
         {
             Debug.LogError("SpawnManager::Start(). Enemy Container is NULL");
         }
-        if (_powerupContainer == null)
+        if (powerupContainer == null)
         {
             Debug.LogError("SpawnManager::Start(). Powerup Container is NULL");
         }
@@ -213,7 +213,7 @@ public class SpawnManager : MonoBehaviour
                 Vector3 spawnPosition = new Vector3(_randomX, _yPositionLimit, 0);
                 _randomPowerUpIndex = Random.Range(0, _spawnList.Length);
                 GameObject newPowerup = Instantiate(_spawnList[_randomPowerUpIndex], spawnPosition, Quaternion.identity);
-                newPowerup.transform.parent = _powerupContainer.transform;
+                newPowerup.transform.parent = powerupContainer.transform;
             }
         }
     }

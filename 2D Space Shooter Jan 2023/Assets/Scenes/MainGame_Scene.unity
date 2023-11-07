@@ -1237,7 +1237,7 @@ MonoBehaviour:
   - {fileID: 2020700719460078783, guid: a764598c572a36240866fb7d162be9cf, type: 3}
   - {fileID: 1415458708288577300, guid: 7bfcd627adb40794fa8804e0803782a9, type: 3}
   _enemyContainer: {fileID: 395430345}
-  _powerupContainer: {fileID: 112201290}
+  powerupContainer: {fileID: 112201290}
   _powerupPrefabFrequent:
   - {fileID: 7295739879116137568, guid: 111f78c67d0f7f0488942c2b03b0aa3c, type: 3}
   _powerupPrefab:

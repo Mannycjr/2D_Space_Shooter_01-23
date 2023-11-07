@@ -24,16 +24,38 @@ public class Powerup : MonoBehaviour
     [SerializeField] private GameObject _explosionPrefab;
     private GameObject _explosionInstance;
 
+    private SpawnManager _spawnManager; // get script SpawnManager of GameObject Spawn_Manager
+    private bool _moveTowardsPlayer = false;
+    private Player _player;
+
     // SFX
     [SerializeField] private AudioClip _powerupAudioClip;
     [SerializeField] private AudioClip _sfxClipExplosion;
     private float _audioPositionZ = -9f;
 
+    private void Start()
+    {
+        _player = GameObject.Find("Player").GetComponent<Player>();
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Powerup::Start: Spawn Manager is NULL.");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        // move down
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if (!_moveTowardsPlayer)
+        {
+            // move down at a speed
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+        else if ((_moveTowardsPlayer) & (_player != null))
+        {
+            Debug.Log("MovingTowardPlayer");
+            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _speed * 2.0f * Time.deltaTime);
+        }
 
         // when leave screen, destroy object
         if (transform.position.y <= -_verticalLimit)
@@ -111,5 +133,15 @@ public class Powerup : MonoBehaviour
     {
         _explosionInstance = Instantiate(_explosionPrefab, transform.position, transform.rotation);
         Destroy(_explosionInstance, 4.0f);
+    }
+
+    public void MoveTowardsPlayerEnable()
+    {
+        _moveTowardsPlayer = true;
+    }
+
+    public void MoveTowardsPlayerDisable()
+    {
+        _moveTowardsPlayer = false;
     }
 }
