@@ -46,12 +46,9 @@ public class Powerup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // move down
-        // transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
         if (!_moveTowardsPlayer)
         {
-            // move down at a speed of 3
+            // move down at a speed
             transform.Translate(Vector3.down * _speed * Time.deltaTime);
         }
         else if ((_moveTowardsPlayer) & (_player != null))
