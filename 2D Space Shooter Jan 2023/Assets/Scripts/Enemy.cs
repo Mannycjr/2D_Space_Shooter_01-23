@@ -17,7 +17,8 @@ public class Enemy : MonoBehaviour
     private GameObject _explosionInstance;
 
     private GameManager _gameManager;
- 
+    private SpawnManager _spawnManager;
+
     GameObject _laserSpawnPoint;
     GameObject _laserSpawnPointBack;
     private float _verticalLimit = 7.0f;
@@ -78,6 +79,12 @@ public class Enemy : MonoBehaviour
         if (_gameManager == null)
         {
             Debug.LogError("Enemy::Start(). Game Manager is NULL");
+        }
+
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if (_gameManager == null)
+        {
+            Debug.LogError("Enemy::Start(). Spawn Manager is NULL");
         }
 
         _enemyAnimator = GetComponent<Animator>();
@@ -260,6 +267,8 @@ public class Enemy : MonoBehaviour
             _canFireAtTime = Time.time + _fireRate;
 
             GameObject _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
+
+            _enemyLaser.transform.parent = _spawnManager.laserStandardContainer.transform;
 
             Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
 
@@ -458,9 +467,9 @@ public class Enemy : MonoBehaviour
     private void DetermineIfPowerupInfront()
     {
         // Make array of powerups. Second child of the Spawn_Manager will always be the "Powerup_Container" game object
-        Debug.Log("Enemy::Start:This enemy's parent is " + transform.parent.parent.name);
+        //Debug.Log("Enemy::Start:This enemy's parent is " + transform.parent.parent.name);
         Powerup[] _allPowerUps = transform.parent.parent.GetChild(1).GetComponentsInChildren<Powerup>();
-        Debug.Log("Enemy::Start:_allPowerUps.Length= " + _allPowerUps.Length);
+        //Debug.Log("Enemy::Start:_allPowerUps.Length= " + _allPowerUps.Length);
         for (int i = 0; i < _allPowerUps.Length; i++)
         {
             Vector3 directionPowerup = _allPowerUps[i].transform.position - transform.position;

@@ -61,7 +61,7 @@ public class Laser : MonoBehaviour
 
         if ( (transform.position.y < -_yLimit) | (Mathf.Abs(transform.position.x) > _xLimit) )
         {
-            if (this.transform.parent != null)
+            if (this.transform.parent != null & this.transform.parent.name != "LaserStandard_Container")
             {
                 Destroy(this.transform.parent.gameObject);
             }

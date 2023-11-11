@@ -1217,6 +1217,7 @@ Transform:
   m_Children:
   - {fileID: 395430346}
   - {fileID: 112201291}
+  - {fileID: 1139791483}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1238,6 +1239,7 @@ MonoBehaviour:
   - {fileID: 1415458708288577300, guid: 7bfcd627adb40794fa8804e0803782a9, type: 3}
   _enemyContainer: {fileID: 395430345}
   powerupContainer: {fileID: 112201290}
+  laserStandardContainer: {fileID: 1139791482}
   _powerupPrefabFrequent:
   - {fileID: 7295739879116137568, guid: 111f78c67d0f7f0488942c2b03b0aa3c, type: 3}
   _powerupPrefab:
@@ -2292,6 +2294,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e39f7c92c2cede409ae6776f72a14d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1139791482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1139791483}
+  m_Layer: 0
+  m_Name: LaserStandard_Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1139791483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139791482}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 548013847}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1206772055
 GameObject:
   m_ObjectHideFlags: 0
