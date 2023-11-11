@@ -274,6 +274,7 @@ public class Player : MonoBehaviour
     void Firelaser()
     {
         _canFire = Time.time + _firerate;
+        GameObject _newLaser;
 
         if (_ammoCount > 0)
         {
@@ -289,7 +290,8 @@ public class Player : MonoBehaviour
             }
             else 
             {
-                Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+                _newLaser = Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+                _newLaser.transform.parent = _spawnManager.laserStandardContainer.transform; // Add new Laser to Container
             }
 
             _ammoCount--;
@@ -302,7 +304,18 @@ public class Player : MonoBehaviour
 
     void FireWideShot()
     {
-        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+        Laser[] _newLaser;
+        int _spawnAngle = -90;
+
+        for (int i = 0; i < 5; i++)
+        {
+            //_newLaser[i] = Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, _spawnAngle));
+            //_newLaser[i].transform.parent = _spawnManager.laserStandardContainer.transform;
+
+            _spawnAngle += 45;
+        }
+
+        
         Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, 45f));
         Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, 90f));
         Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, -45f));
