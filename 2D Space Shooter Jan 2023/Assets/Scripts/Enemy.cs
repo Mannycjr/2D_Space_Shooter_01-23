@@ -263,12 +263,11 @@ public class Enemy : MonoBehaviour
         if (Time.time > _canFireAtTime && _isDestroyed == false)
         {
             _fireRate = Random.Range(0f, 5f);
-            //_fireRate = 1.0f;
             _canFireAtTime = Time.time + _fireRate;
 
             GameObject _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
 
-            _enemyLaser.transform.parent = _spawnManager.laserStandardContainer.transform;
+            _enemyLaser.transform.parent = _spawnManager.enemyLaserStandardContainer.transform;
 
             Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
 
