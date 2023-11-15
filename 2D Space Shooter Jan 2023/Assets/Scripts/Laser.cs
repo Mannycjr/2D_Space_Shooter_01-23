@@ -48,6 +48,7 @@ public class Laser : MonoBehaviour
             if (this.transform.parent.name == "Triple_Shot")
             {
                 Destroy(this.transform.parent.gameObject);
+                Destroy(this.gameObject);
             }
             else
             {
@@ -62,9 +63,7 @@ public class Laser : MonoBehaviour
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         if ( (transform.position.y < -_yLimit) | (Mathf.Abs(transform.position.x) > _xLimit) )
-        {
-            Destroy(this.gameObject);
-            
+        {   
             if ( (this.transform.parent != null) & (this.transform.parent.name != "EnemyLaserStandard_Container") )
             {
                 Destroy(this.transform.parent.gameObject);

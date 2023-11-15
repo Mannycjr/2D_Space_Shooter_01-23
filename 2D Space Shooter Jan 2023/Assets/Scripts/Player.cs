@@ -319,24 +319,6 @@ public class Player : MonoBehaviour
 
             _spawnAngle += 45;
         }
-
-        /*
-
-        newMultiLasers[0] = Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, 45f));
-        newMultiLasers[0].transform.parent = _spawnManager.laserStandardContainer.transform; // Add new Laser to Container
-
-        newMultiLasers[1] = Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, 90f));
-        newMultiLasers[1].transform.parent = _spawnManager.laserStandardContainer.transform; // Add new Laser to Container
-
-        newMultiLasers[2] = Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, 0.0f));
-        newMultiLasers[2].transform.parent = _spawnManager.laserStandardContainer.transform; // Add new Laser to Container
-
-        newMultiLasers[3] = Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, -45f));
-        newMultiLasers[3].transform.parent = _spawnManager.laserStandardContainer.transform; // Add new Laser to Container
-
-        newMultiLasers[4] = Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, -90f));
-        newMultiLasers[4].transform.parent = _spawnManager.laserStandardContainer.transform; // Add new Laser to Container
-        */
     }
 
     public void Damage()
