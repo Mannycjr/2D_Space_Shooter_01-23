@@ -181,14 +181,6 @@ public class Enemy : MonoBehaviour
             case _enemyIDs.AvoidLaser:
 
                 DetermineAvoidLaser();
-                if (_avoidLaser)
-                {
-
-                }
-                else
-                {
-                    CalculateMovementStandard();
-                }
                 break;
             case _enemyIDs.Standard:
             default:
@@ -225,7 +217,7 @@ public class Enemy : MonoBehaviour
         CalcMovementAtScreenLimits();
     }
 
-    private void CalculateMovementAvoidLaser()
+    private void CalculateMovementAvoidLaser(Laser _avoidThisLaser)
     {
 
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -460,12 +452,29 @@ public class Enemy : MonoBehaviour
 
     private void DetermineAvoidLaser()
     {
-        Laser[] trackLasers = _spawnManager.laserStandardContainer.GetComponentsInChildren <Laser>();
+        // Debug.Log("');
+        Vector2 _enemyMoveDirection = Vector2.down;
+        Laser[] _trackLasers = _spawnManager.laserStandardContainer.GetComponentsInChildren<Laser>();
 
-        if (trackLasers.Length > 0)
+        for (int i = 0; i < _trackLasers.Length; i++)
         {
 
+            Vector2 _directionToLaser = _trackLasers[i].transform.position - transform.position;
+
+            if (_directionToLaser.magnitude < _avoidDistance)
+            {
+                _avoidLaser = true;
+                _enemyMoveDirection = _directionToLaser;
+            } else
+            {
+                _avoidLaser = false;
+            }
+
         }
+
+        transform.Translate(_enemyMoveDirection * _speed * Time.deltaTime);
+
+        CalcMovementAtScreenLimits();
     }
 
     private void RamPlayer()
