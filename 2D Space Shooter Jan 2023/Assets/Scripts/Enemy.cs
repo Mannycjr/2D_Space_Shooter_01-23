@@ -459,11 +459,11 @@ public class Enemy : MonoBehaviour
 
         for (int i = 0; i < _trackLasers.Length; i++)
         {
-            Vector2 _directionToLaser = transform.position - _trackLasers[i].transform.position;
+            Vector2 _directionToLaser = _trackLasers[i].transform.position - transform.position;
 
-            if (_directionToLaser.magnitude < _avoidDistance)
+            if (Mathf.Abs(_directionToLaser.magnitude) < _avoidDistance)
             {
-                _enemyMoveDirection = _directionToLaser;
+                _enemyMoveDirection = -_directionToLaser;
             }
         }
 
