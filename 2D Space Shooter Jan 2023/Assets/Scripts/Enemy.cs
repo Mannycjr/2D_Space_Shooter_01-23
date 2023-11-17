@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour
     {
         Standard,
         LaserBeam,
-        SmartRearLaser
+        SmartRearLaser,
+        AvoidLaser
     }
 
     public _enemyIDs _enemyID;
@@ -64,6 +65,10 @@ public class Enemy : MonoBehaviour
     public float _rammingDistance = 5.0f;
 
     private bool enemyBehindPlayer = false;
+
+    [Header("Enemy Avoid Laser Only")]
+    [SerializeField] private bool _avoidLaser = false;
+    [SerializeField] private float _avoidDistance = 3.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -151,6 +156,7 @@ public class Enemy : MonoBehaviour
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
+                DetermineEnemyAggression();  // sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
                 if (!_aggressiveEnemy)
                 {
                     if (_gameManager.waveID > afterLevelXLaserBeamEnemyWavyMove) // afterLevelXLaserBeamEnemyWavyMove = 7 (Default)
@@ -165,12 +171,24 @@ public class Enemy : MonoBehaviour
                 {
                     RamPlayer();
                 }
-
+                
                 FireLaserBeam();
                 break;
             case _enemyIDs.SmartRearLaser:
                 CalculateMovementStandard();
                 FireLaserBehind();
+                break;
+            case _enemyIDs.AvoidLaser:
+
+                DetermineAvoidLaser();
+                if (_avoidLaser)
+                {
+
+                }
+                else
+                {
+                    CalculateMovementStandard();
+                }
                 break;
             case _enemyIDs.Standard:
             default:
@@ -179,7 +197,7 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
-        DetermineEnemyAggression();  // sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
+        
         
     }
 
@@ -204,6 +222,14 @@ public class Enemy : MonoBehaviour
         float _newRotation = Mathf.Cos(Time.time* _randomMultiplier) * Time.deltaTime * 45f;
         //Debug.Log("Enemy::CalculateMovementWavy:_newRotation=" + _newRotation);
         transform.Rotate(0,0, _newRotation);
+        CalcMovementAtScreenLimits();
+    }
+
+    private void CalculateMovementAvoidLaser()
+    {
+
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
         CalcMovementAtScreenLimits();
     }
 
@@ -429,6 +455,16 @@ public class Enemy : MonoBehaviour
         } else
         {
             _aggressiveEnemy = false;
+        }
+    }
+
+    private void DetermineAvoidLaser()
+    {
+        Laser[] trackLasers = _spawnManager.laserStandardContainer.GetComponentsInChildren <Laser>();
+
+        if (trackLasers.Length > 0)
+        {
+
         }
     }
 
