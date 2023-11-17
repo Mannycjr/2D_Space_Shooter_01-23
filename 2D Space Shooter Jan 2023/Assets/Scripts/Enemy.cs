@@ -459,7 +459,7 @@ public class Enemy : MonoBehaviour
         for (int i = 0; i < _trackLasers.Length; i++)
         {
 
-            Vector2 _directionToLaser = _trackLasers[i].transform.position - transform.position;
+            Vector2 _directionToLaser = transform.position - _trackLasers[i].transform.position;
 
             if (_directionToLaser.magnitude < _avoidDistance)
             {
