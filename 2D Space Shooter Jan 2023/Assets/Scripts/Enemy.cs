@@ -67,7 +67,6 @@ public class Enemy : MonoBehaviour
     private bool enemyBehindPlayer = false;
 
     [Header("Enemy Avoid Laser Only")]
-    [SerializeField] private bool _avoidLaser = false;
     [SerializeField] private float _avoidDistance = 3.0f;
 
     // Start is called before the first frame update
@@ -118,6 +117,7 @@ public class Enemy : MonoBehaviour
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
+            case _enemyIDs.AvoidLaser:
                 _explosionAnimLength = 0.0f;
                 break;
             case _enemyIDs.SmartRearLaser:
@@ -144,7 +144,7 @@ public class Enemy : MonoBehaviour
 
     private void SheildsInitialize()
     {
-        if ((enemyShieldsChances > 0) && (Random.Range(1, enemyShieldsChances) == 1)) // 
+        if ((enemyShieldsChances > 0) && (Random.Range(1, enemyShieldsChances) == 1) && (_enemyID == _enemyIDs.Standard)) // 
         {
             ShieldsActive();
         }
@@ -392,6 +392,7 @@ public class Enemy : MonoBehaviour
                 Destroy(this.GetComponentInChildren<Laser>());
                 break;
             case _enemyIDs.SmartRearLaser:
+            case _enemyIDs.AvoidLaser:
                 ExplosionOnlyAnim();
                 break;
             case _enemyIDs.Standard:
@@ -458,18 +459,12 @@ public class Enemy : MonoBehaviour
 
         for (int i = 0; i < _trackLasers.Length; i++)
         {
-
             Vector2 _directionToLaser = transform.position - _trackLasers[i].transform.position;
 
             if (_directionToLaser.magnitude < _avoidDistance)
             {
-                _avoidLaser = true;
                 _enemyMoveDirection = _directionToLaser;
-            } else
-            {
-                _avoidLaser = false;
             }
-
         }
 
         transform.Translate(_enemyMoveDirection * _speed * Time.deltaTime);
