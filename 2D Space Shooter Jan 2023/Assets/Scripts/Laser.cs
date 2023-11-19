@@ -42,16 +42,19 @@ public class Laser : MonoBehaviour
 
         if ( (Mathf.Abs(transform.position.y) > _yLimit ) | (Mathf.Abs(transform.position.x) > _xLimit ) )
         {
+            //Destroy(this.gameObject);
             //check if this object is a parent such as Triple Shot Laser
-
-            if (this.transform.parent != null)
+            // if ((this.transform.parent != null) & ((this.transform.parent.name != "LaserStandard_Container") | (this.transform.parent.name != "EnemyLaserStandard_Container")) )
+            if (this.transform.parent.name == "Triple_Shot")
             {
                 Destroy(this.transform.parent.gameObject);
+                Destroy(this.gameObject);
             }
             else
             {
                 Destroy(this.gameObject);
-            }        
+            } 
+            /**/
         }
     }
 
@@ -60,8 +63,8 @@ public class Laser : MonoBehaviour
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         if ( (transform.position.y < -_yLimit) | (Mathf.Abs(transform.position.x) > _xLimit) )
-        {
-            if (this.transform.parent != null)
+        {   
+            if ( (this.transform.parent != null) & (this.transform.parent.name != "EnemyLaserStandard_Container") )
             {
                 Destroy(this.transform.parent.gameObject);
             }
@@ -69,6 +72,7 @@ public class Laser : MonoBehaviour
             {
                 Destroy(this.gameObject);
             }
+            
         }
     }
 

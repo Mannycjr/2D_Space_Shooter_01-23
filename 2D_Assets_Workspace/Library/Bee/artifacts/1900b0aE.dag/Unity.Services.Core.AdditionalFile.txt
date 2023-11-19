@@ -1,1 +1,1 @@
-C:\_GameDevHQ\GH\2D_Space_Shooter_01-23\2D_Assets_Workspace
+C:\2DGalaxyShooter\2D_Space_Shooter_01-23\2D_Assets_Workspace

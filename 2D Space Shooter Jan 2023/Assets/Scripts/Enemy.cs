@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour
     {
         Standard,
         LaserBeam,
-        SmartRearLaser
+        SmartRearLaser,
+        AvoidLaser
     }
 
     public _enemyIDs _enemyID;
@@ -17,7 +18,8 @@ public class Enemy : MonoBehaviour
     private GameObject _explosionInstance;
 
     private GameManager _gameManager;
- 
+    private SpawnManager _spawnManager;
+
     GameObject _laserSpawnPoint;
     GameObject _laserSpawnPointBack;
     private float _verticalLimit = 7.0f;
@@ -64,6 +66,9 @@ public class Enemy : MonoBehaviour
 
     private bool enemyBehindPlayer = false;
 
+    [Header("Enemy Avoid Laser Only")]
+    [SerializeField] private float _avoidDistance = 3.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +83,12 @@ public class Enemy : MonoBehaviour
         if (_gameManager == null)
         {
             Debug.LogError("Enemy::Start(). Game Manager is NULL");
+        }
+
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Enemy::Start(). Spawn Manager is NULL");
         }
 
         _enemyAnimator = GetComponent<Animator>();
@@ -106,6 +117,7 @@ public class Enemy : MonoBehaviour
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
+            case _enemyIDs.AvoidLaser:
                 _explosionAnimLength = 0.0f;
                 break;
             case _enemyIDs.SmartRearLaser:
@@ -132,7 +144,7 @@ public class Enemy : MonoBehaviour
 
     private void SheildsInitialize()
     {
-        if ((enemyShieldsChances > 0) && (Random.Range(1, enemyShieldsChances) == 1)) // 
+        if ((enemyShieldsChances > 0) && (Random.Range(1, enemyShieldsChances) == 1) && (_enemyID == _enemyIDs.Standard)) // 
         {
             ShieldsActive();
         }
@@ -144,6 +156,7 @@ public class Enemy : MonoBehaviour
         switch (_enemyID)
         {
             case _enemyIDs.LaserBeam:
+                DetermineEnemyAggression();  // sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
                 if (!_aggressiveEnemy)
                 {
                     if (_gameManager.waveID > afterLevelXLaserBeamEnemyWavyMove) // afterLevelXLaserBeamEnemyWavyMove = 7 (Default)
@@ -158,12 +171,16 @@ public class Enemy : MonoBehaviour
                 {
                     RamPlayer();
                 }
-
+                
                 FireLaserBeam();
                 break;
             case _enemyIDs.SmartRearLaser:
                 CalculateMovementStandard();
                 FireLaserBehind();
+                break;
+            case _enemyIDs.AvoidLaser:
+
+                AvoidLaser();
                 break;
             case _enemyIDs.Standard:
             default:
@@ -172,7 +189,7 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
-        DetermineEnemyAggression();  // sets _aggressiveEnemy according to wave level, distance to player, chance random assignment
+        
         
     }
 
@@ -197,6 +214,14 @@ public class Enemy : MonoBehaviour
         float _newRotation = Mathf.Cos(Time.time* _randomMultiplier) * Time.deltaTime * 45f;
         //Debug.Log("Enemy::CalculateMovementWavy:_newRotation=" + _newRotation);
         transform.Rotate(0,0, _newRotation);
+        CalcMovementAtScreenLimits();
+    }
+
+    private void CalculateMovementAvoidLaser(Laser _avoidThisLaser)
+    {
+
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
         CalcMovementAtScreenLimits();
     }
 
@@ -256,10 +281,11 @@ public class Enemy : MonoBehaviour
         if (Time.time > _canFireAtTime && _isDestroyed == false)
         {
             _fireRate = Random.Range(0f, 5f);
-            //_fireRate = 1.0f;
             _canFireAtTime = Time.time + _fireRate;
 
             GameObject _enemyLaser = Instantiate(_laserPrefab, _laserSpawnPoint.transform.position, transform.rotation);
+
+            _enemyLaser.transform.parent = _spawnManager.enemyLaserStandardContainer.transform;
 
             Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
 
@@ -366,6 +392,7 @@ public class Enemy : MonoBehaviour
                 Destroy(this.GetComponentInChildren<Laser>());
                 break;
             case _enemyIDs.SmartRearLaser:
+            case _enemyIDs.AvoidLaser:
                 ExplosionOnlyAnim();
                 break;
             case _enemyIDs.Standard:
@@ -424,6 +451,27 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void AvoidLaser()
+    {
+        // Debug.Log("');
+        Vector2 _enemyMoveDirection = Vector2.down;
+        Laser[] _trackLasers = _spawnManager.laserStandardContainer.GetComponentsInChildren<Laser>();
+
+        for (int i = 0; i < _trackLasers.Length; i++)
+        {
+            Vector2 _directionToLaser = _trackLasers[i].transform.position - transform.position;
+
+            if (Mathf.Abs(_directionToLaser.magnitude) < _avoidDistance)
+            {
+                _enemyMoveDirection = -_directionToLaser;
+            }
+        }
+
+        transform.Translate(_enemyMoveDirection * _speed * Time.deltaTime);
+
+        CalcMovementAtScreenLimits();
+    }
+
     private void RamPlayer()
     {
         //Debug.Log("Enemy::RamPlayer:Begin");
@@ -458,9 +506,9 @@ public class Enemy : MonoBehaviour
     private void DetermineIfPowerupInfront()
     {
         // Make array of powerups. Second child of the Spawn_Manager will always be the "Powerup_Container" game object
-        Debug.Log("Enemy::Start:This enemy's parent is " + transform.parent.parent.name);
+        //Debug.Log("Enemy::Start:This enemy's parent is " + transform.parent.parent.name);
         Powerup[] _allPowerUps = transform.parent.parent.GetChild(1).GetComponentsInChildren<Powerup>();
-        Debug.Log("Enemy::Start:_allPowerUps.Length= " + _allPowerUps.Length);
+        //Debug.Log("Enemy::Start:_allPowerUps.Length= " + _allPowerUps.Length);
         for (int i = 0; i < _allPowerUps.Length; i++)
         {
             Vector3 directionPowerup = _allPowerUps[i].transform.position - transform.position;

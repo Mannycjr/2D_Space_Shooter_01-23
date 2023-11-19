@@ -7,6 +7,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject[] _enemyPrefab;
     [SerializeField] private GameObject _enemyContainer;
     public GameObject powerupContainer;
+    public GameObject enemyLaserStandardContainer;
+    public GameObject laserStandardContainer;
     [SerializeField] private GameObject[] _powerupPrefabFrequent;
     [SerializeField] private GameObject[] _powerupPrefab;
     [SerializeField] private GameObject[] _powerupPrefabRare;
@@ -49,6 +51,14 @@ public class SpawnManager : MonoBehaviour
         if (powerupContainer == null)
         {
             Debug.LogError("SpawnManager::Start(). Powerup Container is NULL");
+        }
+        if (enemyLaserStandardContainer == null)
+        {
+            Debug.LogError("SpawnManager::Start(). Enemy Standard Laser Container is NULL");
+        }
+        if (laserStandardContainer == null)
+        {
+            Debug.LogError("SpawnManager::Start(). Standard Laser Container is NULL");
         }
     }
 

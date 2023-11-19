@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
 
     SpawnManager _spawnManager;
 
+    //public GameObject[] newMultiLasers;
+
     [SerializeField] private float _speedBoostMultiplierShift = 2.5f;
 
     //Powerups variables
@@ -274,6 +276,7 @@ public class Player : MonoBehaviour
     void Firelaser()
     {
         _canFire = Time.time + _firerate;
+        GameObject _newLaser;
 
         if (_ammoCount > 0)
         {
@@ -281,7 +284,8 @@ public class Player : MonoBehaviour
 
             if (_tripleShotActive == true && _wideShotActive == false)
             {
-                Instantiate(_tripleShotlaserPrefab, transform.position, Quaternion.identity);
+                _newLaser = Instantiate(_tripleShotlaserPrefab, transform.position, Quaternion.identity);
+                _newLaser.transform.parent = _spawnManager.laserStandardContainer.transform; // Add new Laser to Container
             }
             else if (_tripleShotActive == false && _wideShotActive == true)
             {
@@ -289,7 +293,8 @@ public class Player : MonoBehaviour
             }
             else 
             {
-                Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+                _newLaser = Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+                _newLaser.transform.parent = _spawnManager.laserStandardContainer.transform; // Add new Laser to Container
             }
 
             _ammoCount--;
@@ -302,11 +307,18 @@ public class Player : MonoBehaviour
 
     void FireWideShot()
     {
-        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
-        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, 45f));
-        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, 90f));
-        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, -45f));
-        Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, -90f));
+        GameObject[] newMultiLasers = new GameObject[5];
+
+        
+        int _spawnAngle = -90;
+
+        for (int i = 0; i < 5; i++)
+        {
+            newMultiLasers[i] = Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.Euler(0, 0, _spawnAngle));
+            newMultiLasers[i].transform.parent = _spawnManager.laserStandardContainer.transform; // Add new Laser to Container
+
+            _spawnAngle += 45;
+        }
     }
 
     public void Damage()
