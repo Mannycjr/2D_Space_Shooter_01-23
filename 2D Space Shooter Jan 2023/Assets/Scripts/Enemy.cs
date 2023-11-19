@@ -86,7 +86,7 @@ public class Enemy : MonoBehaviour
         }
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        if (_gameManager == null)
+        if (_spawnManager == null)
         {
             Debug.LogError("Enemy::Start(). Spawn Manager is NULL");
         }
@@ -180,7 +180,7 @@ public class Enemy : MonoBehaviour
                 break;
             case _enemyIDs.AvoidLaser:
 
-                DetermineAvoidLaser();
+                AvoidLaser();
                 break;
             case _enemyIDs.Standard:
             default:
@@ -451,7 +451,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void DetermineAvoidLaser()
+    private void AvoidLaser()
     {
         // Debug.Log("');
         Vector2 _enemyMoveDirection = Vector2.down;
