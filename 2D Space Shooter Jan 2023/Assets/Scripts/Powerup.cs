@@ -14,6 +14,7 @@ public class Powerup : MonoBehaviour
         Ammo,
         Health,
         WideShot,
+        Homing,
         NoAmmo
     }
 

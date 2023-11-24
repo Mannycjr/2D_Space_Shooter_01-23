@@ -1186,6 +1186,67 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1001 &519709819
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3423743573829851199, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_Name
+      value: Powerup_Wide_Shot
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298367717252746428, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2ddc2dd562fb61d4aa46b3b810a927eb, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
 --- !u!1 &548013846
 GameObject:
   m_ObjectHideFlags: 0
