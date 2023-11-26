@@ -19,10 +19,16 @@ public class Missile : MonoBehaviour
     [SerializeField] private GameObject _explosionPrefab;
     private GameObject _explosionInstance;
 
+    private SpawnManager _spawnManagerScript;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        _spawnManagerScript = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if (_spawnManagerScript == null)
+        {
+            Debug.LogError("Missile::Start:No _spawnManager");
+        }
     }
 
     // Update is called once per frame
@@ -30,7 +36,7 @@ public class Missile : MonoBehaviour
     {
         if (_isPlayerMissile == true)
         {
-            //MoveUp();
+            MoveUp();
         }
         else
         {
@@ -38,6 +44,38 @@ public class Missile : MonoBehaviour
             {
                 //MoveDown();
             }
+        }
+    }
+
+    void MoveUp()
+    {
+        switch (MissileType)
+        {
+            case missileIDs.Homing:
+                
+                // MoveHomingMissle();
+                // moveTowards nearest enemy;
+                break;
+            case missileIDs.Normal:
+            default:
+                transform.Translate(Vector3.up * _speed * Time.deltaTime);
+                break;
+        }
+
+        DestroyAtScreenLimits();
+
+    }
+
+    void MoveHomingMissle()
+    {
+
+    }
+
+    void DestroyAtScreenLimits()
+    {
+        if ((Mathf.Abs(transform.position.y) > _yLimit) | (Mathf.Abs(transform.position.x) > _xLimit))
+        {
+            Destroy(this.gameObject);
         }
     }
 }

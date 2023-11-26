@@ -22,8 +22,6 @@ public class Player : MonoBehaviour
 
     SpawnManager _spawnManager;
 
-    //public GameObject[] newMultiLasers;
-
     [SerializeField] private float _speedBoostMultiplierShift = 2.5f;
 
     //Powerups variables
