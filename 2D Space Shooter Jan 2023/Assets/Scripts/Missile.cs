@@ -14,7 +14,9 @@ public class Missile : MonoBehaviour
     private int _speed = 5;
     private float _xLimit = 11.0f;
     private float _yLimit = 6.0f;
-    private bool _isPlayerMissile = true;
+    
+    // In the beginning of dev, missile is player only
+    //private bool _isPlayerMissile = true;
 
     [SerializeField] private GameObject _explosionPrefab;
     private GameObject _explosionInstance;
@@ -34,33 +36,24 @@ public class Missile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isPlayerMissile == true)
-        {
-            MoveUp();
-        }
-        else
-        {
-            if (MissileType == missileIDs.Normal)
-            {
-                //MoveDown();
-            }
-        }
-    }
-
-    void MoveUp()
-    {
         switch (MissileType)
         {
             case missileIDs.Homing:
-                
-                // MoveHomingMissle();
+
+                MoveHomingMissle();
                 // moveTowards nearest enemy;
                 break;
             case missileIDs.Normal:
             default:
-                transform.Translate(Vector3.up * _speed * Time.deltaTime);
+                MoveUp();
                 break;
         }
+
+    }
+
+    void MoveUp()
+    {
+        transform.Translate(Vector3.up * _speed * Time.deltaTime);
 
         DestroyAtScreenLimits();
 
@@ -68,6 +61,9 @@ public class Missile : MonoBehaviour
 
     void MoveHomingMissle()
     {
+        // select closest enemy. sorting algorithm
+
+        // move towards closest enemy
 
     }
 
