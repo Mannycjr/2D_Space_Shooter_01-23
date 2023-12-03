@@ -23,6 +23,9 @@ public class Missile : MonoBehaviour
 
     private SpawnManager _spawnManagerScript;
 
+    float _nearestEnemyDistance = 5.0f;
+    [SerializeField] private Enemy _nearestEnemy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +34,10 @@ public class Missile : MonoBehaviour
         {
             Debug.LogError("Missile::Start:No _spawnManager");
         }
+
+        Enemy[] _allEnemies = _spawnManagerScript._enemyContainer.GetComponentsInChildren<Enemy>(); ;
+
+        StartCoroutine(GetNearestEnemy(_allEnemies));
     }
 
     // Update is called once per frame
@@ -74,4 +81,23 @@ public class Missile : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    IEnumerator GetNearestEnemy(Enemy[] _allEnemies)
+    {
+        Vector2 _distanceToEnemy = _allEnemies[0].transform.position - transform.position;
+        _nearestEnemy = _allEnemies[0];
+
+        for (int i = 1; i < _allEnemies.Length; i++)
+        {
+            _distanceToEnemy = _allEnemies[i].transform.position - transform.position;
+            if (Mathf.Abs(_distanceToEnemy.magnitude) < _nearestEnemyDistance)
+            {
+                _nearestEnemy = _allEnemies[i];
+            }
+
+        }
+        return null;
+
+    }
+
 }
