@@ -85,12 +85,13 @@ public class Missile : MonoBehaviour
     IEnumerator GetNearestEnemy(Enemy[] _allEnemies)
     {
         Vector2 _distanceToEnemy = _allEnemies[0].transform.position - transform.position;
+        float _previousDistance = Mathf.Abs(_distanceToEnemy.magnitude);
         _nearestEnemy = _allEnemies[0];
 
         for (int i = 1; i < _allEnemies.Length; i++)
         {
             _distanceToEnemy = _allEnemies[i].transform.position - transform.position;
-            if (Mathf.Abs(_distanceToEnemy.magnitude) < _nearestEnemyDistance)
+            if ((Mathf.Abs(_distanceToEnemy.magnitude) < _nearestEnemyDistance) & (Mathf.Abs(_distanceToEnemy.magnitude) < _previousDistance))
             {
                 _nearestEnemy = _allEnemies[i];
             }
