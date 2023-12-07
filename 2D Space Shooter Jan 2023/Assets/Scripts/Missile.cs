@@ -23,7 +23,7 @@ public class Missile : MonoBehaviour
 
     private SpawnManager _spawnManagerScript;
 
-    float _nearestEnemyDistance = 5.0f;
+    [SerializeField] float _nearestEnemyDistance = 5.0f;
     [SerializeField] private Enemy _nearestEnemy;
 
     // Start is called before the first frame update
@@ -95,7 +95,7 @@ public class Missile : MonoBehaviour
             {
                 _nearestEnemy = _allEnemies[i];
             }
-
+            _previousDistance = Mathf.Abs(_distanceToEnemy.magnitude);
         }
         return null;
 

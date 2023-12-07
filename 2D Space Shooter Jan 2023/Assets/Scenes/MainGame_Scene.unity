@@ -615,6 +615,7 @@ MonoBehaviour:
   _tripleShotActive: 0
   _wideShotActive: 0
   _speedBoostPowerupActive: 0
+  _homingMissile: 0
   _shieldsActiveAlready: 0
   _shieldStrength: 0
   _shieldsOnPlayer: {fileID: 1359052590}
@@ -1239,7 +1240,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3423743573829851199, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
       propertyPath: m_Name
-      value: Powerup_Wide_Shot
+      value: Powerup_HomingMissile
+      objectReference: {fileID: 0}
+    - target: {fileID: 4689562599182838286, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
+      propertyPath: _powerupID
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7298367717252746428, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
       propertyPath: m_Sprite

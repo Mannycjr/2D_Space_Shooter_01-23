@@ -105,6 +105,10 @@ public class Powerup : MonoBehaviour
                         player.WideShotActive(5.0f);
                         Debug.Log("Powerup::OnTriggerEnter2D:switch WideShot");
                         break;
+                    case _powerupIDs.Homing:
+                        //player.HomingMissileActive();
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch Homing Missile");
+                        break;
                     case _powerupIDs.NoAmmo:
                         player.NoAmmo();
                         Debug.Log("Powerup::OnTriggerEnter2D:switch NoAmmo");
