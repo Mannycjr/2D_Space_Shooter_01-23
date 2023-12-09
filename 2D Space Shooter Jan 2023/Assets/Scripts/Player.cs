@@ -290,6 +290,10 @@ public class Player : MonoBehaviour
             {
                 FireWideShot();
             }
+            else if ( _homingMissile == true & (_tripleShotActive == false & _wideShotActive == false))
+            {
+                FireMissile(_newLaser);
+            }
             else 
             {
                 _newLaser = Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
@@ -307,7 +311,6 @@ public class Player : MonoBehaviour
     void FireWideShot()
     {
         GameObject[] newMultiLasers = new GameObject[5];
-
         
         int _spawnAngle = -90;
 
@@ -318,6 +321,11 @@ public class Player : MonoBehaviour
 
             _spawnAngle += 45;
         }
+    }
+
+    void FireMissile(GameObject _newMissile)
+    {
+        _newMissile =  = Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
     }
 
     public void Damage()
