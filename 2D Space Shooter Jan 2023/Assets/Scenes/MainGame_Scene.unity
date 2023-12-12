@@ -615,7 +615,6 @@ MonoBehaviour:
   _tripleShotActive: 0
   _wideShotActive: 0
   _speedBoostPowerupActive: 0
-  _homingMissile: 0
   _shieldsActiveAlready: 0
   _shieldStrength: 0
   _shieldsOnPlayer: {fileID: 1359052590}
@@ -628,6 +627,8 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 1, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
   _speedBoostMultiplierPowerup: 7
+  _homingMissilePrefab: {fileID: 4159848291764405963, guid: eb1382293af27c945911f807be2c305d, type: 3}
+  _homingMissile: 0
   _damageSmokeLeft: {fileID: 905524595}
   _damageSmokeRight: {fileID: 1206772055}
   _explosionPrefab: {fileID: 5665125328609053333, guid: f053f236ed91d604b9ae33590978cf4f, type: 3}
@@ -1200,7 +1201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5.29
       objectReference: {fileID: 0}
     - target: {fileID: 1100575781309496774, guid: ab68bfd80cac763478da9f9ec765cf7f, type: 3}
       propertyPath: m_LocalPosition.y

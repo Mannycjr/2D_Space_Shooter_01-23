@@ -24,11 +24,10 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float _speedBoostMultiplierShift = 2.5f;
 
-    //Powerups variables
+    [Header("Powerups variables")]
     [SerializeField] private bool _tripleShotActive = false;
     [SerializeField] private bool _wideShotActive = false;
     [SerializeField] private bool _speedBoostPowerupActive = false;
-    [SerializeField] private bool _homingMissile = false;
 
     [SerializeField] private bool _shieldsActiveAlready = false;
     [SerializeField] private int _shieldStrength = 0;
@@ -37,6 +36,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float[] _shieldsScaling;
     [SerializeField] private Color[] _shieldsColor; // Double check user-set color's Alpha channel setting in Inspector.
     [SerializeField] private float _speedBoostMultiplierPowerup = 7.0f;
+    [SerializeField] private GameObject _homingMissilePrefab;
+    [SerializeField] private bool _homingMissile = false;
 
     private int _score = 0;
     UIManager _UIManager;
@@ -110,6 +111,12 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Player::Start:_tripleShotlaserPrefab is NULL");
         }
+
+        if (_homingMissilePrefab == null)
+        {
+            Debug.LogError("Player::Start:_homingMissilePrefab is NULL");
+        }
+
     }
 
     // Update is called once per frame
@@ -281,18 +288,18 @@ public class Player : MonoBehaviour
         {
             Vector3 _laserPosition = transform.position + _laserOffset;
 
-            if (_tripleShotActive == true && _wideShotActive == false)
+            if (_tripleShotActive == true & (_wideShotActive == false & _homingMissile == false))
             {
                 _newLaser = Instantiate(_tripleShotlaserPrefab, transform.position, Quaternion.identity);
                 _newLaser.transform.parent = _spawnManager.laserStandardContainer.transform; // Add new Laser to Container
             }
-            else if (_tripleShotActive == false && _wideShotActive == true)
+            else if (_wideShotActive == true & (_tripleShotActive == false & _homingMissile == false))
             {
                 FireWideShot();
             }
             else if ( _homingMissile == true & (_tripleShotActive == false & _wideShotActive == false))
             {
-                FireMissile(_newLaser);
+                FireMissile();
             }
             else 
             {
@@ -323,9 +330,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    void FireMissile(GameObject _newMissile)
+    void FireMissile()
     {
-        _newMissile =  = Instantiate(_laserPrefab, _laserPosition, Quaternion.identity);
+        GameObject _newMissile = Instantiate(_homingMissilePrefab, transform.position, Quaternion.identity);
+        _newMissile.transform.parent = _spawnManager.laserStandardContainer.transform;
     }
 
     public void Damage()
@@ -396,12 +404,12 @@ public class Player : MonoBehaviour
         _homingMissile = true;
         _tripleShotActive = false;
         _wideShotActive = false;
-        StartCoroutine(HomingMissileDuration(5.0f));
+        StartCoroutine(HomingMissileDuration(10.0f));
     }
 
     IEnumerator HomingMissileDuration(float _delay)
     {
-        // wait 5 seconds
+        // wait _delay seconds
         yield return new WaitForSeconds(_delay);
         _homingMissile = false;
     }

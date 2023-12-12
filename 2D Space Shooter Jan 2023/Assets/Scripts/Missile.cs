@@ -11,7 +11,7 @@ public class Missile : MonoBehaviour
     }
 
     public missileIDs MissileType;
-    private int _speed = 5;
+    private float _speed = 5.0f;
     private float _xLimit = 11.0f;
     private float _yLimit = 6.0f;
     
@@ -25,6 +25,8 @@ public class Missile : MonoBehaviour
 
     [SerializeField] float _nearestEnemyDistance = 5.0f;
     [SerializeField] private Enemy _nearestEnemy;
+    [SerializeField] Enemy[] _allEnemies = new Enemy[1];
+
 
     // Start is called before the first frame update
     void Start()
@@ -35,9 +37,12 @@ public class Missile : MonoBehaviour
             Debug.LogError("Missile::Start:No _spawnManager");
         }
 
-        Enemy[] _allEnemies = _spawnManagerScript._enemyContainer.GetComponentsInChildren<Enemy>(); ;
-
-        StartCoroutine(GetNearestEnemy(_allEnemies));
+        _allEnemies = _spawnManagerScript._enemyContainer.GetComponentsInChildren<Enemy>();
+        if (_allEnemies.Length > 0)
+        {
+            StartCoroutine(GetNearestEnemy(_allEnemies));
+        }
+        
     }
 
     // Update is called once per frame
@@ -56,6 +61,11 @@ public class Missile : MonoBehaviour
                 break;
         }
 
+        _allEnemies = _spawnManagerScript._enemyContainer.GetComponentsInChildren<Enemy>();
+        if (_allEnemies.Length > 0)
+        {
+            StartCoroutine(GetNearestEnemy(_allEnemies));
+        }
     }
 
     void MoveUp()
@@ -68,10 +78,15 @@ public class Missile : MonoBehaviour
 
     void MoveHomingMissle()
     {
-        // select closest enemy. sorting algorithm
-
-        // move towards closest enemy
-
+        if (_nearestEnemy != null)
+        {
+            // move towards closest enemy
+            transform.position = Vector2.MoveTowards(transform.position, _nearestEnemy.transform.position, _speed * Time.deltaTime);
+        }
+        else
+        {
+            MoveUp();
+        }
     }
 
     void DestroyAtScreenLimits()
@@ -84,20 +99,25 @@ public class Missile : MonoBehaviour
 
     IEnumerator GetNearestEnemy(Enemy[] _allEnemies)
     {
-        Vector2 _distanceToEnemy = _allEnemies[0].transform.position - transform.position;
-        float _previousDistance = Mathf.Abs(_distanceToEnemy.magnitude);
-        _nearestEnemy = _allEnemies[0];
+        _nearestEnemy = _allEnemies[0]; // first enemy
 
-        for (int i = 1; i < _allEnemies.Length; i++)
+        if (_allEnemies.Length > 1)
         {
-            _distanceToEnemy = _allEnemies[i].transform.position - transform.position;
-            if ((Mathf.Abs(_distanceToEnemy.magnitude) < _nearestEnemyDistance) & (Mathf.Abs(_distanceToEnemy.magnitude) < _previousDistance))
+            Vector2 _distanceToEnemy = _allEnemies[0].transform.position - transform.position; // vector distance to first enemy
+            float _previousDistance = Mathf.Abs(_distanceToEnemy.magnitude); // magnitude of distance vector to first enemy
+
+            for (int i = 1; i < _allEnemies.Length; i++)
             {
-                _nearestEnemy = _allEnemies[i];
+                _distanceToEnemy = _allEnemies[i].transform.position - transform.position;
+                if ((Mathf.Abs(_distanceToEnemy.magnitude) < _nearestEnemyDistance) & (Mathf.Abs(_distanceToEnemy.magnitude) < _previousDistance))
+                {
+                    _nearestEnemy = _allEnemies[i];
+                }
+                _previousDistance = Mathf.Abs(_distanceToEnemy.magnitude);
             }
-            _previousDistance = Mathf.Abs(_distanceToEnemy.magnitude);
         }
-        return null;
+
+        yield return null;
 
     }
 
