@@ -82,6 +82,12 @@ public class Missile : MonoBehaviour
         {
             // move towards closest enemy
             transform.position = Vector2.MoveTowards(transform.position, _nearestEnemy.transform.position, _speed * Time.deltaTime);
+            //transform.LookAt(_nearestEnemy.transform, Vector2.up);
+            Vector3 diff = _nearestEnemy.transform.position - transform.position;
+            diff.Normalize();
+
+            float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, rot_z - 90);
         }
         else
         {
