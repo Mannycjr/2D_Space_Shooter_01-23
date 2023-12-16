@@ -376,6 +376,7 @@ public class Player : MonoBehaviour
     {
         _tripleShotActive = true;
         _wideShotActive = false;
+        _homingMissile = false;
         StartCoroutine(TripleShotDuration(_duration));
     }
 
@@ -389,6 +390,7 @@ public class Player : MonoBehaviour
     {
         _tripleShotActive = false;
         _wideShotActive = true;
+        _homingMissile = false;
         StartCoroutine(WideShotDuration(_duration));
     }
 
