@@ -23,7 +23,7 @@ public class Missile : MonoBehaviour
 
     private SpawnManager _spawnManagerScript;
 
-    [SerializeField] float _nearestEnemyDistance = 5.0f;
+    [SerializeField] float _nearestEnemyDistance = 200.0f;
     [SerializeField] private Enemy _nearestEnemy;
     [SerializeField] Enemy[] _allEnemies = new Enemy[1];
 

@@ -404,7 +404,7 @@ public class Player : MonoBehaviour
         _homingMissile = true;
         _tripleShotActive = false;
         _wideShotActive = false;
-        StartCoroutine(HomingMissileDuration(10.0f));
+        StartCoroutine(HomingMissileDuration(20.0f));
     }
 
     IEnumerator HomingMissileDuration(float _delay)

@@ -117,7 +117,6 @@ GameObject:
   - component: {fileID: 280920513906182067}
   - component: {fileID: 1826113398866789275}
   - component: {fileID: 7778629145793636302}
-  - component: {fileID: 3829696354383991501}
   - component: {fileID: 7532114634983755456}
   m_Layer: 0
   m_Name: Missile
@@ -241,20 +240,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &3829696354383991501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4159848291764405963}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 732e9406bfc12a445b3c6df4a402b3cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  laserType: 0
-  _explosionPrefab: {fileID: 5665125328609053333, guid: f053f236ed91d604b9ae33590978cf4f, type: 3}
 --- !u!114 &7532114634983755456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,3 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MissileType: 1
   _explosionPrefab: {fileID: 5665125328609053333, guid: f053f236ed91d604b9ae33590978cf4f, type: 3}
+  _nearestEnemyDistance: 200
+  _nearestEnemy: {fileID: 0}
+  _allEnemies:
+  - {fileID: 0}
