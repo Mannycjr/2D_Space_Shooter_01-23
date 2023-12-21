@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 1826113398866789275}
   - component: {fileID: 7778629145793636302}
   - component: {fileID: 7532114634983755456}
+  - component: {fileID: -1927893379412453175}
   m_Layer: 0
   m_Name: Missile
   m_TagString: Laser
@@ -258,3 +259,17 @@ MonoBehaviour:
   _nearestEnemy: {fileID: 0}
   _allEnemies:
   - {fileID: 0}
+--- !u!114 &-1927893379412453175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159848291764405963}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 732e9406bfc12a445b3c6df4a402b3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserType: 0
+  _explosionPrefab: {fileID: 0}

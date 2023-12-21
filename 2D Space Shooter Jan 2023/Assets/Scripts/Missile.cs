@@ -118,8 +118,9 @@ public class Missile : MonoBehaviour
                 if ((Mathf.Abs(_distanceToEnemy.magnitude) < _nearestEnemyDistance) & (Mathf.Abs(_distanceToEnemy.magnitude) < _previousDistance))
                 {
                     _nearestEnemy = _allEnemies[i];
+                    _previousDistance = Mathf.Abs(_distanceToEnemy.magnitude);
                 }
-                _previousDistance = Mathf.Abs(_distanceToEnemy.magnitude);
+                
             }
         }
 

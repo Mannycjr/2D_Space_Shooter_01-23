@@ -453,7 +453,7 @@ public class Enemy : MonoBehaviour
 
     private void AvoidLaser()
     {
-        // Debug.Log("');
+        // Debug.Log("Enemy::AvoidLaser:Start");
         Vector2 _enemyMoveDirection = Vector2.down;
         Laser[] _trackLasers = _spawnManager.laserStandardContainer.GetComponentsInChildren<Laser>();
 
