@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] _enemyPrefab;
-    [SerializeField] private GameObject _enemyContainer;
+    public GameObject _enemyContainer;
     public GameObject powerupContainer;
     public GameObject enemyLaserStandardContainer;
     public GameObject laserStandardContainer;

@@ -14,6 +14,7 @@ public class Powerup : MonoBehaviour
         Ammo,
         Health,
         WideShot,
+        Homing,
         NoAmmo
     }
 
@@ -103,6 +104,10 @@ public class Powerup : MonoBehaviour
                     case _powerupIDs.WideShot:
                         player.WideShotActive(5.0f);
                         Debug.Log("Powerup::OnTriggerEnter2D:switch WideShot");
+                        break;
+                    case _powerupIDs.Homing:
+                        player.HomingMissileActive();
+                        Debug.Log("Powerup::OnTriggerEnter2D:switch Homing Missile");
                         break;
                     case _powerupIDs.NoAmmo:
                         player.NoAmmo();
