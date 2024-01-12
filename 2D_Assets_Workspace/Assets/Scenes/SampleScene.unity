@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18349397, g: 0.22905655, b: 0.3057733, a: 1}
+  m_IndirectSpecularColor: {r: 0.18349274, g: 0.22905585, b: 0.3057742, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -134,21 +134,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Space Dreadnought 05
       objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 1832a37002e0e4de1af1bee02de1fff8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 1832a37002e0e4de1af1bee02de1fff8, type: 3}
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 1832a37002e0e4de1af1bee02de1fff8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 1832a37002e0e4de1af1bee02de1fff8, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 1832a37002e0e4de1af1bee02de1fff8, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 1832a37002e0e4de1af1bee02de1fff8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -282,14 +286,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.46914092, y: 0.039633427, z: 0.5884209, w: 0.65734076}
-  m_LocalPosition: {x: -1.655, y: 3, z: -3.746}
+  m_LocalRotation: {x: 0.3608507, y: -0.07410957, z: 0.66039354, w: 0.6543508}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 34.759, y: 47.345, z: 99.293}
+  m_LocalEulerAnglesHint: {x: 34.759, y: 27.521, z: 99.293}
 --- !u!1001 &860696864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -445,7 +449,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.0011911493, y: 0.005098857, z: 0.0000066029584, w: -0.9999863}
-  m_LocalPosition: {x: -0.025, y: 0.11, z: -3.4}
+  m_LocalPosition: {x: -0.025, y: -0.041, z: -3.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -465,8 +469,85 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   folderBaseName: Screenshots
-  frameRate: 30
-  framesToCapture: 1
+  frameRate: 32
+  framesToCapture: 32
+--- !u!1001 &1640011043
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_Name
+      value: Alien Saucer
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0005
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0005
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0005
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.000000013953814
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.003
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 61ee48dea49886742bfcdee75d104d43, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7d47b64bed8195d4ba6d24b5502db6db, type: 3}
 --- !u!1001 &1731501450
 PrefabInstance:
   m_ObjectHideFlags: 0
