@@ -15,6 +15,9 @@ public class Enemy_Boss : MonoBehaviour
     private float _verticalLimit = 7.0f;
     private float _horizontalLimit = 11.0f;
 
+    int _bossHealthMax = 100;
+    int _bossHealthCurrent = 0;
+
     private Player _player;
 
     // Start is called before the first frame update
@@ -38,7 +41,7 @@ public class Enemy_Boss : MonoBehaviour
             Debug.LogError("Enemy::Start(). Spawn Manager is NULL");
         }
 
-
+        _bossHealthCurrent = _bossHealthMax;
     }
 
     // Update is called once per frame
@@ -49,17 +52,17 @@ public class Enemy_Boss : MonoBehaviour
 
     private void DamageEnemy()
     {
-        /*
-        if (_enemyShieldsActiveAlready)
+        
+        if ((_bossHealthCurrent <= _bossHealthMax) && (_bossHealthCurrent > 0))
         {
-            ExplosionOnlyAnim();
-            ShieldsNOTActive();
+            //ExplosionOnlyAnim();
+            //ShieldsNOTActive();
         }
         else
         {
-            DestoryEnemy();
+            //DestoryEnemy();
         }
-        */
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
