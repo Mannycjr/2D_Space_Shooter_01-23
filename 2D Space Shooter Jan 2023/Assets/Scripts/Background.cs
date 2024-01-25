@@ -1,26 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Background : MonoBehaviour
 {
-    public float _speed = 2.0f;
-    public float _bottomLimitY = -16.01f;
-    public float _topRespawnY = 24.86f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private RawImage _img;
+    public float _speed = 0.01f;
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-        if (transform.position.y < _bottomLimitY)
-        {
-            transform.position = new Vector3(transform.position.x,_topRespawnY,transform.position.z);
-        }
+        _img.uvRect = new Rect(_img.uvRect.position + new Vector2(0, _speed) * Time.deltaTime, _img.uvRect.size);
     }
 }
