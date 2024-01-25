@@ -624,6 +624,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Boss01_AlienSaucer
       objectReference: {fileID: 0}
+    - target: {fileID: 3779539305041374862, guid: 467719687249c4b4787d540d52ac0c95, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 467719687249c4b4787d540d52ac0c95, type: 3}
 --- !u!1 &242333500
@@ -2854,6 +2858,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1459458807}
   - component: {fileID: 1459458806}
+  - component: {fileID: 1459458808}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -2902,7 +2907,7 @@ SpriteRenderer:
   m_SortingLayerID: -1804844453
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bbc0dc53f83e1cb45a092ab78fb92887, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ae4103898ad0fb429b72ef7cad5f84a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2921,13 +2926,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1459458805}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -20, z: 0}
-  m_LocalScale: {x: 2.1, y: 2.1, z: 2.1}
+  m_LocalPosition: {x: 0, y: 24.86, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1459458808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459458805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ce4e3ff49604342a89922d126c8ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 2
+  _bottomLimitY: -16.01
+  _topRespawnY: 24.86
 --- !u!1 &1558735191
 GameObject:
   m_ObjectHideFlags: 0
@@ -3313,6 +3333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1940570484}
   - component: {fileID: 1940570483}
+  - component: {fileID: 1940570485}
   m_Layer: 0
   m_Name: Background_2
   m_TagString: Untagged
@@ -3361,7 +3382,7 @@ SpriteRenderer:
   m_SortingLayerID: -1804844453
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bbc0dc53f83e1cb45a092ab78fb92887, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0ae4103898ad0fb429b72ef7cad5f84a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3380,13 +3401,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1940570482}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 23.01, z: 0}
-  m_LocalScale: {x: 2.1, y: 2.1, z: 2.1}
+  m_LocalPosition: {x: 0, y: 4.38, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1940570485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940570482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ce4e3ff49604342a89922d126c8ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 2
+  _bottomLimitY: -16.01
+  _topRespawnY: 24.86
 --- !u!1 &2087545396
 GameObject:
   m_ObjectHideFlags: 0
