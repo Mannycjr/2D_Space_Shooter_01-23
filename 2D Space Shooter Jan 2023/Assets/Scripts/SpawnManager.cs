@@ -160,6 +160,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
+        Debug.Log("Spawnmanager::SpawnEnemyRoutine() called. Begin.");
         int _enemyIndex = 0; // Initialized to Standard Enemy
 
         while ((_stopSpawning == false) && (_gameManager._isGameOver == false))
