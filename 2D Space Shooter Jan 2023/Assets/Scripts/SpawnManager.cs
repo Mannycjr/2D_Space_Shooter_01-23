@@ -35,6 +35,8 @@ public class SpawnManager : MonoBehaviour
     float _waitTimeWaves = 7.0f; // Waves spawning looping wait time between waves of enemies
     int maxEnemiesSpawned = 1;
 
+    public bool spawnBoss01 = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -119,8 +121,12 @@ public class SpawnManager : MonoBehaviour
                 _waitTimeEnemy = 3.5f;
                 break;
             case 2:
-                maxEnemiesSpawned = 2;
-                _waitTimeEnemy = 3.0f;
+                maxEnemiesSpawned = 0;
+                _waitTimeEnemy = 1800.0f;
+                /*              
+                                maxEnemiesSpawned = 2;
+                                _waitTimeEnemy = 3.0f;
+                */
                 break;
             case 3:
                 maxEnemiesSpawned = 3;
